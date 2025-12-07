@@ -31,7 +31,7 @@ export default function HeroSection() {
                     </p>
 
                     <div className={styles.ctaGroup}>
-                        <Link href="/sign-up" className={styles.primaryBtn}>
+                        <Link href="/sign-up" className={`${styles.primaryBtn} pulse-button`}>
                             Start Free Trial
                         </Link>
                         <button className={styles.secondaryBtn}>
