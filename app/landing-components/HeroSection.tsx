@@ -41,6 +41,13 @@ export default function HeroSection() {
                             Watch Demo
                         </button>
                     </div>
+                    {/* Testimonial added below CTA */}
+                    <div style={{ textAlign: 'center', margin: '1rem 0', fontSize: '0.9rem', color: '#666' }}>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', margin: '0.5rem' }}>
+                            <span style={{ color: 'gold' }}>★★★★★</span>
+                            <span>"Generated 3 viral posts in first week!"</span>
+                        </div>
+                    </div>
 
                     <div className={styles.trust}>
                         Trusted by 1,000+ marketers, founders, and professionals
