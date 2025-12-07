@@ -31,7 +31,7 @@ export async function POST(request: Request) {
             }
         }
 
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         const prompt = `Analyze this LinkedIn post opening line (hook): "${hook}"
 

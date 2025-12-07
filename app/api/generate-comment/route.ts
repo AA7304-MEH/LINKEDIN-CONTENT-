@@ -31,7 +31,7 @@ export async function POST(request: Request) {
             }
         }
 
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         // Pick a random story to potentially use in the 'story' comment option
         const randomStory = userStories.length > 0 ? userStories[Math.floor(Math.random() * userStories.length)] : null;

@@ -74,8 +74,8 @@ export async function POST(request: Request) {
             }
         }
 
-        // Using gemini-2.0-flash as it is available in the user's project
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+        // Using gemini-1.5-flash as it is available in the user's project
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         let prompt = `Generate a LinkedIn post about "${topic}".
         

@@ -42,7 +42,7 @@ export async function POST(request: Request) {
             textToProcess = `Content from ${url}`;
         }
 
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         const prompt = `Repurpose the following content into LinkedIn formats:
     Content: "${textToProcess.substring(0, 5000)}"
