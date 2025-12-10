@@ -3,6 +3,7 @@
   "/_not-found/page": "app/_not-found/page.js",
   "/api/analyze-hook/route": "app/api/analyze-hook/route.js",
   "/api/create-order/route": "app/api/create-order/route.js",
+  "/api/debug-models/route": "app/api/debug-models/route.js",
   "/api/generate-comment/route": "app/api/generate-comment/route.js",
   "/api/generate/route": "app/api/generate/route.js",
   "/api/posts/route": "app/api/posts/route.js",
@@ -20,5 +21,6 @@
   "/pricing/page": "app/pricing/page.js",
   "/repurpose/page": "app/repurpose/page.js",
   "/sign-in/[[...sign-in]]/page": "app/sign-in/[[...sign-in]]/page.js",
-  "/sign-up/[[...sign-up]]/page": "app/sign-up/[[...sign-up]]/page.js"
+  "/sign-up/[[...sign-up]]/page": "app/sign-up/[[...sign-up]]/page.js",
+  "/video-demo/page": "app/video-demo/page.js"
 }

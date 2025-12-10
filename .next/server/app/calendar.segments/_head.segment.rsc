@@ -1,8 +1,0 @@
-1:"$Sreact.fragment"
-2:I[97367,["/_next/static/chunks/208d109d56c94dec.js","/_next/static/chunks/18763f99e0ed0e75.js"],"ViewportBoundary"]
-4:I[97367,["/_next/static/chunks/208d109d56c94dec.js","/_next/static/chunks/18763f99e0ed0e75.js"],"MetadataBoundary"]
-5:"$Sreact.suspense"
-7:I[27201,["/_next/static/chunks/208d109d56c94dec.js","/_next/static/chunks/18763f99e0ed0e75.js"],"IconMark"]
-0:{"buildId":"98Ebc-SI83Og32GdbBNhm","rsc":["$","$1","h",{"children":[null,["$","$L2",null,{"children":"$@3"}],["$","div",null,{"hidden":true,"children":["$","$L4",null,{"children":["$","$5",null,{"name":"Next.Metadata","children":"$@6"}]}]}],null]}],"loading":null,"isPartial":false}
-3:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
-6:[["$","title","0",{"children":"Resonate | AI-Powered Professional Posts"}],["$","meta","1",{"name":"description","content":"Generate engaging, professional LinkedIn posts in seconds with our AI-powered tool. Boost your personal brand today."}],["$","meta","2",{"name":"keywords","content":"LinkedIn,Content Generator,AI,Professional,Social Media"}],["$","meta","3",{"property":"og:title","content":"Resonate"}],["$","meta","4",{"property":"og:description","content":"Generate engaging, professional LinkedIn posts in seconds."}],["$","meta","5",{"property":"og:type","content":"website"}],["$","meta","6",{"name":"twitter:card","content":"summary"}],["$","meta","7",{"name":"twitter:title","content":"Resonate"}],["$","meta","8",{"name":"twitter:description","content":"Generate engaging, professional LinkedIn posts in seconds."}],["$","link","9",{"rel":"icon","href":"/favicon.ico?favicon.0b3bf435.ico","sizes":"256x256","type":"image/x-icon"}],["$","$L7","10",{}]]

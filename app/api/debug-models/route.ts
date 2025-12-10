@@ -5,7 +5,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY || '');
 
 export async function GET() {
-    const results = {};
+    const results: Record<string, any> = {};
 
     // Test gemini-pro
     try {
