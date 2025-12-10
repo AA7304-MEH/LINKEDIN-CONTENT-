@@ -11,7 +11,7 @@ export default function SocialProof() {
 
                 <div className={styles.grid}>
                     <div className={styles.card}>
-                        <p className={styles.quote}>"I used to spend 2 hours writing a single LinkedIn post. With Resonate, I generate a week's worth of content in 15 minutes. It's a game changer."</p>
+                        <p className={styles.quote}>"Saved 5 hours/week! That's time I could spend on my actual business instead of staring at a blank screen."</p>
                         <div className={styles.author}>
                             <div className={styles.avatar} style={{ background: '#ccc' }}></div>
                             <div className={styles.meta}>
@@ -22,23 +22,23 @@ export default function SocialProof() {
                     </div>
 
                     <div className={styles.card}>
-                        <p className={styles.quote}>"The hook scoring feature is incredible. My engagement has increased by 300% since I started using Resonate to optimize my opening lines."</p>
+                        <p className={styles.quote}>"3x more engagement! The hook scoring feature is incredible. My posts are finally reaching the right audience."</p>
                         <div className={styles.author}>
                             <div className={styles.avatar} style={{ background: '#bbb' }}></div>
                             <div className={styles.meta}>
                                 <span className={styles.name}>David Chen</span>
-                                <span className={styles.title}>Startup Founder</span>
+                                <span className={styles.title}>Founder</span>
                             </div>
                         </div>
                     </div>
 
                     <div className={styles.card}>
-                        <p className={styles.quote}>"Finally, an AI tool that doesn't sound like a robot. The 'Personal DNA' feature nails my tone of voice perfectly every time."</p>
+                        <p className={styles.quote}>"Hook scores improved 87%! Resonate knows exactly how to tweak my opening lines for maximum impact."</p>
                         <div className={styles.author}>
                             <div className={styles.avatar} style={{ background: '#aaa' }}></div>
                             <div className={styles.meta}>
                                 <span className={styles.name}>Emily Rossi</span>
-                                <span className={styles.title}>Growth Consultant</span>
+                                <span className={styles.title}>Content Creator</span>
                             </div>
                         </div>
                     </div>

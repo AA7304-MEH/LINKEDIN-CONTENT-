@@ -24,6 +24,61 @@
   display: flex;
 }
 
+.ContentCalendar-module__lW6IAW__addDraftSection {
+  border-bottom: 1px solid #333;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+}
+
+.ContentCalendar-module__lW6IAW__addDraftSection h3 {
+  color: #fff;
+  margin-bottom: .5rem;
+  font-size: 1rem;
+}
+
+.ContentCalendar-module__lW6IAW__addInput {
+  color: #fff;
+  resize: vertical;
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 6px;
+  width: 100%;
+  min-height: 80px;
+  margin-bottom: .5rem;
+  padding: .8rem;
+}
+
+.ContentCalendar-module__lW6IAW__addControls {
+  gap: .5rem;
+  display: flex;
+}
+
+.ContentCalendar-module__lW6IAW__typeSelect {
+  color: #fff;
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 6px;
+  flex: 2;
+  padding: .5rem;
+}
+
+.ContentCalendar-module__lW6IAW__addButton {
+  color: #fff;
+  cursor: pointer;
+  background: #0070f3;
+  border: none;
+  border-radius: 6px;
+  flex: 1;
+  padding: .5rem;
+  font-weight: 600;
+}
+
+.ContentCalendar-module__lW6IAW__addButton:disabled {
+  cursor: not-allowed;
+  color: #888;
+  background: #333;
+}
+
 .ContentCalendar-module__lW6IAW__sidebar {
   background: #111;
   border: 1px solid #333;

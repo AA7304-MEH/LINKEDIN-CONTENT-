@@ -12,24 +12,50 @@ export default async function DashboardPage() {
         redirect('/sign-in');
     }
 
-    // Fetch db user to check onboarding
-    const dbUser = await prisma.user.findUnique({
-        where: { id: userId },
-        include: {
-            posts: {
-                orderBy: { createdAt: 'desc' },
-                take: 5,
+    let dbUser;
+    try {
+        // Fetch db user to check onboarding
+        dbUser = await prisma.user.findUnique({
+            where: { id: userId },
+            include: {
+                posts: {
+                    orderBy: { createdAt: 'desc' },
+                    take: 5,
+                },
+                hookAnalyses: {
+                    select: { score: true },
+                },
             },
-            hookAnalyses: {
-                select: { score: true },
-            },
-        },
-    });
+        });
+    } catch (error: any) {
+        console.error("Dashboard Error:", error);
+        return (
+            <main className={styles.main}>
+                <div className={styles.container}>
+                    <div className={styles.header}>
+                        <h1 style={{ color: 'red' }}>Server Error</h1>
+                        <p>Something went wrong loading your dashboard.</p>
+                    </div>
+                    <div style={{
+                        background: '#1a1a1a',
+                        padding: '1rem',
+                        borderRadius: '8px',
+                        marginTop: '1rem',
+                        overflow: 'auto'
+                    }}>
+                        <pre style={{ color: '#ff6b6b' }}>
+                            {error?.message || JSON.stringify(error, null, 2)}
+                        </pre>
+                    </div>
+                </div>
+            </main>
+        );
+    }
 
     const posts = dbUser?.posts || [];
-    const hookScores = dbUser?.hookAnalyses.map(h => h.score) || [];
+    const hookScores = dbUser?.hookAnalyses?.map((h: any) => h.score) || [];
     const avgHookScore = hookScores.length > 0
-        ? (hookScores.reduce((a, b) => a + b, 0) / hookScores.length).toFixed(1)
+        ? (hookScores.reduce((a: number, b: number) => a + b, 0) / hookScores.length).toFixed(1)
         : 'N/A';
 
     const onboardingComplete = dbUser?.onboardingComplete;

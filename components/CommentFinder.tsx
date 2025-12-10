@@ -54,11 +54,14 @@ export default function CommentFinder() {
                 body: JSON.stringify({ postContent, postAuthor }),
             });
 
-            if (!res.ok) throw new Error('Failed');
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.error || 'Failed to generate comments');
+            }
             const data = await res.json();
             setGeneratedComments(data);
-        } catch (e) {
-            alert('Error generating comments');
+        } catch (e: any) {
+            alert(e.message || 'Error generating comments');
             setActivePostId(null);
         } finally {
             setLoading(false);

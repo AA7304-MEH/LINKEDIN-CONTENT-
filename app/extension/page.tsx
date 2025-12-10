@@ -1,3 +1,5 @@
+"use client";
+
 import Link from 'next/link';
 import { Download, Puzzle, CheckCircle } from 'lucide-react';
 
@@ -18,7 +20,7 @@ export default function ExtensionPage() {
                 <div style={{ padding: '2rem', borderRadius: '12px', border: '1px solid #eaeaea', backgroundColor: '#fff' }}>
                     <h2 style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '1rem' }}>Installation</h2>
                     <ol style={{ paddingLeft: '1.5rem', lineHeight: '1.8', color: '#444' }}>
-                        <li>Download the extension source code.</li>
+                        <li>Download and <b>extract</b> the extension zip file.</li>
                         <li>Open Chrome and navigate to <b>chrome://extensions</b>.</li>
                         <li>Enable <b>Developer mode</b> in the top right.</li>
                         <li>Click <b>Load unpacked</b>.</li>
@@ -46,23 +48,28 @@ export default function ExtensionPage() {
             </div>
 
             <div style={{ textAlign: 'center' }}>
-                <button style={{
-                    opacity: 0.5,
-                    cursor: 'not-allowed',
-                    background: '#0070f3',
-                    color: 'white',
-                    padding: '1rem 2rem',
-                    borderRadius: '8px',
-                    border: 'none',
-                    fontSize: '1.1rem',
-                    fontWeight: '600',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.75rem'
-                }}>
-                    <Download size={20} />
-                    Download Extension (Coming Soon)
-                </button>
+                <a href="/extension.zip" download style={{ textDecoration: 'none' }}>
+                    <button style={{
+                        cursor: 'pointer',
+                        background: '#0070f3',
+                        color: 'white',
+                        padding: '1rem 2rem',
+                        borderRadius: '8px',
+                        border: 'none',
+                        fontSize: '1.1rem',
+                        fontWeight: '600',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.75rem',
+                        transition: 'opacity 0.2s',
+                    }}
+                        onMouseOver={(e) => e.currentTarget.style.opacity = '0.9'}
+                        onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
+                    >
+                        <Download size={20} />
+                        Download Extension (.zip)
+                    </button>
+                </a>
                 <p style={{ marginTop: '1rem', fontSize: '0.875rem', color: '#888' }}>
                     Currently available in local development environment only.
                 </p>

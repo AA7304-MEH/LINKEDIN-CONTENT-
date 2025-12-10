@@ -28,5 +28,8 @@
     "eslint-config-next": "16.0.7",
     "prisma": "^5.22.0",
     "typescript": "^5"
+  },
+  "overrides": {
+    "undici": "6.19.2"
   }
 }

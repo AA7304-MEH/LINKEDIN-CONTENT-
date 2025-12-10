@@ -2,6 +2,10 @@
 "[project]/components/ContentCalendar.module.css [app-client] (css module)", ((__turbopack_context__) => {
 
 __turbopack_context__.v({
+  "addButton": "ContentCalendar-module__lW6IAW__addButton",
+  "addControls": "ContentCalendar-module__lW6IAW__addControls",
+  "addDraftSection": "ContentCalendar-module__lW6IAW__addDraftSection",
+  "addInput": "ContentCalendar-module__lW6IAW__addInput",
   "clearBtn": "ContentCalendar-module__lW6IAW__clearBtn",
   "container": "ContentCalendar-module__lW6IAW__container",
   "dayName": "ContentCalendar-module__lW6IAW__dayName",
@@ -21,6 +25,7 @@ __turbopack_context__.v({
   "slotHeader": "ContentCalendar-module__lW6IAW__slotHeader",
   "slotPosts": "ContentCalendar-module__lW6IAW__slotPosts",
   "tinyType": "ContentCalendar-module__lW6IAW__tinyType",
+  "typeSelect": "ContentCalendar-module__lW6IAW__typeSelect",
 });
 }),
 "[project]/components/ContentCalendar.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
@@ -57,6 +62,8 @@ function ContentCalendar() {
                 posts: []
             })
     }["ContentCalendar.useState"]));
+    const [newDraft, setNewDraft] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
+    const [draftType, setDraftType] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('Educational');
     const [unscheduled, setUnscheduled] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([
         {
             id: '1',
@@ -83,6 +90,19 @@ function ContentCalendar() {
             hookScore: 6.0
         }
     ]);
+    const handleAddDraft = ()=>{
+        if (!newDraft.trim()) return;
+        const draft = {
+            id: Date.now().toString(),
+            content: newDraft,
+            type: draftType
+        };
+        setUnscheduled([
+            ...unscheduled,
+            draft
+        ]);
+        setNewDraft('');
+    };
     const handleDragStart = (e, post, source)=>{
         e.dataTransfer.setData('post', JSON.stringify(post));
         e.dataTransfer.setData('source', source.toString());
@@ -150,7 +170,7 @@ function ContentCalendar() {
                         children: "Weekly Planner"
                     }, void 0, false, {
                         fileName: "[project]/components/ContentCalendar.tsx",
-                        lineNumber: 95,
+                        lineNumber: 109,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -159,13 +179,13 @@ function ContentCalendar() {
                         children: "Export Text"
                     }, void 0, false, {
                         fileName: "[project]/components/ContentCalendar.tsx",
-                        lineNumber: 96,
+                        lineNumber: 110,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/ContentCalendar.tsx",
-                lineNumber: 94,
+                lineNumber: 108,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -174,11 +194,95 @@ function ContentCalendar() {
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ContentCalendar$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].sidebar,
                         children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ContentCalendar$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].addDraftSection,
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                        children: "Add New Idea"
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/ContentCalendar.tsx",
+                                        lineNumber: 117,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
+                                        value: newDraft,
+                                        onChange: (e)=>setNewDraft(e.target.value),
+                                        placeholder: "Type your post idea...",
+                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ContentCalendar$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].addInput
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/ContentCalendar.tsx",
+                                        lineNumber: 118,
+                                        columnNumber: 25
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ContentCalendar$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].addControls,
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                                                value: draftType,
+                                                onChange: (e)=>setDraftType(e.target.value),
+                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ContentCalendar$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].typeSelect,
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                        children: "Educational"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/components/ContentCalendar.tsx",
+                                                        lineNumber: 126,
+                                                        columnNumber: 33
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                        children: "Story"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/components/ContentCalendar.tsx",
+                                                        lineNumber: 127,
+                                                        columnNumber: 33
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                        children: "Contrarian"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/components/ContentCalendar.tsx",
+                                                        lineNumber: 128,
+                                                        columnNumber: 33
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                        children: "Promotional"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/components/ContentCalendar.tsx",
+                                                        lineNumber: 129,
+                                                        columnNumber: 33
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/components/ContentCalendar.tsx",
+                                                lineNumber: 125,
+                                                columnNumber: 29
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                onClick: handleAddDraft,
+                                                disabled: !newDraft.trim(),
+                                                className: __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ContentCalendar$2e$module$2e$css__$5b$app$2d$client$5d$__$28$css__module$29$__["default"].addButton,
+                                                children: "Add"
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/ContentCalendar.tsx",
+                                                lineNumber: 131,
+                                                columnNumber: 29
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/components/ContentCalendar.tsx",
+                                        lineNumber: 124,
+                                        columnNumber: 25
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/components/ContentCalendar.tsx",
+                                lineNumber: 116,
+                                columnNumber: 21
+                            }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
                                 children: "Unscheduled Drafts"
                             }, void 0, false, {
                                 fileName: "[project]/components/ContentCalendar.tsx",
-                                lineNumber: 102,
+                                lineNumber: 135,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -194,7 +298,7 @@ function ContentCalendar() {
                                                     children: post.type
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/ContentCalendar.tsx",
-                                                    lineNumber: 111,
+                                                    lineNumber: 144,
                                                     columnNumber: 33
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -205,7 +309,7 @@ function ContentCalendar() {
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/ContentCalendar.tsx",
-                                                    lineNumber: 112,
+                                                    lineNumber: 145,
                                                     columnNumber: 33
                                                 }, this),
                                                 post.hookScore && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -216,13 +320,13 @@ function ContentCalendar() {
                                                     children: post.hookScore
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/ContentCalendar.tsx",
-                                                    lineNumber: 114,
+                                                    lineNumber: 147,
                                                     columnNumber: 37
                                                 }, this)
                                             ]
                                         }, post.id, true, {
                                             fileName: "[project]/components/ContentCalendar.tsx",
-                                            lineNumber: 105,
+                                            lineNumber: 138,
                                             columnNumber: 29
                                         }, this)),
                                     unscheduled.length === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -230,19 +334,19 @@ function ContentCalendar() {
                                         children: "All planned!"
                                     }, void 0, false, {
                                         fileName: "[project]/components/ContentCalendar.tsx",
-                                        lineNumber: 123,
+                                        lineNumber: 156,
                                         columnNumber: 54
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/ContentCalendar.tsx",
-                                lineNumber: 103,
+                                lineNumber: 136,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/ContentCalendar.tsx",
-                        lineNumber: 101,
+                        lineNumber: 115,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -260,7 +364,7 @@ function ContentCalendar() {
                                                 children: slot.day
                                             }, void 0, false, {
                                                 fileName: "[project]/components/ContentCalendar.tsx",
-                                                lineNumber: 137,
+                                                lineNumber: 170,
                                                 columnNumber: 33
                                             }, this),
                                             slot.posts.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -269,13 +373,13 @@ function ContentCalendar() {
                                                 children: "×"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/ContentCalendar.tsx",
-                                                lineNumber: 139,
+                                                lineNumber: 172,
                                                 columnNumber: 37
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/ContentCalendar.tsx",
-                                        lineNumber: 136,
+                                        lineNumber: 169,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -291,7 +395,7 @@ function ContentCalendar() {
                                                             children: post.type
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/ContentCalendar.tsx",
-                                                            lineNumber: 151,
+                                                            lineNumber: 184,
                                                             columnNumber: 41
                                                         }, this),
                                                         post.content.substring(0, 30),
@@ -299,7 +403,7 @@ function ContentCalendar() {
                                                     ]
                                                 }, post.id, true, {
                                                     fileName: "[project]/components/ContentCalendar.tsx",
-                                                    lineNumber: 145,
+                                                    lineNumber: 178,
                                                     columnNumber: 37
                                                 }, this)),
                                             slot.posts.length === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -307,40 +411,40 @@ function ContentCalendar() {
                                                 children: "Drop here"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/ContentCalendar.tsx",
-                                                lineNumber: 155,
+                                                lineNumber: 188,
                                                 columnNumber: 61
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/ContentCalendar.tsx",
-                                        lineNumber: 143,
+                                        lineNumber: 176,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, slot.day, true, {
                                 fileName: "[project]/components/ContentCalendar.tsx",
-                                lineNumber: 130,
+                                lineNumber: 163,
                                 columnNumber: 25
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/components/ContentCalendar.tsx",
-                        lineNumber: 128,
+                        lineNumber: 161,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/ContentCalendar.tsx",
-                lineNumber: 99,
+                lineNumber: 113,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/ContentCalendar.tsx",
-        lineNumber: 93,
+        lineNumber: 107,
         columnNumber: 9
     }, this);
 }
-_s(ContentCalendar, "73kQuOp+LUBVTtU4aRYVhHXalUI=");
+_s(ContentCalendar, "qucq0Rd1VBtQ1fFXHgbTXImUmws=");
 _c = ContentCalendar;
 var _c;
 __turbopack_context__.k.register(_c, "ContentCalendar");

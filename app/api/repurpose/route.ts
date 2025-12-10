@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { auth } from '@clerk/nextjs/server';
 import { prisma } from '@/lib/prisma'; // Ensure prisma is imported
+import { withRetry } from '@/lib/ai-helper';
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY || '');
 
@@ -42,24 +43,37 @@ export async function POST(request: Request) {
             textToProcess = `Content from ${url}`;
         }
 
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
         const prompt = `Repurpose the following content into LinkedIn formats:
     Content: "${textToProcess.substring(0, 5000)}"
 
     Output JSON with 3 keys:
     1. "thread": A twitter/linkedin thread (array of strings).
-    2. "carousel": Outline for a document carousel (5 slides, title + content).
+    2. "carousel": Outline for a document carousel (array of objects with "title" and "content").
     3. "question": An engaging discussion question based on the content.
 
     Return JSON only.`;
 
-        const result = await model.generateContent(prompt);
+        const result = await withRetry(async () => {
+            return await model.generateContent(prompt);
+        });
         const response = await result.response;
         let text = response.text();
         text = text.replace(/```json/g, '').replace(/```/g, '').trim();
 
-        const data = JSON.parse(text);
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch (e) {
+            console.error("JSON parse error:", text);
+            throw new Error("Invalid JSON from AI");
+        }
+
+        // Validate structure
+        if (!data.thread || !Array.isArray(data.thread)) data.thread = [];
+        if (!data.carousel || !Array.isArray(data.carousel)) data.carousel = [];
+        if (!data.question) data.question = "could not generate question";
 
         return NextResponse.json(data);
     } catch (error) {

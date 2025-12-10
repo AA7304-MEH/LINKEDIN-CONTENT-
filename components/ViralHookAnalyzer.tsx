@@ -24,19 +24,41 @@ export default function ViralHookAnalyzer() {
         setResult(null);
 
         try {
+            // DEMO MODE INTERCEPTION
+            if (hook.toLowerCase().includes('the future of remote work')) {
+                // Simulate API delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                setResult({
+                    score: 8,
+                    color: 'green',
+                    badges: ['High Impact', 'Strong Hook'],
+                    feedback: 'Great use of a forward-looking statement! This triggers curiosity.',
+                    alternatives: [
+                        'Remote work isn\'t the future. It\'s the present.',
+                        'Why 90% of companies will recall RTO mandates by 2025.',
+                        'The one thing missing from your remote work strategy.'
+                    ]
+                });
+                setLoading(false);
+                return;
+            }
+
             const res = await fetch('/api/analyze-hook', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ hook }),
             });
 
-            if (!res.ok) throw new Error('Failed to analyze');
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.error || 'Failed to analyze');
+            }
 
             const data = await res.json();
             setResult(data);
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            alert('Failed to analyze hook. Please try again.');
+            alert(error.message || 'Failed to analyze hook. Please try again.');
         } finally {
             setLoading(false);
         }

@@ -56,10 +56,15 @@ export default function FeatureDemo() {
 
                     <div className={styles.preview}>
                         {activeStep === 1 && (
-                            <div>
-                                <div style={{ marginBottom: '1rem', color: '#666' }}>What do you want to post about?</div>
-                                <div className={styles.mockInput}>Future of remote work</div>
-                                <div style={{ width: '100px', height: '36px', background: '#0077b5', borderRadius: '4px', marginTop: '1rem' }}></div>
+                            <div className={styles.videoContainer} style={{ width: '100%', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
+                                <img
+                                    src="/demo-video.webp"
+                                    alt="Resonate Solution Demo"
+                                    style={{ width: '100%', display: 'block' }}
+                                />
+                                <div style={{ padding: '1rem', background: '#f9fafb', fontSize: '0.9rem', color: '#6b7280', textAlign: 'center' }}>
+                                    Watch how Resonate generates viral content in seconds
+                                </div>
                             </div>
                         )}
 

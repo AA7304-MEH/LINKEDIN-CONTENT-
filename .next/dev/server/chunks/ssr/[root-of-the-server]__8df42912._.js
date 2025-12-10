@@ -121,8 +121,18 @@ function ExtensionPage() {
                                 },
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                        children: "Download the extension source code."
-                                    }, void 0, false, {
+                                        children: [
+                                            "Download and ",
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("b", {
+                                                children: "extract"
+                                            }, void 0, false, {
+                                                fileName: "[project]/app/extension/page.tsx",
+                                                lineNumber: 21,
+                                                columnNumber: 42
+                                            }, this),
+                                            " the extension zip file."
+                                        ]
+                                    }, void 0, true, {
                                         fileName: "[project]/app/extension/page.tsx",
                                         lineNumber: 21,
                                         columnNumber: 25
@@ -343,32 +353,45 @@ function ExtensionPage() {
                     textAlign: 'center'
                 },
                 children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                        href: "/extension.zip",
+                        download: true,
                         style: {
-                            opacity: 0.5,
-                            cursor: 'not-allowed',
-                            background: '#0070f3',
-                            color: 'white',
-                            padding: '1rem 2rem',
-                            borderRadius: '8px',
-                            border: 'none',
-                            fontSize: '1.1rem',
-                            fontWeight: '600',
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '0.75rem'
+                            textDecoration: 'none'
                         },
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$download$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Download$3e$__["Download"], {
-                                size: 20
-                            }, void 0, false, {
-                                fileName: "[project]/app/extension/page.tsx",
-                                lineNumber: 63,
-                                columnNumber: 21
-                            }, this),
-                            "Download Extension (Coming Soon)"
-                        ]
-                    }, void 0, true, {
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            style: {
+                                cursor: 'pointer',
+                                background: '#0070f3',
+                                color: 'white',
+                                padding: '1rem 2rem',
+                                borderRadius: '8px',
+                                border: 'none',
+                                fontSize: '1.1rem',
+                                fontWeight: '600',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '0.75rem',
+                                transition: 'opacity 0.2s'
+                            },
+                            onMouseOver: (e)=>e.currentTarget.style.opacity = '0.9',
+                            onMouseOut: (e)=>e.currentTarget.style.opacity = '1',
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$download$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__Download$3e$__["Download"], {
+                                    size: 20
+                                }, void 0, false, {
+                                    fileName: "[project]/app/extension/page.tsx",
+                                    lineNumber: 67,
+                                    columnNumber: 25
+                                }, this),
+                                "Download Extension (.zip)"
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/app/extension/page.tsx",
+                            lineNumber: 50,
+                            columnNumber: 21
+                        }, this)
+                    }, void 0, false, {
                         fileName: "[project]/app/extension/page.tsx",
                         lineNumber: 49,
                         columnNumber: 17
@@ -382,7 +405,7 @@ function ExtensionPage() {
                         children: "Currently available in local development environment only."
                     }, void 0, false, {
                         fileName: "[project]/app/extension/page.tsx",
-                        lineNumber: 66,
+                        lineNumber: 71,
                         columnNumber: 17
                     }, this)
                 ]

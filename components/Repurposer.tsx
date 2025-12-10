@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import styles from './Repurposer.module.css';
 
 interface RepurposeResult {
@@ -9,11 +10,19 @@ interface RepurposeResult {
     question: string;
 }
 
-export default function Repurposer() {
+function RepurposerContent() {
+    const searchParams = useSearchParams();
     const [input, setInput] = useState('');
     const [result, setResult] = useState<RepurposeResult | null>(null);
     const [loading, setLoading] = useState(false);
     const [activeTab, setActiveTab] = useState<'thread' | 'carousel' | 'question'>('thread');
+
+    useEffect(() => {
+        const textParam = searchParams.get('text');
+        if (textParam) {
+            setInput(textParam);
+        }
+    }, [searchParams]);
 
     const handleGenerate = async () => {
         if (!input.trim()) return;
@@ -60,7 +69,7 @@ export default function Repurposer() {
                     <div className={styles.tabContent}>
                         {activeTab === 'thread' && (
                             <div className={styles.thread}>
-                                {result.thread.map((tweet, i) => (
+                                {result.thread?.map((tweet, i) => (
                                     <div key={i} className={styles.tweet}>
                                         <span className={styles.counter}>{i + 1}/{result.thread.length}</span>
                                         <p>{tweet}</p>
@@ -71,7 +80,7 @@ export default function Repurposer() {
 
                         {activeTab === 'carousel' && (
                             <div className={styles.carousel}>
-                                {result.carousel.map((slide, i) => (
+                                {result.carousel?.map((slide, i) => (
                                     <div key={i} className={styles.slide}>
                                         <h4>Slide {i + 1}: {slide.title}</h4>
                                         <p>{slide.content}</p>
@@ -90,5 +99,13 @@ export default function Repurposer() {
                 </div>
             )}
         </div>
+    );
+}
+
+export default function Repurposer() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <RepurposerContent />
+        </Suspense>
     );
 }

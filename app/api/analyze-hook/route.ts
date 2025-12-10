@@ -2,11 +2,21 @@ import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { auth, currentUser } from '@clerk/nextjs/server';
 import { prisma } from '@/lib/prisma';
+import { withRetry } from '@/lib/ai-helper';
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY || '');
 
 export async function POST(request: Request) {
     try {
+        const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+        if (!apiKey) {
+            console.error("GOOGLE_GENERATIVE_AI_API_KEY is missing");
+            return NextResponse.json(
+                { error: 'Server configuration error: API key missing' },
+                { status: 500 }
+            );
+        }
+
         const { hook } = await request.json();
         const { userId } = await auth();
 
@@ -31,7 +41,7 @@ export async function POST(request: Request) {
             }
         }
 
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
         const prompt = `Analyze this LinkedIn post opening line (hook): "${hook}"
 
@@ -49,38 +59,55 @@ export async function POST(request: Request) {
     - 5-7 (Yellow): Good but could be sharper.
     - 1-4 (Red): Generic, boring, or too long.`;
 
-        const result = await model.generateContent(prompt);
+        const result = await withRetry(async () => {
+            return await model.generateContent(prompt);
+        });
         const response = await result.response;
         let text = response.text();
 
-        // Clean up markdown code blocks if present
-        text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+        // Clean up markdown code blocks if present (handle ```json and ```)
+        text = text.replace(/```(?:json)?/g, '').replace(/```/g, '').trim();
 
-        const analysis = JSON.parse(text);
+        let analysis;
+        try {
+            analysis = JSON.parse(text);
+        } catch (e) {
+            console.error("Failed to parse LLM response:", text);
+            return NextResponse.json(
+                { error: 'Failed to parse AI response. Please try again.' },
+                { status: 500 }
+            );
+        }
 
         // Save to DB if logged in
         if (userId) {
-            await prisma.user.upsert({
-                where: { id: userId },
-                update: {},
-                create: { id: userId, email: (await currentUser())?.emailAddresses[0]?.emailAddress || 'unknown' },
-            });
+            try {
+                // Ensure user exists in DB first (upsert)
+                await prisma.user.upsert({
+                    where: { id: userId },
+                    update: {},
+                    create: { id: userId, email: (await currentUser())?.emailAddresses[0]?.emailAddress || 'unknown' },
+                });
 
-            await prisma.hookAnalysis.create({
-                data: {
-                    hookText: hook,
-                    score: analysis.score,
-                    feedback: JSON.stringify(analysis),
-                    userId: userId,
-                },
-            });
+                await prisma.hookAnalysis.create({
+                    data: {
+                        hookText: hook,
+                        score: analysis.score,
+                        feedback: JSON.stringify(analysis),
+                        userId: userId,
+                    },
+                });
+            } catch (dbError) {
+                console.error("Database error saving analysis:", dbError);
+                // Don't fail the request if saving to DB fails, just log it
+            }
         }
 
         return NextResponse.json(analysis);
-    } catch (error) {
+    } catch (error: any) {
         console.error("Hook analysis error:", error);
         return NextResponse.json(
-            { error: 'Failed to analyze hook' },
+            { error: error instanceof Error ? error.message : 'Failed to analyze hook' },
             { status: 500 }
         );
     }

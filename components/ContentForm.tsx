@@ -44,6 +44,7 @@ export default function ContentForm({ onGenerate }: ContentFormProps) {
                     <label className={styles.label}>Type</label>
                     <select value={type} onChange={(e) => setType(e.target.value)} className={styles.select}>
                         <option value="Educational">Educational</option>
+                        <option value="Thought Leadership">Thought Leadership</option>
                         <option value="Story">Personal Story</option>
                         <option value="Contrarian">Contrarian</option>
                         <option value="Promotional">Promotional</option>

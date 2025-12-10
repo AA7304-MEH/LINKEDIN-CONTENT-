@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { auth, currentUser } from '@clerk/nextjs/server';
 import { prisma } from '@/lib/prisma';
+import { withRetry } from '@/lib/ai-helper';
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY || '');
 
@@ -74,8 +75,8 @@ export async function POST(request: Request) {
             }
         }
 
-        // Using gemini-1.5-flash as it is available in the user's project
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        // Using gemini-flash-latest as it is confirmed working for this project
+        const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
         let prompt = `Generate a LinkedIn post about "${topic}".
         
@@ -116,7 +117,9 @@ export async function POST(request: Request) {
         - Community: Specific groups (e.g. #marketers)
         `;
 
-        const result = await model.generateContent(prompt);
+        const result = await withRetry(async () => {
+            return await model.generateContent(prompt);
+        });
         const response = await result.response;
         let text = response.text();
 

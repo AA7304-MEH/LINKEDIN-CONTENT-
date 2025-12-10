@@ -40,4 +40,33 @@ a {
   border: 1px solid #ffffff4d;
 }
 
+.launch-banner {
+  color: #fff;
+  text-align: center;
+  z-index: 100;
+  background: linear-gradient(135deg, #0077b5 0%, #00a0dc 100%);
+  padding: 1rem;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+}
+
+.pulse-button {
+  animation: 2s infinite pulse;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
 /*# sourceMappingURL=app_globals_css_bad6b30c._.single.css.map*/

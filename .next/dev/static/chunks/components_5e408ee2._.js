@@ -58,12 +58,15 @@ function ViralHookAnalyzer() {
                     hook
                 })
             });
-            if (!res.ok) throw new Error('Failed to analyze');
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.error || 'Failed to analyze');
+            }
             const data = await res.json();
             setResult(data);
         } catch (error) {
             console.error(error);
-            alert('Failed to analyze hook. Please try again.');
+            alert(error.message || 'Failed to analyze hook. Please try again.');
         } finally{
             setLoading(false);
         }
@@ -76,7 +79,7 @@ function ViralHookAnalyzer() {
                 children: "Viral Hook Engine"
             }, void 0, false, {
                 fileName: "[project]/components/ViralHookAnalyzer.tsx",
-                lineNumber: 47,
+                lineNumber: 50,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -84,7 +87,7 @@ function ViralHookAnalyzer() {
                 children: "Test your opening line before you post."
             }, void 0, false, {
                 fileName: "[project]/components/ViralHookAnalyzer.tsx",
-                lineNumber: 48,
+                lineNumber: 51,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -98,7 +101,7 @@ function ViralHookAnalyzer() {
                         rows: 3
                     }, void 0, false, {
                         fileName: "[project]/components/ViralHookAnalyzer.tsx",
-                        lineNumber: 51,
+                        lineNumber: 54,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -108,13 +111,13 @@ function ViralHookAnalyzer() {
                         children: loading ? 'Analyzing...' : 'Analyze Hook'
                     }, void 0, false, {
                         fileName: "[project]/components/ViralHookAnalyzer.tsx",
-                        lineNumber: 58,
+                        lineNumber: 61,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/ViralHookAnalyzer.tsx",
-                lineNumber: 50,
+                lineNumber: 53,
                 columnNumber: 13
             }, this),
             result && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -128,7 +131,7 @@ function ViralHookAnalyzer() {
                                 children: result.score
                             }, void 0, false, {
                                 fileName: "[project]/components/ViralHookAnalyzer.tsx",
-                                lineNumber: 70,
+                                lineNumber: 73,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -136,13 +139,13 @@ function ViralHookAnalyzer() {
                                 children: "/ 10"
                             }, void 0, false, {
                                 fileName: "[project]/components/ViralHookAnalyzer.tsx",
-                                lineNumber: 71,
+                                lineNumber: 74,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/ViralHookAnalyzer.tsx",
-                        lineNumber: 69,
+                        lineNumber: 72,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -156,12 +159,12 @@ function ViralHookAnalyzer() {
                                 ]
                             }, index, true, {
                                 fileName: "[project]/components/ViralHookAnalyzer.tsx",
-                                lineNumber: 76,
+                                lineNumber: 79,
                                 columnNumber: 29
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/components/ViralHookAnalyzer.tsx",
-                        lineNumber: 74,
+                        lineNumber: 77,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -172,7 +175,7 @@ function ViralHookAnalyzer() {
                                 children: showExplanation ? 'Hide Explanation' : 'Why this score?'
                             }, void 0, false, {
                                 fileName: "[project]/components/ViralHookAnalyzer.tsx",
-                                lineNumber: 83,
+                                lineNumber: 86,
                                 columnNumber: 25
                             }, this),
                             showExplanation && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -180,13 +183,13 @@ function ViralHookAnalyzer() {
                                 children: result.feedback
                             }, void 0, false, {
                                 fileName: "[project]/components/ViralHookAnalyzer.tsx",
-                                lineNumber: 86,
+                                lineNumber: 89,
                                 columnNumber: 45
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/ViralHookAnalyzer.tsx",
-                        lineNumber: 82,
+                        lineNumber: 85,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -196,7 +199,7 @@ function ViralHookAnalyzer() {
                                 children: "Try these instead:"
                             }, void 0, false, {
                                 fileName: "[project]/components/ViralHookAnalyzer.tsx",
-                                lineNumber: 90,
+                                lineNumber: 93,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -204,30 +207,30 @@ function ViralHookAnalyzer() {
                                         children: alt
                                     }, i, false, {
                                         fileName: "[project]/components/ViralHookAnalyzer.tsx",
-                                        lineNumber: 93,
+                                        lineNumber: 96,
                                         columnNumber: 33
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/components/ViralHookAnalyzer.tsx",
-                                lineNumber: 91,
+                                lineNumber: 94,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/ViralHookAnalyzer.tsx",
-                        lineNumber: 89,
+                        lineNumber: 92,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/ViralHookAnalyzer.tsx",
-                lineNumber: 68,
+                lineNumber: 71,
                 columnNumber: 17
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/ViralHookAnalyzer.tsx",
-        lineNumber: 46,
+        lineNumber: 49,
         columnNumber: 9
     }, this);
 }

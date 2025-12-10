@@ -8,6 +8,7 @@ export default function HeroSection() {
     const [topic, setTopic] = useState('');
     const [score, setScore] = useState<number | null>(null);
     const [loading, setLoading] = useState(false);
+    const [showVideo, setShowVideo] = useState(false);
 
     const handleAnalyze = () => {
         if (!topic) return;
@@ -34,7 +35,7 @@ export default function HeroSection() {
                         <Link href="/sign-up" className={`${styles.primaryBtn} pulse-button`}>
                             Start Free Trial
                         </Link>
-                        <button className={styles.secondaryBtn}>
+                        <button className={styles.secondaryBtn} onClick={() => setShowVideo(true)}>
                             <svg fill="currentColor" viewBox="0 0 24 24" height="20" width="20">
                                 <path d="M8 5v14l11-7z" />
                             </svg>
@@ -95,6 +96,60 @@ export default function HeroSection() {
                     </div>
                 </div>
             </div>
+
+            {/* Video Modal */}
+            {showVideo && (
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    zIndex: 1000,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '2rem'
+                }} onClick={() => setShowVideo(false)}>
+                    <div style={{
+                        position: 'relative',
+                        width: '100%',
+                        maxWidth: '900px',
+                        background: '#000',
+                        borderRadius: '12px',
+                        overflow: 'hidden',
+                        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+                    }} onClick={e => e.stopPropagation()}>
+                        <button
+                            onClick={() => setShowVideo(false)}
+                            style={{
+                                position: 'absolute',
+                                top: '1rem',
+                                right: '1rem',
+                                background: 'rgba(255,255,255,0.2)',
+                                border: 'none',
+                                color: 'white',
+                                width: '30px',
+                                height: '30px',
+                                borderRadius: '50%',
+                                cursor: 'pointer',
+                                zIndex: 10,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}
+                        >
+                            ✕
+                        </button>
+                        <img
+                            src="/demo-video.webp"
+                            alt="Resonate Demo Video"
+                            style={{ width: '100%', height: 'auto', display: 'block' }}
+                        />
+                    </div>
+                </div>
+            )}
         </section>
     );
 }
