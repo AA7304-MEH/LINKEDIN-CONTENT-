@@ -58,7 +58,7 @@ export default function HeroSection() {
                     </div>
 
                     <div className={styles.trust}>
-                        Join early adopters transforming their LinkedIn growth
+                        Join professionals building their brand on LinkedIn
                     </div>
                 </div>
 

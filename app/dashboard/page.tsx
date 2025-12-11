@@ -2,6 +2,7 @@ import { auth, currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
+import DashboardClient from './DashboardClient';
 import styles from './page.module.css';
 
 export default async function DashboardPage() {
@@ -95,33 +96,7 @@ export default async function DashboardPage() {
                     </div>
                 </div>
 
-                <div className={styles.actionSection}>
-                    <Link href="/" className={styles.generateButton}>
-                        + Generate New Post
-                    </Link>
-                    <Link href="/hook-analyzer" className={styles.secondaryButton}>
-                        Analyze a Hook
-                    </Link>
-                </div>
-
-                <div className={styles.recentPosts}>
-                    <h2>Recent Posts</h2>
-                    {posts.length === 0 ? (
-                        <p className={styles.emptyState}>No posts generated yet.</p>
-                    ) : (
-                        <div className={styles.postList}>
-                            {posts.map((post) => (
-                                <div key={post.id} className={styles.postCard}>
-                                    <p className={styles.postPreview}>{post.content.substring(0, 100)}...</p>
-                                    <div className={styles.postMeta}>
-                                        <span className={styles.tag}>{post.type || 'General'}</span>
-                                        <span className={styles.date}>{post.createdAt.toLocaleDateString()}</span>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
+                <DashboardClient initialPosts={posts} />
             </div>
         </main>
     );

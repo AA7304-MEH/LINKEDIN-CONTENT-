@@ -3,114 +3,127 @@
 import { useState } from 'react';
 import styles from './FeatureDemo.module.css';
 
-const steps = [
-    {
-        id: 1,
-        title: "Input a Topic",
-        description: "Simply type what you want to write about. 'Future of remote work', 'AI in Marketing', etc."
-    },
-    {
-        id: 2,
-        title: "Get Viral Hooks",
-        description: "Our AI generates high-converting hooks based on proven viral frameworks, scored by potential."
-    },
-    {
-        id: 3,
-        title: "Generate Full Post",
-        description: "Select your favorite hook and watch Resonate write the entire post in your specific tone."
-    },
-    {
-        id: 4,
-        title: "Schedule & Publish",
-        description: "Add to your content calendar and sync directly with LinkedIn."
-    }
-];
-
 export default function FeatureDemo() {
-    const [activeStep, setActiveStep] = useState(1);
+    const [demoState, setDemoState] = useState<'IDLE' | 'GENERATING' | 'DONE'>('IDLE');
+    const [topic, setTopic] = useState('');
+
+    const handleMockGenerate = () => {
+        if (!topic.trim()) return;
+        setDemoState('GENERATING');
+        setTimeout(() => {
+            setDemoState('DONE');
+        }, 1500);
+    };
 
     return (
         <section className={styles.section} id="how-it-works">
             <div className={styles.container}>
                 <div className={styles.header}>
                     <h2 className={styles.title}>See the Magic in Action</h2>
-                    <p className={styles.subtitle}>From idea to scheduled post in under 60 seconds.</p>
+                    <p className={styles.subtitle}>Try the generator right here. No sign-up required.</p>
                 </div>
 
-                <div className={styles.content}>
-                    <div className={styles.steps}>
-                        {steps.map((step) => (
-                            <div
-                                key={step.id}
-                                className={`${styles.step} ${activeStep === step.id ? styles.active : ''}`}
-                                onMouseEnter={() => setActiveStep(step.id)}
-                            >
-                                <div className={styles.stepNumber}>{step.id}</div>
-                                <div className={styles.stepContent}>
-                                    <h4>{step.title}</h4>
-                                    <p>{step.description}</p>
-                                </div>
-                            </div>
-                        ))}
+                <div style={{
+                    maxWidth: '800px',
+                    margin: '0 auto',
+                    background: 'white',
+                    borderRadius: '12px',
+                    padding: '2rem',
+                    boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
+                }}>
+                    <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
+                        <input
+                            type="text"
+                            placeholder="Type a topic (e.g. 'Consistent Writing')"
+                            style={{
+                                flex: 1,
+                                padding: '1rem',
+                                border: '1px solid #e5e7eb',
+                                borderRadius: '8px',
+                                fontSize: '1rem'
+                            }}
+                            value={topic}
+                            onChange={(e) => setTopic(e.target.value)}
+                        />
+                        <button
+                            onClick={handleMockGenerate}
+                            disabled={demoState === 'GENERATING' || !topic.trim()}
+                            style={{
+                                background: '#0077B5',
+                                color: 'white',
+                                border: 'none',
+                                padding: '0 2rem',
+                                borderRadius: '8px',
+                                fontWeight: 'bold',
+                                cursor: 'pointer',
+                                opacity: !topic.trim() ? 0.7 : 1
+                            }}
+                        >
+                            {demoState === 'GENERATING' ? 'Writing...' : 'Generate Demo'}
+                        </button>
                     </div>
 
-                    <div className={styles.preview}>
-                        {activeStep === 1 && (
-                            <div className={styles.videoContainer} style={{ width: '100%', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
-                                <img
-                                    src="/demo-video.webp"
-                                    alt="Resonate Solution Demo"
-                                    style={{ width: '100%', display: 'block' }}
-                                />
-                                <div style={{ padding: '1rem', background: '#f9fafb', fontSize: '0.9rem', color: '#6b7280', textAlign: 'center' }}>
-                                    Watch how Resonate generates viral content in seconds
-                                </div>
+                    {demoState === 'DONE' && (
+                        <div style={{ animation: 'fadeIn 0.5s ease' }}>
+                            <div style={{
+                                background: 'linear-gradient(135deg, #0077B5 0%, #00a0dc 100%)',
+                                color: 'white',
+                                padding: '1rem',
+                                borderRadius: '8px',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '1rem',
+                                marginBottom: '1.5rem',
+                                boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+                            }}>
+                                <span style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>8.8</span>
+                                <span style={{ fontSize: '0.9rem', opacity: 0.9 }}>HOOK SCORE</span>
                             </div>
-                        )}
 
-                        {activeStep === 2 && (
-                            <div>
-                                <div className={styles.hookCard}>
-                                    <span>Remote work isn't the future. It's the present. Here's why...</span>
-                                    <span className={styles.hookScore}>9.8</span>
-                                </div>
-                                <div className={styles.hookCard}>
-                                    <span>Stop forcing your team back to the office.</span>
-                                    <span className={styles.hookScore}>8.5</span>
-                                </div>
-                                <div className={styles.hookCard}>
-                                    <span>5 remote work myths that are holding you back.</span>
-                                    <span className={styles.hookScore}>9.2</span>
-                                </div>
+                            <div style={{
+                                background: '#f9fafb',
+                                padding: '1.5rem',
+                                borderRadius: '8px',
+                                border: '1px solid #e5e7eb',
+                                textAlign: 'left',
+                                lineHeight: '1.6',
+                                color: '#374151'
+                            }}>
+                                <p style={{ fontWeight: 'bold', marginBottom: '1rem' }}>
+                                    Stop trying to be perfect. Start being consistent.
+                                </p>
+                                <p style={{ marginBottom: '1rem' }}>
+                                    I used to spend 3 hours on a single LinkedIn post. I wanted it to be a masterpiece.
+                                    The result? I posted once a month.
+                                </p>
+                                <p style={{ marginBottom: '1rem' }}>
+                                    Then I changed my mindset. I committed to "good enough" but every single day.
+                                    In 30 days, my engagement tripled.
+                                </p>
+                                <p style={{ marginBottom: '1rem' }}>
+                                    Perfectionism is just procrastination in a fancy suit.
+                                    Show up. Press publish. Repeat.
+                                </p>
+                                <p style={{ color: '#0077B5', fontWeight: 600 }}>
+                                    #{topic.replace(/\s+/g, '') || 'Writing'} #Growth #Consistency
+                                </p>
                             </div>
-                        )}
 
-                        {activeStep === 3 && (
-                            <div className={styles.finalPost}>
-                                <p>Remote work isn't the future. It's the present.</p>
-                                <br />
-                                <p>I've spoken to 50+ founders in the last month.</p>
-                                <p>90% of them are hiring remote-first.</p>
-                                <br />
-                                <p>Why? Access to global talent, lower overhead, and happier employees.</p>
-                                <br />
-                                <p>If you're still mandating RTO, you're fighting a losing battle.</p>
-                                <p className={styles.hashtags}>#RemoteWork #Leadership #FutureOfWork</p>
+                            <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
+                                <a href="/sign-up" style={{ color: '#0077B5', fontWeight: 'bold', textDecoration: 'none' }}>
+                                    Start your free trial to write more &rarr;
+                                </a>
                             </div>
-                        )}
-
-                        {activeStep === 4 && (
-                            <div className={styles.calendarView}>
-                                {[...Array(28)].map((_, i) => (
-                                    <div key={i} className={`${styles.calendarDay} ${i === 12 ? styles.scheduled : ''}`}>
-                                        {i === 12 ? 'POST' : ''}
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </div>
             </div>
+            <style jsx>{`
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+            `}</style>
         </section>
     );
 }
