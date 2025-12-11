@@ -4,11 +4,12 @@ export default function CTASection() {
     return (
         <section className={styles.ctaSection}>
             <div className={styles.ctaContainer}>
-                <h2 className={styles.ctaTitle}>Ready to 10x Your LinkedIn Engagement?</h2>
-                <form className={styles.ctaForm} action="/sign-up">
-                    <input type="email" placeholder="Enter your email address" className={styles.ctaInput} required />
-                    <button type="submit" className={styles.ctaButton}>Get Started Free</button>
-                </form>
+                <h2 className={styles.ctaTitle}>Ready to save 5+ hours a week?</h2>
+                <div style={{ marginTop: '2rem' }}>
+                    <a href="/sign-up" className={styles.ctaButton} style={{ display: 'inline-block', textDecoration: 'none', lineHeight: '1.5' }}>
+                        Start your free trial today
+                    </a>
+                </div>
                 <p className={styles.ctaSub}>No credit card required. 14-day free trial on Pro plans.</p>
             </div>
         </section>

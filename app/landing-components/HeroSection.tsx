@@ -33,7 +33,7 @@ export default function HeroSection() {
 
                     <div className={styles.ctaGroup}>
                         <Link href="/sign-up" className={`${styles.primaryBtn} pulse-button`}>
-                            Start Free Trial
+                            Start Free Trial →
                         </Link>
                         <button className={styles.secondaryBtn} onClick={() => setShowVideo(true)}>
                             <svg fill="currentColor" viewBox="0 0 24 24" height="20" width="20">
@@ -47,11 +47,12 @@ export default function HeroSection() {
                         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', margin: '0.5rem' }}>
                             <span style={{ color: 'gold' }}>★★★★★</span>
                             <span>"Generated 3 viral posts in first week!"</span>
+                            <span style={{ opacity: 0.7, fontSize: '0.8rem' }}>(Based on early user feedback)</span>
                         </div>
                     </div>
 
                     <div className={styles.trust}>
-                        Trusted by 1,000+ marketers, founders, and professionals
+                        Join early adopters transforming their LinkedIn growth
                     </div>
                 </div>
 

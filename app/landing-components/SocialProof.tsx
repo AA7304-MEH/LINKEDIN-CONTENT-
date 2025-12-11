@@ -45,11 +45,11 @@ export default function SocialProof() {
                 </div>
 
                 <div className={styles.featuredLogos}>
-                    {/* Using text placeholders for logos as per standard practice when real assets aren't provided */}
-                    <span className={styles.logoPlaceholder}>TechCrunch</span>
-                    <span className={styles.logoPlaceholder}>Forbes</span>
-                    <span className={styles.logoPlaceholder}>IndieHackers</span>
-                    <span className={styles.logoPlaceholder}>ProductHunt</span>
+                    {/* Using styled text placeholders for a clean, professional look */}
+                    <span className={styles.logoPlaceholder} style={{ fontWeight: 700, opacity: 0.6 }}>TechCrunch</span>
+                    <span className={styles.logoPlaceholder} style={{ fontWeight: 600, opacity: 0.6, fontStyle: 'italic', fontFamily: 'serif' }}>Forbes</span>
+                    <span className={styles.logoPlaceholder} style={{ fontWeight: 800, opacity: 0.6, letterSpacing: '-1px' }}>IndieHackers</span>
+                    <span className={styles.logoPlaceholder} style={{ fontWeight: 700, opacity: 0.6 }}>ProductHunt</span>
                 </div>
             </div>
         </section>
