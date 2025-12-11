@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from './HeroSection.module.css';
 
@@ -9,6 +10,7 @@ export default function HeroSection() {
     const [score, setScore] = useState<number | null>(null);
     const [loading, setLoading] = useState(false);
     const [showVideo, setShowVideo] = useState(false);
+    const router = useRouter();
 
     const handleAnalyze = () => {
         if (!topic) return;
@@ -17,6 +19,10 @@ export default function HeroSection() {
         setTimeout(() => {
             setScore(Math.floor(Math.random() * 3) + 8); // Random score between 8-10
             setLoading(false);
+            // Redirect to sign up after showing score briefly
+            setTimeout(() => {
+                router.push(`/sign-up?topic=${encodeURIComponent(topic)}`);
+            }, 1500);
         }, 1500);
     };
 
