@@ -122,8 +122,8 @@ export default function PricingTable() {
                         <div className={styles.price}>
                             $19<span>/mo</span>
                         </div>
-                        <div className={styles.trialInfo} style={{ color: '#0077B5', fontSize: '0.9rem', marginBottom: '1rem', fontWeight: 'bold' }}>
-                            Includes 14-Day Free Trial
+                        <div className={styles.trialInfo} style={{ color: '#059669', fontSize: '1rem', marginBottom: '1rem', fontWeight: 'bold' }}>
+                            Start with 14-Day Free Trial
                         </div>
                         <ul className={styles.features}>
                             <li className={styles.feature}>
@@ -145,6 +145,7 @@ export default function PricingTable() {
                         >
                             Start 14-Day Free Trial
                         </button>
+                        <p style={{ fontSize: '0.8rem', color: '#666', marginTop: '0.5rem' }}>No credit card required for trial.</p>
                     </div>
 
                     {/* Business Tier */}

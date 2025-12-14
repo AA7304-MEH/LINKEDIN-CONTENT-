@@ -94,9 +94,12 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app
 ;
 ;
 ;
-const genAI = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$google$2f$generative$2d$ai$2f$dist$2f$index$2e$mjs__$5b$app$2d$route$5d$__$28$ecmascript$29$__["GoogleGenerativeAI"](("TURBOPACK compile-time value", "AIzaSyAdpVnuS3DCErMSngR9iwf-VIrFMTP-v6I") || '');
+const genAI = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$google$2f$generative$2d$ai$2f$dist$2f$index$2e$mjs__$5b$app$2d$route$5d$__$28$ecmascript$29$__["GoogleGenerativeAI"](("TURBOPACK compile-time value", "AIzaSyDHPCYabbNjrxMN9rImrp8D57TpgYateuE") || '');
 async function POST(request) {
     try {
+        const apiKey = ("TURBOPACK compile-time value", "AIzaSyDHPCYabbNjrxMN9rImrp8D57TpgYateuE");
+        if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
+        ;
         const { postContent, postAuthor } = await request.json();
         const { userId } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$clerk$2f$nextjs$2f$dist$2f$esm$2f$app$2d$router$2f$server$2f$auth$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["auth"])();
         const user = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$clerk$2f$nextjs$2f$dist$2f$esm$2f$app$2d$router$2f$server$2f$currentUser$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["currentUser"])();
@@ -120,7 +123,7 @@ async function POST(request) {
             }
         }
         const model = genAI.getGenerativeModel({
-            model: "gemini-2.0-flash"
+            model: "gemini-flash-latest"
         });
         // Pick a random story to potentially use in the 'story' comment option
         const randomStory = userStories.length > 0 ? userStories[Math.floor(Math.random() * userStories.length)] : null;
@@ -146,8 +149,14 @@ async function POST(request) {
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(data);
     } catch (error) {
         console.error("Comment generation error:", error);
+        let errorMessage = 'Failed to generate comments';
+        if (error.message && error.message.includes('404')) {
+            errorMessage = 'AI Model not found or API Key invalid. Please check server configuration.';
+        } else if (error.message) {
+            errorMessage = error.message;
+        }
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: 'Failed to generate comments'
+            error: errorMessage
         }, {
             status: 500
         });

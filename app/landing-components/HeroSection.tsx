@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from './HeroSection.module.css';
 
@@ -8,6 +9,8 @@ export default function HeroSection() {
     const [topic, setTopic] = useState('');
     const [score, setScore] = useState<number | null>(null);
     const [loading, setLoading] = useState(false);
+    const [showVideo, setShowVideo] = useState(false);
+    const router = useRouter();
 
     const handleAnalyze = () => {
         if (!topic) return;
@@ -16,6 +19,10 @@ export default function HeroSection() {
         setTimeout(() => {
             setScore(Math.floor(Math.random() * 3) + 8); // Random score between 8-10
             setLoading(false);
+            // Redirect to sign up after showing score briefly
+            setTimeout(() => {
+                router.push(`/sign-up?topic=${encodeURIComponent(topic)}`);
+            }, 1500);
         }, 1500);
     };
 
@@ -31,19 +38,27 @@ export default function HeroSection() {
                     </p>
 
                     <div className={styles.ctaGroup}>
-                        <Link href="/sign-up" className={styles.primaryBtn}>
-                            Start Free Trial
+                        <Link href="/sign-up" className={`${styles.primaryBtn} pulse-button`}>
+                            Start Free Trial →
                         </Link>
-                        <button className={styles.secondaryBtn}>
+                        <button className={styles.secondaryBtn} onClick={() => setShowVideo(true)}>
                             <svg fill="currentColor" viewBox="0 0 24 24" height="20" width="20">
                                 <path d="M8 5v14l11-7z" />
                             </svg>
                             Watch Demo
                         </button>
                     </div>
+                    {/* Testimonial added below CTA */}
+                    <div style={{ textAlign: 'center', margin: '1rem 0', fontSize: '0.9rem', color: '#666' }}>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', margin: '0.5rem' }}>
+                            <span style={{ color: 'gold' }}>★★★★★</span>
+                            <span>"Generated 3 viral posts in first week!"</span>
+                            <span style={{ opacity: 0.7, fontSize: '0.8rem' }}>(Based on early user feedback)</span>
+                        </div>
+                    </div>
 
                     <div className={styles.trust}>
-                        Trusted by 1,000+ marketers, founders, and professionals
+                        Join professionals building their brand on LinkedIn
                     </div>
                 </div>
 
@@ -88,6 +103,60 @@ export default function HeroSection() {
                     </div>
                 </div>
             </div>
+
+            {/* Video Modal */}
+            {showVideo && (
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    zIndex: 1000,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '2rem'
+                }} onClick={() => setShowVideo(false)}>
+                    <div style={{
+                        position: 'relative',
+                        width: '100%',
+                        maxWidth: '900px',
+                        background: '#000',
+                        borderRadius: '12px',
+                        overflow: 'hidden',
+                        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+                    }} onClick={e => e.stopPropagation()}>
+                        <button
+                            onClick={() => setShowVideo(false)}
+                            style={{
+                                position: 'absolute',
+                                top: '1rem',
+                                right: '1rem',
+                                background: 'rgba(255,255,255,0.2)',
+                                border: 'none',
+                                color: 'white',
+                                width: '30px',
+                                height: '30px',
+                                borderRadius: '50%',
+                                cursor: 'pointer',
+                                zIndex: 10,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}
+                        >
+                            ✕
+                        </button>
+                        <img
+                            src="/demo-video.webp"
+                            alt="Resonate Demo Video"
+                            style={{ width: '100%', height: 'auto', display: 'block' }}
+                        />
+                    </div>
+                </div>
+            )}
         </section>
     );
 }

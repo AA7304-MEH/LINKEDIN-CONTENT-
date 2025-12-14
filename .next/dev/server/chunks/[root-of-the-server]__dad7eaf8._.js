@@ -94,9 +94,12 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app
 ;
 ;
 ;
-const genAI = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$google$2f$generative$2d$ai$2f$dist$2f$index$2e$mjs__$5b$app$2d$route$5d$__$28$ecmascript$29$__["GoogleGenerativeAI"](("TURBOPACK compile-time value", "AIzaSyAdpVnuS3DCErMSngR9iwf-VIrFMTP-v6I") || '');
+const genAI = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$google$2f$generative$2d$ai$2f$dist$2f$index$2e$mjs__$5b$app$2d$route$5d$__$28$ecmascript$29$__["GoogleGenerativeAI"](("TURBOPACK compile-time value", "AIzaSyDHPCYabbNjrxMN9rImrp8D57TpgYateuE") || '');
 async function POST(request) {
     try {
+        const apiKey = ("TURBOPACK compile-time value", "AIzaSyDHPCYabbNjrxMN9rImrp8D57TpgYateuE");
+        if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
+        ;
         const { hook } = await request.json();
         const { userId } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$clerk$2f$nextjs$2f$dist$2f$esm$2f$app$2d$router$2f$server$2f$auth$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["auth"])();
         if (!hook) {
@@ -106,8 +109,28 @@ async function POST(request) {
                 status: 400
             });
         }
+        if (userId) {
+            const dbUser = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].user.findUnique({
+                where: {
+                    id: userId
+                }
+            });
+            if (dbUser) {
+                const ONE_DAY = 24 * 60 * 60 * 1000;
+                const daysSinceCreation = Math.floor((Date.now() - new Date(dbUser.createdAt).getTime()) / ONE_DAY);
+                const isTrialActive = daysSinceCreation < 14;
+                const isPro = dbUser.plan === 'PRO' || dbUser.plan === 'BUSINESS';
+                if (!isTrialActive && !isPro) {
+                    return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                        error: 'Viral Hook Engine is a Pro feature. Please upgrade.'
+                    }, {
+                        status: 403
+                    });
+                }
+            }
+        }
         const model = genAI.getGenerativeModel({
-            model: "gemini-2.0-flash"
+            model: "gemini-flash-latest"
         });
         const prompt = `Analyze this LinkedIn post opening line (hook): "${hook}"
 
@@ -127,35 +150,51 @@ async function POST(request) {
         const result = await model.generateContent(prompt);
         const response = await result.response;
         let text = response.text();
-        // Clean up markdown code blocks if present
-        text = text.replace(/```json/g, '').replace(/```/g, '').trim();
-        const analysis = JSON.parse(text);
+        // Clean up markdown code blocks if present (handle ```json and ```)
+        text = text.replace(/```(?:json)?/g, '').replace(/```/g, '').trim();
+        let analysis;
+        try {
+            analysis = JSON.parse(text);
+        } catch (e) {
+            console.error("Failed to parse LLM response:", text);
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                error: 'Failed to parse AI response. Please try again.'
+            }, {
+                status: 500
+            });
+        }
         // Save to DB if logged in
         if (userId) {
-            await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].user.upsert({
-                where: {
-                    id: userId
-                },
-                update: {},
-                create: {
-                    id: userId,
-                    email: (await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$clerk$2f$nextjs$2f$dist$2f$esm$2f$app$2d$router$2f$server$2f$currentUser$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["currentUser"])())?.emailAddresses[0]?.emailAddress || 'unknown'
-                }
-            });
-            await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].hookAnalysis.create({
-                data: {
-                    hookText: hook,
-                    score: analysis.score,
-                    feedback: JSON.stringify(analysis),
-                    userId: userId
-                }
-            });
+            try {
+                // Ensure user exists in DB first (upsert)
+                await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].user.upsert({
+                    where: {
+                        id: userId
+                    },
+                    update: {},
+                    create: {
+                        id: userId,
+                        email: (await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$clerk$2f$nextjs$2f$dist$2f$esm$2f$app$2d$router$2f$server$2f$currentUser$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["currentUser"])())?.emailAddresses[0]?.emailAddress || 'unknown'
+                    }
+                });
+                await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].hookAnalysis.create({
+                    data: {
+                        hookText: hook,
+                        score: analysis.score,
+                        feedback: JSON.stringify(analysis),
+                        userId: userId
+                    }
+                });
+            } catch (dbError) {
+                console.error("Database error saving analysis:", dbError);
+            // Don't fail the request if saving to DB fails, just log it
+            }
         }
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(analysis);
     } catch (error) {
         console.error("Hook analysis error:", error);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: 'Failed to analyze hook'
+            error: error instanceof Error ? error.message : 'Failed to analyze hook'
         }, {
             status: 500
         });

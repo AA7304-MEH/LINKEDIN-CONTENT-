@@ -8,15 +8,15 @@ chrome.action.onClicked.addListener((tab) => {
         chrome.tabs.sendMessage(tab.id, { text: 'get_content' }, (response) => {
             if (response) {
                 // Encode content and open our app
-                // Note: In a real extension, we might use local storage or a pop-up. 
-                // For MVP, we pass data via URL params or just open the tab.
-                // Since URL params have limits, we'll copy to clipboard in content script or just open Repurpose page.
+                // Limit to 2000 chars for URL safety (Next.js/Browsers handle more but let's be safe)
+                const maxLength = 2000;
+                let textToPass = response;
+                if (textToPass.length > maxLength) {
+                    textToPass = textToPass.substring(0, maxLength);
+                }
 
-                // Better approach for MVP: Open Repurpose page and let user paste.
-                // Or use an intermediate 'popup' to copy content.
-
-                // Simpler: Just open the repurpose page
-                chrome.tabs.create({ url: 'http://localhost:3000/repurpose' });
+                const encodedText = encodeURIComponent(textToPass);
+                chrome.tabs.create({ url: `http://localhost:3000/repurpose?text=${encodedText}` });
             }
         });
     });
