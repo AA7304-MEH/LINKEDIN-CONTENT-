@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Analytics } from "@vercel/analytics/next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import SupportWidget from "@/components/SupportWidget";
+
+
 
 export const metadata: Metadata = {
   title: "Resonate | AI-Powered Professional Posts",
@@ -23,11 +24,11 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider publishableKey="pk_test_b3B0aW11bS1jb25kb3ItOTcuY2xlcmsuYWNjb3VudHMuZGV2JA">
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body suppressHydrationWarning>
-          <Navbar />
+
           {children}
-          <Footer />
+          <SupportWidget />
           <Analytics />
         </body>
       </html>

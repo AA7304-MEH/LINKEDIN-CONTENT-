@@ -1,0 +1,240 @@
+[2025-12-29T09:49:50.879Z] Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-34e70c932casm29922252a91.0 - gsmtp
+Stack: Error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-34e70c932casm29922252a91.0 - gsmtp
+    at SMTPConnection._formatError (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29701:19)
+    at SMTPConnection._actionAUTHComplete (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:30331:34)
+    at SMTPConnection.<anonymous> (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29509:26)
+    at SMTPConnection._processResponse (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29842:20)
+    at SMTPConnection._onData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29674:14)
+    at SMTPConnection._onSocketData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29220:48)
+    at TLSSocket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+    at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+Details: {
+  "code": "EAUTH",
+  "response": "535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-34e70c932casm29922252a91.0 - gsmtp",
+  "responseCode": 535,
+  "command": "AUTH PLAIN"
+}
+
+[2025-12-29T14:37:51.041Z] Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2a2f3c828e6sm272585935ad.24 - gsmtp
+Stack: Error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2a2f3c828e6sm272585935ad.24 - gsmtp
+    at SMTPConnection._formatError (D:\linkedin content generator\.next\dev\server\chunks\node_modules_dc8a0f3a._.js:24368:19)
+    at SMTPConnection._actionAUTHComplete (D:\linkedin content generator\.next\dev\server\chunks\node_modules_dc8a0f3a._.js:24998:34)
+    at SMTPConnection.<anonymous> (D:\linkedin content generator\.next\dev\server\chunks\node_modules_dc8a0f3a._.js:24176:26)
+    at SMTPConnection._processResponse (D:\linkedin content generator\.next\dev\server\chunks\node_modules_dc8a0f3a._.js:24509:20)
+    at SMTPConnection._onData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_dc8a0f3a._.js:24341:14)
+    at SMTPConnection._onSocketData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_dc8a0f3a._.js:23887:48)
+    at TLSSocket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+    at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+Details: {
+  "code": "EAUTH",
+  "response": "535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2a2f3c828e6sm272585935ad.24 - gsmtp",
+  "responseCode": 535,
+  "command": "AUTH PLAIN"
+}
+
+[2025-12-29T14:57:45.030Z] Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-7ff7b5236b5sm29591236b3a.29 - gsmtp
+Stack: Error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-7ff7b5236b5sm29591236b3a.29 - gsmtp
+    at SMTPConnection._formatError (D:\linkedin content generator\.next\dev\server\chunks\node_modules_dc8a0f3a._.js:24368:19)
+    at SMTPConnection._actionAUTHComplete (D:\linkedin content generator\.next\dev\server\chunks\node_modules_dc8a0f3a._.js:24998:34)
+    at SMTPConnection.<anonymous> (D:\linkedin content generator\.next\dev\server\chunks\node_modules_dc8a0f3a._.js:24176:26)
+    at SMTPConnection._processResponse (D:\linkedin content generator\.next\dev\server\chunks\node_modules_dc8a0f3a._.js:24509:20)
+    at SMTPConnection._onData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_dc8a0f3a._.js:24341:14)
+    at SMTPConnection._onSocketData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_dc8a0f3a._.js:23887:48)
+    at TLSSocket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+    at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+Details: {
+  "code": "EAUTH",
+  "response": "535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-7ff7b5236b5sm29591236b3a.29 - gsmtp",
+  "responseCode": 535,
+  "command": "AUTH PLAIN"
+}
+
+[2025-12-29T14:59:43.385Z] Invalid login: 535 Authentication Failed
+Stack: Error: Invalid login: 535 Authentication Failed
+    at SMTPConnection._formatError (D:\linkedin content generator\.next\dev\server\chunks\node_modules_dc8a0f3a._.js:24368:19)
+    at SMTPConnection._actionAUTHComplete (D:\linkedin content generator\.next\dev\server\chunks\node_modules_dc8a0f3a._.js:24998:34)
+    at SMTPConnection.<anonymous> (D:\linkedin content generator\.next\dev\server\chunks\node_modules_dc8a0f3a._.js:24176:26)
+    at SMTPConnection._processResponse (D:\linkedin content generator\.next\dev\server\chunks\node_modules_dc8a0f3a._.js:24509:20)
+    at SMTPConnection._onData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_dc8a0f3a._.js:24341:14)
+    at SMTPConnection._onSocketData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_dc8a0f3a._.js:23887:48)
+    at TLSSocket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+    at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+
+[2025-12-29T16:04:44.085Z] Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-7ff7b71986asm29955174b3a.30 - gsmtp
+Stack: Error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-7ff7b71986asm29955174b3a.30 - gsmtp
+    at SMTPConnection._formatError (D:\linkedin content generator\.next\dev\server\chunks\node_modules_828e4e32._.js:24368:19)
+    at SMTPConnection._actionAUTHComplete (D:\linkedin content generator\.next\dev\server\chunks\node_modules_828e4e32._.js:24998:34)
+    at SMTPConnection.<anonymous> (D:\linkedin content generator\.next\dev\server\chunks\node_modules_828e4e32._.js:24176:26)
+    at SMTPConnection._processResponse (D:\linkedin content generator\.next\dev\server\chunks\node_modules_828e4e32._.js:24509:20)
+    at SMTPConnection._onData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_828e4e32._.js:24341:14)
+    at SMTPConnection._onSocketData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_828e4e32._.js:23887:48)
+    at TLSSocket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+    at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+
+[2025-12-29T16:09:03.931Z] Invalid login: 535 Authentication Failed
+Stack: Error: Invalid login: 535 Authentication Failed
+    at SMTPConnection._formatError (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29701:19)
+    at SMTPConnection._actionAUTHComplete (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:30331:34)
+    at SMTPConnection.<anonymous> (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29509:26)
+    at SMTPConnection._processResponse (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29842:20)
+    at SMTPConnection._onData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29674:14)
+    at SMTPConnection._onSocketData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29220:48)
+    at TLSSocket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+    at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+
+[2025-12-29T16:31:11.212Z] Invalid login: 535 Authentication Failed
+Stack: Error: Invalid login: 535 Authentication Failed
+    at SMTPConnection._formatError (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29701:19)
+    at SMTPConnection._actionAUTHComplete (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:30331:34)
+    at SMTPConnection.<anonymous> (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29509:26)
+    at SMTPConnection._processResponse (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29842:20)
+    at SMTPConnection._onData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29674:14)
+    at SMTPConnection._onSocketData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29220:48)
+    at TLSSocket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+    at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+
+[2025-12-30T06:20:58.014Z] Invalid login: 535 Authentication Failed
+Stack: Error: Invalid login: 535 Authentication Failed
+    at SMTPConnection._formatError (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29701:19)
+    at SMTPConnection._actionAUTHComplete (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:30331:34)
+    at SMTPConnection.<anonymous> (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29509:26)
+    at SMTPConnection._processResponse (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29842:20)
+    at SMTPConnection._onData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29674:14)
+    at SMTPConnection._onSocketData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29220:48)
+    at TLSSocket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+    at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+
+[2025-12-30T06:21:53.167Z] Invalid login: 535 Authentication Failed
+Stack: Error: Invalid login: 535 Authentication Failed
+    at SMTPConnection._formatError (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29701:19)
+    at SMTPConnection._actionAUTHComplete (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:30331:34)
+    at SMTPConnection.<anonymous> (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29509:26)
+    at SMTPConnection._processResponse (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29842:20)
+    at SMTPConnection._onData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29674:14)
+    at SMTPConnection._onSocketData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29220:48)
+    at TLSSocket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+    at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+
+[2025-12-30T06:23:12.658Z] Invalid login: 535 Authentication Failed
+Stack: Error: Invalid login: 535 Authentication Failed
+    at SMTPConnection._formatError (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29701:19)
+    at SMTPConnection._actionAUTHComplete (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:30331:34)
+    at SMTPConnection.<anonymous> (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29509:26)
+    at SMTPConnection._processResponse (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29842:20)
+    at SMTPConnection._onData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29674:14)
+    at SMTPConnection._onSocketData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29220:48)
+    at TLSSocket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+    at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+
+[2025-12-30T07:09:26.214Z] Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-7ff7e0a05e4sm31342618b3a.38 - gsmtp
+Stack: Error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-7ff7e0a05e4sm31342618b3a.38 - gsmtp
+    at SMTPConnection._formatError (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29701:19)
+    at SMTPConnection._actionAUTHComplete (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:30331:34)
+    at SMTPConnection.<anonymous> (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29509:26)
+    at SMTPConnection._processResponse (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29842:20)
+    at SMTPConnection._onData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29674:14)
+    at SMTPConnection._onSocketData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29220:48)
+    at TLSSocket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+    at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+
+[2025-12-30T07:10:14.796Z] Invalid login: 535 Authentication Failed
+Stack: Error: Invalid login: 535 Authentication Failed
+    at SMTPConnection._formatError (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29701:19)
+    at SMTPConnection._actionAUTHComplete (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:30331:34)
+    at SMTPConnection.<anonymous> (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29509:26)
+    at SMTPConnection._processResponse (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29842:20)
+    at SMTPConnection._onData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29674:14)
+    at SMTPConnection._onSocketData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29220:48)
+    at TLSSocket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+    at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+
+[2025-12-30T07:25:39.929Z] Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-7ff7dfab836sm31485918b3a.36 - gsmtp
+Stack: Error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-7ff7dfab836sm31485918b3a.36 - gsmtp
+    at SMTPConnection._formatError (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29701:19)
+    at SMTPConnection._actionAUTHComplete (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:30331:34)
+    at SMTPConnection.<anonymous> (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29509:26)
+    at SMTPConnection._processResponse (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29842:20)
+    at SMTPConnection._onData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29674:14)
+    at SMTPConnection._onSocketData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29220:48)
+    at TLSSocket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+    at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+
+[2025-12-30T07:26:37.913Z] Invalid login: 535 Authentication Failed
+Stack: Error: Invalid login: 535 Authentication Failed
+    at SMTPConnection._formatError (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29701:19)
+    at SMTPConnection._actionAUTHComplete (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:30331:34)
+    at SMTPConnection.<anonymous> (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29509:26)
+    at SMTPConnection._processResponse (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29842:20)
+    at SMTPConnection._onData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29674:14)
+    at SMTPConnection._onSocketData (D:\linkedin content generator\.next\dev\server\chunks\node_modules_daa21af4._.js:29220:48)
+    at TLSSocket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+    at TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+

@@ -28,6 +28,28 @@ function RepurposerContent() {
         if (!input.trim()) return;
         setLoading(true);
         try {
+            // DEMO INTERCEPT
+            if (input.includes("This is a demo article")) {
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                setResult({
+                    thread: [
+                        "1/5 🧵 AI is changing how we create content, but not how you think.\n\nIt's not a replacement.\nIt's a multiplier.",
+                        "2/5 Most people use it to write generic fluff.\n\nThe real power comes when you use it to restructure your EXISTING ideas.",
+                        "3/5 Take this article for example.\n\nI fed it into the system, and it broke it down into this thread instantly.",
+                        "4/5 Efficiency isn't just about speed.\nIt's about leverage.\n\nMore output, same input.",
+                        "5/5 Try repurposing your old content today.\n\nYou might be surprised by what you find."
+                    ],
+                    carousel: [
+                        { title: "The AI Shift", content: "AI is a multiplier, not a replacement." },
+                        { title: "Stop Generating Fluff", content: "Use AI to restructure existing ideas instead." },
+                        { title: "Leverage", content: "Get more output from the same input." }
+                    ],
+                    question: "How are you using AI in your workflow today? Multiplier or Writer?"
+                });
+                setLoading(false);
+                return;
+            }
+
             const res = await fetch('/api/repurpose', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

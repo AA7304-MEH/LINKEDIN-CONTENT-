@@ -32,6 +32,9 @@ export default function Navbar() {
                 <Link href="/extension" className={styles.link}>
                     Extension
                 </Link>
+                <Link href="/admin/marketing" className={styles.link}>
+                    Admin
+                </Link>
                 <SignedOut>
                     <SignInButton mode="modal">
                         <button className={styles.link} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "inherit" }}>
