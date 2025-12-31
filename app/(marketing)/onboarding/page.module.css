@@ -1,0 +1,117 @@
+.main {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background: #050505;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    background: #111;
+    padding: 3rem;
+    border-radius: 16px;
+    border: 1px solid #333;
+}
+
+.progress {
+    width: 100%;
+    height: 4px;
+    background: #222;
+    margin-bottom: 2rem;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progressBar {
+    height: 100%;
+    background: #0070f3;
+    transition: width 0.3s ease;
+}
+
+.step h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.step p {
+    color: #888;
+    margin-bottom: 2rem;
+}
+
+.textarea,
+.textareaSmall,
+.input {
+    width: 100%;
+    background: #0a0a0a;
+    border: 1px solid #333;
+    color: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-family: inherit;
+}
+
+.storyInput {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #222;
+}
+
+.storyInput:last-child {
+    border-bottom: none;
+}
+
+.buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.button,
+.secondaryButton {
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    flex: 1;
+}
+
+.button {
+    background: #0070f3;
+    color: white;
+}
+
+.secondaryButton {
+    background: #222;
+    color: #ccc;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    padding: 1.5rem;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.card:hover {
+    border-color: #555;
+}
+
+.selected {
+    border-color: #0070f3;
+    background: rgba(0, 112, 243, 0.1);
+}
