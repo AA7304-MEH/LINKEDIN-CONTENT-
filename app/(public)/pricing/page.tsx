@@ -1,6 +1,7 @@
-import PricingTable from '../landing-components/PricingTable';
-import LandingNavbar from '../landing-components/LandingNavbar';
-import LandingFooter from '../landing-components/LandingFooter';
+import PricingTable from '@/app/landing-components/PricingTable';
+import LandingNavbar from '@/app/landing-components/LandingNavbar';
+import LandingFooter from '@/app/landing-components/LandingFooter';
+
 
 export default function Pricing() {
     return (

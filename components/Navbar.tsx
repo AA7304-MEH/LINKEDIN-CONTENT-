@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import styles from "./Navbar.module.css";
 
 export default function Navbar() {
@@ -33,19 +32,10 @@ export default function Navbar() {
                     Extension
                 </Link>
                 <Link href="/admin/marketing" className={styles.link}>
-                    Admin
+                    Admin Dashboard
                 </Link>
-                <SignedOut>
-                    <SignInButton mode="modal">
-                        <button className={styles.link} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "inherit" }}>
-                            Sign In
-                        </button>
-                    </SignInButton>
-                </SignedOut>
-                <SignedIn>
-                    <UserButton afterSignOutUrl="/" />
-                </SignedIn>
             </div>
         </nav>
     );
 }
+

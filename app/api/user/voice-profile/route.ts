@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
-import { auth, currentUser } from '@clerk/nextjs/server';
+import { getSessionUser } from '@/lib/security/authz';
 import { prisma } from '@/lib/prisma';
 
 export async function POST(request: Request) {
     try {
-        const { userId } = await auth();
-        const user = await currentUser();
+        const sessionUser = await getSessionUser();
+        const userId = sessionUser?.id;
 
-        if (!userId || !user) {
+        if (!userId || !sessionUser) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
@@ -17,7 +17,7 @@ export async function POST(request: Request) {
         await prisma.user.upsert({
             where: { id: userId },
             update: {},
-            create: { id: userId, email: user.emailAddresses[0]?.emailAddress || 'unknown' },
+            create: { id: userId, email: sessionUser.email },
         });
 
         // Update voice profile

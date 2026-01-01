@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from 'react';
-import ContentForm from '../../components/ContentForm';
-import ContentCalendar from '../../components/ContentCalendar';
+import ContentForm from '@/components/ContentForm';
+import ContentCalendar from '@/components/ContentCalendar';
+
 import styles from './page.module.css';
 
 export default function VideoDemoPage() {

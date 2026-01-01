@@ -1,7 +1,6 @@
-
 import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { auth, currentUser } from '@clerk/nextjs/server';
+import { getSessionUser } from '@/lib/security/authz';
 import { prisma } from '@/lib/prisma';
 import { withRetry } from '@/lib/ai-helper';
 
@@ -19,14 +18,14 @@ export async function POST(request: Request) {
         }
 
         const { postContent, postAuthor } = await request.json();
-        const { userId } = await auth();
-        const user = await currentUser();
+        const sessionUser = await getSessionUser();
+        const userId = sessionUser?.id;
 
         let userVoiceProfile = null;
         let userStories = [];
 
         // Fetch user voice profile if logged in to make comments sound authentic
-        if (userId && user) {
+        if (userId) {
             const dbUser = await prisma.user.findUnique({
                 where: { id: userId },
             });
@@ -51,7 +50,7 @@ export async function POST(request: Request) {
         const prompt = `Generate 3 smart, engaging LinkedIn comments for the following post by ${postAuthor || 'someone'}:
     
     Post: "${postContent}"
-
+ 
     Your Persona Tone: ${tone}
 
     Output JSON with 3 specific keys:

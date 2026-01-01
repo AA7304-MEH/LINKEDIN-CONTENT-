@@ -1,12 +1,13 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
-import { auth } from '@clerk/nextjs/server';
+import { getSessionUser } from '@/lib/security/authz';
 import { prisma } from '@/lib/prisma';
 
 export async function POST(req: Request) {
     try {
         const { orderCreationId, razorpayPaymentId, razorpaySignature, plan } = await req.json();
-        const { userId } = await auth();
+        const sessionUser = await getSessionUser();
+        const userId = sessionUser?.id;
 
         if (!userId) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -36,7 +37,7 @@ export async function POST(req: Request) {
             },
             create: {
                 id: userId,
-                email: 'unknown@example.com', // Should be handled by webhook ideally or earlier flow
+                email: sessionUser?.email || 'unknown@example.com',
                 plan: planCode,
                 subscriptionDate: new Date(),
             }

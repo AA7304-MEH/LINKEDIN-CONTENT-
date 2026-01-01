@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { auth, currentUser } from '@clerk/nextjs/server';
+import { getSessionUser } from '@/lib/security/authz';
 import { prisma } from '@/lib/prisma';
 import { withRetry } from '@/lib/ai-helper';
 
@@ -9,15 +9,17 @@ const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY ||
 export async function POST(request: Request) {
     try {
         const { topic, tone, type, length, includeHook, includeStory } = await request.json();
-        const { userId } = await auth();
-        const user = await currentUser();
+        const sessionUser = await getSessionUser();
+        const userId = sessionUser?.id;
+        const user = sessionUser; // Mock user object for compatibility
+
 
         let userVoiceProfile = null;
         let userStories = [];
         let userPerspective = '';
 
-        if (userId && user) {
-            const email = user.emailAddresses[0]?.emailAddress;
+        if (userId && sessionUser) {
+            const email = sessionUser.email;
             if (email) {
                 await prisma.user.upsert({
                     where: { id: userId },
@@ -25,6 +27,7 @@ export async function POST(request: Request) {
                     create: { id: userId, email },
                 });
             }
+
 
             const dbUser = await prisma.user.findUnique({
                 where: { id: userId },

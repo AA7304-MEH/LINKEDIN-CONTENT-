@@ -1,14 +1,29 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import { verify } from "@/lib/security/jwt";
 
 // Admin Guard
-const isAdminRoute = createRouteMatcher(["/admin(.*)", "/api/admin(.*)"]);
-const isPublicAdminRoute = createRouteMatcher(["/admin/login", "/admin/verify", "/api/admin/login", "/api/admin/verify"]);
+const ADMIN_PATHS = ["/admin", "/api/admin"];
+const PUBLIC_ADMIN_PATHS = ["/admin/login", "/admin/verify", "/api/admin/login", "/api/admin/verify"];
 
-export default clerkMiddleware(async (auth, req) => {
+function isMatch(path: string, patterns: string[]) {
+    return patterns.some(pattern => {
+        if (pattern.endsWith("(.*)")) {
+            const base = pattern.replace("(.*)", "");
+            return path.startsWith(base);
+        }
+        return path === pattern || path.startsWith(pattern + "/");
+    });
+}
+
+export async function middleware(req: NextRequest) {
+    const { pathname } = req.nextUrl;
+
+    const isAdminRoute = isMatch(pathname, ADMIN_PATHS);
+    const isPublicAdminRoute = isMatch(pathname, PUBLIC_ADMIN_PATHS);
+
     // 1. Admin Security Gate
-    if (isAdminRoute(req) && !isPublicAdminRoute(req)) {
+    if (isAdminRoute && !isPublicAdminRoute) {
         // Check custom admin cookie
         const token = req.cookies.get("resonate_admin_session")?.value;
         const secret = process.env.AUTH_SESSION_SECRET || "";
@@ -25,11 +40,8 @@ export default clerkMiddleware(async (auth, req) => {
             isValid = true;
         } else if (!isValid && token && secret) {
             const payload = await verify(token, secret);
-            // Check role and email allowlist (env logic duplicated here or just check basic validity)
-            // Ideally we check allowlist too, but environment variable is accessible.
             const allowlist = process.env.ADMIN_EMAIL_ALLOWLIST;
             if (payload && payload.role === "admin" && payload.email === allowlist) {
-                // Also check exp
                 if (!payload.exp || Date.now() < payload.exp) {
                     isValid = true;
                 }
@@ -37,8 +49,7 @@ export default clerkMiddleware(async (auth, req) => {
         }
 
         if (!isValid) {
-            // Identify if it's an API call or Page
-            if (req.nextUrl.pathname.startsWith("/api")) {
+            if (pathname.startsWith("/api")) {
                 return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
             }
             const url = new URL("/admin/login", req.url);
@@ -46,20 +57,16 @@ export default clerkMiddleware(async (auth, req) => {
         }
     }
 
-    // 2. User Security Gate (Clerk)
-    // Existing logic or expanded
-    // "Middleware can redirect unauth users..."
-    // We leave Clerk protect for other routes if configured.
-    // The previous middleware had "isProtectedRoute" logic for demo?
-    // "const isProtectedRoute = createRouteMatcher(['/api/posts(.*)']);"
-    // We should keep general protection for /dashboard etc if needed.
-    // But for now, user didn't ask to protect user routes explicitly in middleware, just "Admin UI routes".
-    // "Use matcher for /admin/:path* ... Middleware can redirect unauth users"
+    return NextResponse.next();
+}
 
-}, {
-    publishableKey: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
-    secretKey: process.env.CLERK_SECRET_KEY
-});
+export const config = {
+    matcher: [
+        '/((?!_next|static|favicon.ico).*)',
+        '/(api|trpc)(.*)',
+    ],
+};
+
 
 // export const config = {
 //     matcher: [

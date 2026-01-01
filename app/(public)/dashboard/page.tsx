@@ -1,19 +1,16 @@
-import { auth, currentUser } from '@clerk/nextjs/server';
+import { getSessionUser } from '@/lib/security/authz';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
+
 import DashboardClient from './DashboardClient';
 import styles from './page.module.css';
 
 export default async function DashboardPage() {
-    // DEMO MOCK START
-    // const { userId } = await auth();
-    // const user = await currentUser();
-    const user = { firstName: "Demo User" };
+    const sessionUser = await getSessionUser();
 
-    // if (!userId || !user) {
-    //     redirect('/sign-in');
-    // }
+    // For demo/emergency fix, we allow access but show a generic user if not logged in
+    const user = sessionUser || { firstName: "Demo User", role: "user" };
 
     const posts = [
         { id: '1', type: 'Post', createdAt: new Date().toISOString(), content: "Just discovered how powerful AI can be for content creation. It's not about replacing creativity, it's about amplifying it. #AI #Marketing" },
@@ -22,13 +19,12 @@ export default async function DashboardPage() {
     const hookScores = [8.5, 9.2];
     const avgHookScore = "8.9";
     const onboardingComplete = true;
-    // DEMO MOCK END
 
     return (
         <main className={styles.main}>
             <div className={styles.container}>
                 <div className={styles.header}>
-                    <h1>Welcome back, {user.firstName || 'Creator'}</h1>
+                    <h1>Welcome back, {(user as any).firstName || 'Creator'}</h1>
                     <p>Here's what's happening with your content.</p>
                 </div>
 

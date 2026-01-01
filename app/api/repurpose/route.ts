@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { auth } from '@clerk/nextjs/server';
-import { prisma } from '@/lib/prisma'; // Ensure prisma is imported
+import { getSessionUser } from '@/lib/security/authz';
+import { prisma } from '@/lib/prisma';
 import { withRetry } from '@/lib/ai-helper';
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY || '');
@@ -9,7 +9,8 @@ const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY ||
 export async function POST(request: Request) {
     try {
         const { sourceText, url } = await request.json();
-        const { userId } = await auth();
+        const sessionUser = await getSessionUser();
+        const userId = sessionUser?.id;
 
         if (userId) {
             const dbUser = await prisma.user.findUnique({ where: { id: userId } });
@@ -36,10 +37,7 @@ export async function POST(request: Request) {
         let textToProcess = sourceText;
 
         // TODO: Implement actual URL scraping if URL provided
-        // For now, if URL is provided but no text, we just treat URL as text (or mock fetch)
-        // We'll rely on user pasting text for phase 1 of this feature to be robust
         if (url && !sourceText) {
-            // Mock fetch placeholder
             textToProcess = `Content from ${url}`;
         }
 

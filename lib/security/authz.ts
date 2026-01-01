@@ -1,4 +1,3 @@
-import { auth } from "@clerk/nextjs/server";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { sign, verify } from "@/lib/security/jwt";
@@ -61,17 +60,12 @@ export async function getAdminSession(): Promise<SessionUser | null> {
     return null;
 }
 
-// --- User Session (Clerk) ---
+// --- User Session (Stubbed) ---
 async function getUserSession(): Promise<SessionUser | null> {
-    const { userId } = await auth();
-    if (!userId) return null;
-
-    return {
-        id: userId,
-        email: "user@clerk",
-        role: "user",
-    };
+    // Clerk is removed. User sessions are disabled for now.
+    return null;
 }
+
 
 // --- Central Authorization Helpers ---
 

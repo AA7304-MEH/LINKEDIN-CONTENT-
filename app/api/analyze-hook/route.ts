@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { auth, currentUser } from '@clerk/nextjs/server';
+import { getSessionUser } from '@/lib/security/authz';
 import { prisma } from '@/lib/prisma';
 import { withRetry } from '@/lib/ai-helper';
 
@@ -18,7 +18,8 @@ export async function POST(request: Request) {
         }
 
         const { hook } = await request.json();
-        const { userId } = await auth();
+        const sessionUser = await getSessionUser();
+        const userId = sessionUser?.id;
 
         if (!hook) {
             return NextResponse.json({ error: 'Hook text is required' }, { status: 400 });
@@ -80,13 +81,13 @@ export async function POST(request: Request) {
         }
 
         // Save to DB if logged in
-        if (userId) {
+        if (userId && sessionUser) {
             try {
                 // Ensure user exists in DB first (upsert)
                 await prisma.user.upsert({
                     where: { id: userId },
                     update: {},
-                    create: { id: userId, email: (await currentUser())?.emailAddresses[0]?.emailAddress || 'unknown' },
+                    create: { id: userId, email: sessionUser.email },
                 });
 
                 await prisma.hookAnalysis.create({
