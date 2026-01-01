@@ -2,10 +2,10 @@
 "use client";
 
 import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { Loader2 } from 'lucide-react';
 
-export default function UnsubscribePage() {
+function UnsubscribeContent() {
     const searchParams = useSearchParams();
     const leadId = searchParams.get('leadId');
     const token = searchParams.get('token');
@@ -77,5 +77,17 @@ export default function UnsubscribePage() {
                 )}
             </div>
         </div>
+    );
+}
+
+export default function UnsubscribePage() {
+    return (
+        <Suspense fallback={
+            <div className="flex items-center justify-center min-h-screen">
+                <Loader2 className="animate-spin text-gray-500" />
+            </div>
+        }>
+            <UnsubscribeContent />
+        </Suspense>
     );
 }
