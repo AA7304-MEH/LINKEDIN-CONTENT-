@@ -1,1 +1,6 @@
-{}
+{
+  "/(protected)/dashboard/page": "app/(protected)/dashboard/page.js",
+  "/(protected)/extension/page": "app/(protected)/extension/page.js",
+  "/(protected)/settings/page": "app/(protected)/settings/page.js",
+  "/(public)/page": "app/(public)/page.js"
+}

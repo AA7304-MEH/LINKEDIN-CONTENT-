@@ -5,6 +5,7 @@ import HeroSection from '@/app/landing-components/HeroSection';
 import LaunchBanner from '@/app/landing-components/LaunchBanner';
 import ValueProps from '@/app/landing-components/ValueProps';
 import FeatureDemo from '@/app/landing-components/FeatureDemo';
+import LiveDemoSamples from '@/app/landing-components/LiveDemoSamples';
 import SocialProof from '@/app/landing-components/SocialProof';
 import PricingTable from '@/app/landing-components/PricingTable';
 import FAQAccordion from '@/app/landing-components/FAQAccordion';
@@ -20,6 +21,7 @@ export default function Home() {
       <HeroSection />
       <ValueProps />
       <FeatureDemo />
+      <LiveDemoSamples />
       <SocialProof />
       <PricingTable />
       <FAQAccordion />

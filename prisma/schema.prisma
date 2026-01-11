@@ -17,6 +17,8 @@ model User {
   hookAnalyses      HookAnalysis[]
   plan              String   @default("FREE") // FREE, PRO, BUSINESS
   subscriptionDate  DateTime?
+  creditsUsed       Int      @default(0)
+  creditsLimit      Int      @default(10)
 }
 
 model Post {

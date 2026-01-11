@@ -32,19 +32,17 @@ export async function POST(req: NextRequest) {
             }
         });
 
-        // Notify Admin
+        // Notify Support Team
         if (ADMIN_NOTIFICATION_EMAIL) {
             // Fire and forget (or await if critical) to avoid lagging response
             await sendEmailTemplate({
                 to: ADMIN_NOTIFICATION_EMAIL,
                 subjectTemplate: '[Support] New Ticket: {{subject}}',
-                htmlTemplate: `<p>New ticket from {{email}}</p><p><strong>Subject:</strong> {{subject}}</p><p>{{message}}</p><p><a href="{{app_url}}/admin/support/{{ticketId}}">Manage Ticket</a></p>`,
+                htmlTemplate: `<p>New ticket from {{email}}</p><p><strong>Subject:</strong> {{subject}}</p><p>{{message}}</p>`,
                 variables: {
                     email,
                     subject,
-                    message,
-                    ticketId: ticket.id,
-                    app_url: process.env.APP_BASE_URL || 'http://localhost:3000'
+                    message
                 }
             });
         }

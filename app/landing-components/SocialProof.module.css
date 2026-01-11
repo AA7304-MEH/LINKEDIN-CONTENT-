@@ -1,6 +1,6 @@
 .section {
-    padding: 5rem 2rem;
-    background: white;
+    padding: 6rem 2rem;
+    background: #fdfdfd;
     text-align: center;
 }
 
@@ -9,90 +9,132 @@
     margin: 0 auto;
 }
 
-.rating {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 3rem;
-    font-weight: 600;
-    color: var(--foreground);
-}
-
-.stars {
-    color: var(--warning-yellow);
-}
-
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin-bottom: 4rem;
+    gap: 2.5rem;
+    margin-bottom: 6rem;
 }
 
 .card {
     text-align: left;
-    padding: 2rem;
-    border-radius: 12px;
-    background: #fcfcfc;
-    border: 1px solid #f0f0f0;
+    padding: 2.5rem;
+    border-radius: 20px;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
 }
 
 .quote {
-    font-size: 1rem;
+    font-size: 1.125rem;
     line-height: 1.6;
-    color: var(--foreground);
-    margin-bottom: 1.5rem;
-    font-style: italic;
+    color: #1a202c;
+    margin-bottom: 2rem;
+    font-weight: 500;
 }
 
-.author {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: #ddd;
-    object-fit: cover;
+.authorInfo {
+    margin-top: auto;
 }
 
 .meta {
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
 }
 
 .name {
-    font-weight: 700;
-    font-size: 0.95rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #4a5568;
 }
 
-.title {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
+.stars {
+    color: #f6ad55;
+    font-size: 0.8rem;
+    display: flex;
+    gap: 2px;
+}
+
+.pressSection {
+    margin-top: 4rem;
+    position: relative;
+    padding-top: 3rem;
+}
+
+.pressSection::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.pressLabel {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #a0aec0;
+    margin-bottom: 3rem;
 }
 
 .featuredLogos {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 3rem;
-    opacity: 0.5;
+    align-items: center;
+    gap: 4rem;
+}
+
+.logoLink {
+    text-decoration: none;
+    transition: transform 0.3s ease, filter 0.3s ease;
     filter: grayscale(100%);
-    margin-top: 2rem;
+    opacity: 0.4;
+}
+
+.logoLink:hover {
+    transform: scale(1.1);
+    filter: grayscale(0%);
+    opacity: 0.8;
 }
 
 .logoPlaceholder {
-    font-weight: 800;
     font-size: 1.5rem;
-    color: #ccc;
+    color: #4a5568;
+    white-space: nowrap;
+}
+
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media (max-width: 768px) {
     .grid {
         grid-template-columns: 1fr;
+    }
+
+    .section {
+        padding: 4rem 1.5rem;
+    }
+
+    .featuredLogos {
+        gap: 2rem;
+    }
+
+    .logoPlaceholder {
+        font-size: 1.25rem;
     }
 }

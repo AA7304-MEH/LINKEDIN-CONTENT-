@@ -1,21 +1,18 @@
 import nodemailer from 'nodemailer';
 
 // Force Zoho and ignore system-level Gmail overrides
-const SMTP_HOST = (process.env.SMTP_HOST && !process.env.SMTP_HOST.includes('gmail.com'))
-    ? process.env.SMTP_HOST
-    : 'smtp.zoho.com';
-
-const SMTP_USER = (process.env.SMTP_USER && !process.env.SMTP_USER.includes('gmail.com'))
-    ? process.env.SMTP_USER
-    : 'resonateteam@zohomail.com';
+const SMTP_HOST = process.env.SMTP_HOST || 'smtp.zoho.com';
+const SMTP_USER = process.env.SMTP_USER || 'resonateteam@zohomail.com';
+const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
+const SMTP_PASS = process.env.SMTP_PASS;
 
 export const transporter = nodemailer.createTransport({
     host: SMTP_HOST,
-    port: Number(process.env.SMTP_PORT || 587),
+    port: SMTP_PORT,
     secure: process.env.SMTP_SECURE === 'true', // false for 587
     auth: {
         user: SMTP_USER,
-        pass: process.env.SMTP_PASS, // 12-char OK
+        pass: SMTP_PASS,
     },
     pool: true,
     maxConnections: 1,
@@ -37,10 +34,10 @@ export async function sendEmail(options: {
             subject: options.subject,
             html: options.html,
         });
-        console.log('✅ ZOHO EMAIL SENT:', { to: options.to, messageId: result.messageId });
+        console.log('✅ EMAIL SENT:', { to: options.to, messageId: result.messageId });
         return { success: true, messageId: result.messageId };
     } catch (error: any) {
-        console.error('🔴 ZOHO SMTP ERROR:', {
+        console.error('🔴 SMTP ERROR:', {
             code: error.responseCode,
             message: error.message,
             response: error.response,

@@ -16,7 +16,7 @@ export default function FeatureDemo() {
     };
 
     return (
-        <section className={styles.section} id="how-it-works">
+        <section className={styles.section} id="features">
             <div className={styles.container}>
                 <div className={styles.header}>
                     <h2 className={styles.title}>See the Magic in Action</h2>

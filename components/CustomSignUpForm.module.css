@@ -1,0 +1,142 @@
+.container {
+    width: 100%;
+    max-width: 440px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+}
+
+.title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #0c1e3a;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+}
+
+.subtitle {
+    font-size: 0.9375rem;
+    color: #6b7280;
+    margin-bottom: 2rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 1rem;
+    color: #111827;
+    transition: all 0.2s ease;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #0077b5;
+    box-shadow: 0 0 0 4px rgba(0, 119, 181, 0.1);
+}
+
+.submitBtn {
+    margin-top: 1rem;
+    padding: 0.875rem;
+    background: #0077b5;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 119, 181, 0.25);
+}
+
+.submitBtn:hover {
+    background: #005a8a;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 119, 181, 0.35);
+}
+
+.submitBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.error {
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+}
+
+.footer {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.link {
+    color: #0077b5;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 0.25rem;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+/* Verification State */
+.verificationTitle {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0c1e3a;
+    margin-bottom: 1rem;
+}
+
+.verificationSubtitle {
+    font-size: 0.9375rem;
+    color: #6b7280;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+.resendBtn {
+    background: transparent;
+    border: none;
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
+.resendBtn:hover {
+    color: #0077b5;
+}

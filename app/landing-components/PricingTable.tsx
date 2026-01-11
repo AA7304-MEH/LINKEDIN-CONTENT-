@@ -139,12 +139,12 @@ export default function PricingTable() {
                                 <span className={styles.check}>✓</span> Content repurposing
                             </li>
                         </ul>
-                        <button
-                            onClick={() => handlePayment('Pro Creator', 19)}
+                        <Link
+                            href="/sign-up?plan=pro"
                             className={`${styles.button} ${styles.buttonFilled}`}
                         >
                             Start 14-Day Free Trial
-                        </button>
+                        </Link>
                         <p style={{ fontSize: '0.8rem', color: '#666', marginTop: '0.5rem' }}>No credit card required for trial.</p>
                     </div>
 

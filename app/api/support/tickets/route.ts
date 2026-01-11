@@ -1,7 +1,5 @@
-
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getCurrentAdmin } from '@/lib/adminAuth';
 import { sendEmail } from '@/lib/email';
 import { z } from 'zod';
 
@@ -42,7 +40,7 @@ export async function POST(request: Request) {
             },
         });
 
-        // Send Email Notification to Admin
+        // Send Email Notification to Support Team
         const adminEmail = process.env.SUPPORT_NOTIFICATION_EMAIL || 'resonateteam@zohomail.com';
         await sendEmail({
             to: adminEmail,
@@ -54,7 +52,6 @@ export async function POST(request: Request) {
                 <blockquote style="border-left: 2px solid #ccc; padding-left: 10px; color: #555;">
                     ${message.replace(/\n/g, '<br>')}
                 </blockquote>
-                <p><a href="${process.env.APP_BASE_URL || 'http://localhost:3000'}/admin/support/${ticket.id}">View in Admin</a></p>
             `,
         });
 
@@ -62,41 +59,5 @@ export async function POST(request: Request) {
     } catch (error) {
         console.error("Error creating ticket:", error);
         return NextResponse.json({ error: 'Failed to create ticket' }, { status: 500 });
-    }
-}
-
-// GET: List tickets (Admin only)
-export async function GET(request: Request) {
-    const admin = await getCurrentAdmin();
-    if (!admin) {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const { searchParams } = new URL(request.url);
-    const status = searchParams.get('status');
-    const priority = searchParams.get('priority');
-
-    const where: any = {};
-    if (status && status !== 'all') where.status = status;
-    if (priority && priority !== 'all') where.priority = priority;
-
-    try {
-        const tickets = await prisma.supportTicket.findMany({
-            where,
-            orderBy: { createdAt: 'desc' },
-            select: {
-                id: true,
-                email: true,
-                subject: true,
-                status: true,
-                priority: true,
-                createdAt: true,
-                updatedAt: true,
-            }
-        });
-        return NextResponse.json(tickets);
-    } catch (error) {
-        console.error("Error fetching tickets:", error);
-        return NextResponse.json({ error: 'Failed to fetch tickets' }, { status: 500 });
     }
 }

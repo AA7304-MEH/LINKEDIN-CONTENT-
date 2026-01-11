@@ -1,6 +1,3 @@
-/* MarketingDashboard.module.css */
-
-/* --- Stats Header --- */
 .statsContainer {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -9,46 +6,52 @@
 }
 
 .statCard {
-    background: white;
-    border-radius: 12px;
+    background-color: var(--card-bg);
     padding: 1.5rem;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e5e7eb;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--card-border);
+    box-shadow: var(--card-shadow);
     display: flex;
-    align-items: flex-start;
     justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.statCard:hover {
+    box-shadow: var(--card-shadow-hover);
+    transform: translateY(-2px);
 }
 
 .statInfo {
     display: flex;
     flex-direction: column;
+    gap: 0.25rem;
 }
 
 .statLabel {
     font-size: 0.875rem;
     font-weight: 500;
-    color: #6b7280;
-    margin-bottom: 0.25rem;
+    color: var(--sidebar-text);
 }
 
 .statValue {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #111827;
+    color: var(--foreground);
 }
 
 .statIcon {
-    padding: 0.75rem;
-    border-radius: 10px;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* --- Tabs --- */
 .tabsContainer {
     margin-bottom: 2rem;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--sidebar-border);
 }
 
 .tabList {
@@ -58,66 +61,66 @@
 
 .tab {
     padding: 1rem 0;
-    font-size: 0.95rem;
+    font-size: 0.9375rem;
     font-weight: 500;
-    color: #6b7280;
-    border-bottom: 2px solid transparent;
+    color: var(--sidebar-text);
+    background: transparent;
+    border: none;
     cursor: pointer;
-    background: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
+    position: relative;
     transition: all 0.2s;
 }
 
 .tab:hover {
-    color: #111827;
+    color: var(--foreground);
 }
 
 .activeTab {
-    color: var(--linkedin-blue);
-    border-bottom-color: var(--linkedin-blue);
+    color: var(--primary);
+    font-weight: 600;
 }
 
-/* --- Content Areas --- */
+.activeTab::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--primary);
+}
+
 .card {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e5e7eb;
+    background-color: var(--card-bg);
     padding: 2rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--card-border);
+    box-shadow: var(--card-shadow);
+    margin-bottom: 2rem;
+}
+
+.sectionTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--foreground);
     margin-bottom: 1.5rem;
 }
 
-/* --- Settings --- */
 .settingsGrid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
 }
 
-@media (max-width: 1024px) {
-    .settingsGrid {
-        grid-template-columns: 1fr;
-    }
-}
-
-.sectionTitle {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: #111827;
-    margin-bottom: 1.5rem;
-}
-
 .formGroup {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
 }
 
 .label {
     display: block;
     font-size: 0.875rem;
     font-weight: 500;
-    color: #374151;
+    color: var(--foreground);
     margin-bottom: 0.5rem;
 }
 
@@ -126,26 +129,26 @@
 .select {
     width: 100%;
     padding: 0.625rem 0.875rem;
-    border-radius: 6px;
-    border: 1px solid #d1d5db;
-    font-size: 0.95rem;
-    transition: border-color 0.2s;
-    font-family: inherit;
-    background: white;
+    font-size: 0.9375rem;
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    background-color: white;
+    color: var(--foreground);
+    outline: none;
+    transition: all 0.2s;
 }
 
 .input:focus,
 .textarea:focus,
 .select:focus {
-    outline: none;
-    border-color: var(--linkedin-blue);
-    box-shadow: 0 0 0 2px rgba(0, 119, 181, 0.1);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
 }
 
 .platformsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
 }
 
 .platformCheckbox {
@@ -153,123 +156,135 @@
     align-items: center;
     gap: 0.75rem;
     padding: 0.75rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
     cursor: pointer;
-    transition: background 0.1s;
+    transition: all 0.2s;
 }
 
 .platformCheckbox:hover {
-    background-color: #f9fafb;
+    background-color: #f8fafc;
+    border-color: var(--primary);
 }
 
-/* --- Posts --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+}
+
+.btnPrimary {
+    background-color: var(--primary);
+    color: white;
+}
+
+.btnPrimary:hover:not(:disabled) {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.btnSecondary {
+    background-color: white;
+    border-color: var(--card-border);
+    color: var(--foreground);
+}
+
+.btnSecondary:hover:not(:disabled) {
+    background-color: #f8fafc;
+    border-color: var(--sidebar-text);
+}
+
 .generateCard {
-    background: linear-gradient(to right, #f8f9fa, #ffffff);
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 1.5rem;
     display: flex;
+    justify-content: space-between;
     align-items: flex-end;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    background-color: #f8fafc;
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--card-border);
+    margin-bottom: 1.5rem;
 }
 
-.generateInput {
-    flex: 1;
-}
-
-/* --- Table --- */
 .tableWrapper {
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
+    background-color: var(--card-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--card-border);
     overflow: hidden;
 }
 
 .table {
     width: 100%;
     border-collapse: collapse;
+    text-align: left;
 }
 
 .table th {
-    background: #f9fafb;
-    padding: 0.875rem 1.5rem;
-    text-align: left;
+    background-color: #f8fafc;
+    padding: 0.75rem 1.5rem;
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
-    color: #6b7280;
-    border-bottom: 1px solid #e5e7eb;
+    letter-spacing: 0.05em;
+    color: var(--sidebar-text);
+    border-bottom: 1px solid var(--card-border);
 }
 
 .table td {
     padding: 1rem 1.5rem;
-    border-bottom: 1px solid #e5e7eb;
-    color: #1f2937;
-    font-size: 0.9rem;
-}
-
-.table tr:hover {
-    background-color: #f8fafc;
-}
-
-/* --- Badges & Buttons --- */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.625rem 1.25rem;
-    border-radius: 6px;
-    font-weight: 500;
-    font-size: 0.9rem;
-    cursor: pointer;
-    border: none;
-    transition: all 0.2s;
-}
-
-.btnPrimary {
-    background-color: var(--linkedin-blue);
-    color: white;
-}
-
-.btnPrimary:hover {
-    background-color: #006097;
-}
-
-.btnSecondary {
-    background-color: white;
-    border: 1px solid #d1d5db;
-    color: #374151;
-}
-
-.btnSecondary:hover {
-    background-color: #f9fafb;
+    font-size: 0.875rem;
+    color: var(--foreground);
+    border-bottom: 1px solid var(--card-border);
 }
 
 .badge {
+    display: inline-flex;
+    align-items: center;
     padding: 0.25rem 0.625rem;
     border-radius: 9999px;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 500;
     text-transform: capitalize;
 }
 
-.status-published {
-    background: #d1fae5;
-    color: #065f46;
-}
-
 .status-draft {
-    background: #f3f4f6;
-    color: #374151;
+    background-color: #f1f5f9;
+    color: #475569;
 }
 
-.status-scheduled {
-    background: #dbeafe;
-    color: #1e40af;
+.status-published,
+.status-posted {
+    background-color: #ecfdf5;
+    color: #059669;
 }
 
 .status-failed {
-    background: #fee2e2;
-    color: #991b1b;
+    background-color: #fef2f2;
+    color: #dc2626;
+}
+
+.status-scheduled {
+    background-color: #eff6ff;
+    color: #2563eb;
+}
+
+@media (max-width: 1024px) {
+    .settingsGrid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .generateCard {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
 }
