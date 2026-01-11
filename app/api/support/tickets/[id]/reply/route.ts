@@ -1,12 +1,11 @@
-
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getCurrentAdmin } from '@/lib/adminAuth';
+import { getAdminSession } from '@/lib/security/authz';
 import { sendEmail } from '@/lib/email';
 import { z } from 'zod';
 
 export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
-    const admin = await getCurrentAdmin();
+    const admin = await getAdminSession();
     if (!admin) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     const { id } = await context.params;
