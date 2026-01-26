@@ -27,6 +27,7 @@ export default function LandingNavbar() {
                 <li><Link href="/#pricing" className={styles.navLink} onClick={() => setIsOpen(false)}>Pricing</Link></li>
                 <li><Link href="/#testimonials" className={styles.navLink} onClick={() => setIsOpen(false)}>Testimonials</Link></li>
                 <li><Link href="/#faq" className={styles.navLink} onClick={() => setIsOpen(false)}>FAQ</Link></li>
+                <li><Link href="/audit" className={`${styles.navLink} font-bold text-indigo-500`} onClick={() => setIsOpen(false)}>Free Audit</Link></li>
 
                 {/* Mobile only auth buttons if needed, or keep top right */}
                 {isOpen && (
