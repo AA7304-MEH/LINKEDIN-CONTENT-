@@ -1,0 +1,92 @@
+/* Cyberpunk / Neon Lab Theme */
+
+.cyberpunkContainer {
+    --neon-primary: #00f3ff;
+    --neon-accent: #ff00ff;
+    --neon-warning: #ccff00;
+    --bg-dark: #0a0a0a;
+    --bg-card: #111116;
+
+    background-color: var(--bg-dark);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Typography */
+.neonText {
+    text-shadow: 0 0 10px rgba(0, 243, 255, 0.5),
+        0 0 20px rgba(0, 243, 255, 0.3);
+}
+
+.neonTextAccent {
+    text-shadow: 0 0 10px rgba(255, 0, 255, 0.5),
+        0 0 20px rgba(255, 0, 255, 0.3);
+}
+
+/* Buttons */
+.neonButton {
+    background: transparent;
+    border: 2px solid var(--neon-primary);
+    color: var(--neon-primary);
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.2),
+        inset 0 0 10px rgba(0, 243, 255, 0.2);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+.neonButton:hover {
+    background: var(--neon-primary);
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.6),
+        inset 0 0 20px rgba(0, 243, 255, 0.6);
+}
+
+/* Cards */
+.cyberCard {
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+.cyberCard:hover {
+    border-color: var(--neon-primary);
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.15);
+}
+
+/* Progress Bar */
+.progressContainer {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.progressFill {
+    background: linear-gradient(90deg, var(--neon-primary), var(--neon-accent));
+    box-shadow: 0 0 15px var(--neon-primary);
+}
+
+/* Animations */
+@keyframes scanline {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+.scanline::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(0, 243, 255, 0.1), transparent);
+    animation: scanline 4s linear infinite;
+    pointer-events: none;
+}

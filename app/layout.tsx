@@ -3,6 +3,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Analytics } from "@vercel/analytics/next";
 import SupportWidget from "@/components/SupportWidget";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 export const metadata: Metadata = {
   title: "Resonate | AI-Powered Professional Posts",
@@ -23,6 +24,9 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
+        <head>
+          <GoogleAnalytics />
+        </head>
         <body suppressHydrationWarning>
           {children}
           <SupportWidget />

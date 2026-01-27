@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   /* Clean & Airy Modern Palette */
   --primary: #4f46e5;

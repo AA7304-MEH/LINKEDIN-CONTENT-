@@ -1,0 +1,127 @@
+.section {
+    padding: 4rem 1rem;
+    background: #f8fafc;
+    /* Light neutral background */
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    display: flex;
+    max-width: 1200px;
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border-radius: 12px;
+    overflow: hidden;
+    min-height: 600px;
+    /* Ensure substantial height */
+}
+
+/* LEFT SIDE - GENERIC */
+.leftPanel {
+    flex: 1;
+    background: #ffffff;
+    border-right: 1px solid #e2e8f0;
+    font-family: 'Arial', sans-serif;
+    /* Standard boring font */
+}
+
+.leftHeader {
+    background: #3b82f6;
+    /* Cool Blue */
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.leftContent {
+    padding: 3rem;
+    color: #475569;
+}
+
+.leftHeadline {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+}
+
+.leftBody {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+/* RIGHT SIDE - PERSONAL DNA */
+.rightPanel {
+    flex: 1;
+    background: #ffffff;
+    /* Or very subtle warm tint */
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    /* Dynamic modern font */
+}
+
+.rightHeader {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    /* Warm Green/Teal */
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.rightContent {
+    padding: 3rem;
+    color: #1e293b;
+}
+
+.rightHeadline {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+}
+
+.rightBody {
+    font-size: 1.125rem;
+    line-height: 1.6;
+}
+
+.statList {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.statItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-weight: 600;
+    color: #059669;
+}
+
+.bullet {
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .leftPanel,
+    .rightPanel {
+        border-right: none;
+        border-bottom: 1px solid #e2e8f0;
+    }
+}

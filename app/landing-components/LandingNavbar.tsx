@@ -52,6 +52,7 @@ export default function LandingNavbar() {
                         <li><Link href="/#features" className={styles.navLink}>Features</Link></li>
                         <li><Link href="/#pricing" className={styles.navLink}>Pricing</Link></li>
                         <li><Link href="/#faq" className={styles.navLink}>FAQ</Link></li>
+                        <li><Link href="/audit" className={`${styles.navLink} text-indigo-400 font-medium`}>Free Audit</Link></li>
                     </ul>
                     <div className={styles.authActions}>
                         <Link href="/sign-in" className={styles.loginBtn}>
@@ -81,6 +82,7 @@ export default function LandingNavbar() {
                             <li><Link href="/#features" className={styles.mobileNavLink} onClick={closeMenu}>Features</Link></li>
                             <li><Link href="/#pricing" className={styles.mobileNavLink} onClick={closeMenu}>Pricing</Link></li>
                             <li><Link href="/#faq" className={styles.mobileNavLink} onClick={closeMenu}>FAQ</Link></li>
+                            <li><Link href="/audit" className={`${styles.mobileNavLink} text-indigo-400`} onClick={closeMenu}>Free Audit</Link></li>
                         </ul>
                         <div className={styles.mobileAuthActions}>
                             <Link href="/sign-in" className={styles.mobileLoginBtn} onClick={closeMenu}>
