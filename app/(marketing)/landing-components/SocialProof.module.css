@@ -1,0 +1,98 @@
+.section {
+    padding: 5rem 2rem;
+    background: white;
+    text-align: center;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 3rem;
+    font-weight: 600;
+    color: var(--foreground);
+}
+
+.stars {
+    color: var(--warning-yellow);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.card {
+    text-align: left;
+    padding: 2rem;
+    border-radius: 12px;
+    background: #fcfcfc;
+    border: 1px solid #f0f0f0;
+}
+
+.quote {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--foreground);
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+.author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #ddd;
+    object-fit: cover;
+}
+
+.meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.title {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.featuredLogos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3rem;
+    opacity: 0.5;
+    filter: grayscale(100%);
+    margin-top: 2rem;
+}
+
+.logoPlaceholder {
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: #ccc;
+}
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}

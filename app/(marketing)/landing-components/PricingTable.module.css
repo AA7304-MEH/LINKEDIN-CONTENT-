@@ -1,0 +1,138 @@
+.section {
+    padding: 6rem 2rem;
+    background: var(--light-gray);
+    text-align: center;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    color: var(--foreground);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    align-items: center;
+}
+
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+    position: relative;
+}
+
+.card.popular {
+    border: 2px solid var(--linkedin-blue);
+    transform: scale(1.05);
+    box-shadow: 0 20px 40px rgba(0, 119, 181, 0.15);
+    z-index: 2;
+}
+
+.badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--linkedin-blue);
+    color: white;
+    padding: 0.25rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.planName {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--foreground);
+    margin-bottom: 1rem;
+}
+
+.price {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--foreground);
+    margin-bottom: 2rem;
+}
+
+.price span {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+.features {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.feature {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+.check {
+    color: var(--success-green);
+    font-weight: bold;
+}
+
+.button {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+}
+
+.buttonOutline {
+    background: white;
+    border: 1px solid var(--linkedin-blue);
+    color: var(--linkedin-blue);
+}
+
+.buttonOutline:hover {
+    background: rgba(0, 119, 181, 0.05);
+}
+
+.buttonFilled {
+    background: var(--linkedin-blue);
+    border: 1px solid var(--linkedin-blue);
+    color: white;
+}
+
+.buttonFilled:hover {
+    background: var(--light-blue);
+    border-color: var(--light-blue);
+}
+
+@media (max-width: 900px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .card.popular {
+        transform: none;
+    }
+}

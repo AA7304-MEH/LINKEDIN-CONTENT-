@@ -1,0 +1,423 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 2rem;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.logoConfig {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--linkedin-blue);
+    letter-spacing: -0.02em;
+}
+
+.navLinks {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.navLink {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
+    cursor: pointer;
+}
+
+.navLink:hover {
+    color: var(--linkedin-blue);
+}
+
+.authButtons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.loginBtn {
+    padding: 0.5rem 1.25rem;
+    border: 1px solid var(--linkedin-blue);
+    color: var(--linkedin-blue);
+    background: transparent;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.loginBtn:hover {
+    background: rgba(0, 119, 181, 0.05);
+}
+
+.getStartedBtn {
+    padding: 0.5rem 1.25rem;
+    background: var(--linkedin-blue);
+    color: white;
+    border: 1px solid var(--linkedin-blue);
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 119, 181, 0.2);
+    transition: all 0.2s ease;
+}
+
+.getStartedBtn:hover {
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem 2rem;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .logoConfig {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 700;
+        font-size: 1.25rem;
+        color: var(--linkedin-blue);
+        letter-spacing: -0.02em;
+    }
+
+    .navLinks {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+    }
+
+    .navLink {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        transition: color 0.2s ease;
+        cursor: pointer;
+    }
+
+    .navLink:hover {
+        color: var(--linkedin-blue);
+    }
+
+    .authButtons {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .loginBtn {
+        padding: 0.5rem 1.25rem;
+        border: 1px solid var(--linkedin-blue);
+        color: var(--linkedin-blue);
+        background: transparent;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .loginBtn:hover {
+        background: rgba(0, 119, 181, 0.05);
+    }
+
+    .getStartedBtn {
+        padding: 0.5rem 1.25rem;
+        background: var(--linkedin-blue);
+        color: white;
+        border: 1px solid var(--linkedin-blue);
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0, 119, 181, 0.2);
+        transition: all 0.2s ease;
+    }
+
+    .getStartedBtn:hover {
+        background: var(--light-blue);
+        border-color: var(--light-blue);
+        transform: translateY(-1px);
+    }
+
+    @media (max-width: 768px) {
+        .navLinks {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 2rem;
+            border-bottom: 1px solid #eee;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            gap: 1.5rem;
+            height: 100vh;
+            /* simplified fullscreen menu */
+            align-items: center;
+            z-index: 999;
+        }
+
+        .navLinks.open {
+            display: flex;
+        }
+
+        .authButtons {
+            display: none;
+            /* Hide auth buttons in header on mobile? Or move to menu. For now, hide to fit or adapt. */
+        }
+
+        /* Show auth buttons in menu if needed, or keep simplified */
+        .navLinks .authButtonsMobile {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+    }
+
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0.5rem;
+    }
+
+    .hamburger span {
+        width: 24px;
+        height: 2px;
+        gap: 0.5rem;
+        font-weight: 700;
+        font-size: 1.25rem;
+        color: var(--linkedin-blue);
+        letter-spacing: -0.02em;
+    }
+
+    .navLinks {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+    }
+
+    .navLink {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        transition: color 0.2s ease;
+        cursor: pointer;
+    }
+
+    .navLink:hover {
+        color: var(--linkedin-blue);
+    }
+
+    .authButtons {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .loginBtn {
+        padding: 0.5rem 1.25rem;
+        border: 1px solid var(--linkedin-blue);
+        color: var(--linkedin-blue);
+        background: transparent;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .loginBtn:hover {
+        background: rgba(0, 119, 181, 0.05);
+    }
+
+    .getStartedBtn {
+        padding: 0.5rem 1.25rem;
+        background: var(--linkedin-blue);
+        color: white;
+        border: 1px solid var(--linkedin-blue);
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0, 119, 181, 0.2);
+        transition: all 0.2s ease;
+    }
+
+    .getStartedBtn:hover {
+        background: var(--light-blue);
+        border-color: var(--light-blue);
+        transform: translateY(-1px);
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem 2rem;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .logoConfig {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 700;
+        font-size: 1.25rem;
+        color: var(--linkedin-blue);
+        letter-spacing: -0.02em;
+    }
+
+    .navLinks {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+    }
+
+    .navLink {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        transition: color 0.2s ease;
+        cursor: pointer;
+    }
+
+    .navLink:hover {
+        color: var(--linkedin-blue);
+    }
+
+    .authButtons {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .loginBtn {
+        padding: 0.5rem 1.25rem;
+        border: 1px solid var(--linkedin-blue);
+        color: var(--linkedin-blue);
+        background: transparent;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .loginBtn:hover {
+        background: rgba(0, 119, 181, 0.05);
+    }
+
+    .getStartedBtn {
+        padding: 0.5rem 1.25rem;
+        background: var(--linkedin-blue);
+        color: white;
+        border: 1px solid var(--linkedin-blue);
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0, 119, 181, 0.2);
+        transition: all 0.2s ease;
+    }
+
+    .getStartedBtn:hover {
+        background: var(--light-blue);
+        border-color: var(--light-blue);
+        transform: translateY(-1px);
+    }
+
+    @media (max-width: 768px) {
+        .navLinks {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 2rem;
+            border-bottom: 1px solid #eee;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            gap: 1.5rem;
+            height: 100vh;
+            /* simplified fullscreen menu */
+            align-items: center;
+            z-index: 999;
+        }
+
+        .navLinks.open {
+            display: flex;
+        }
+
+        .authButtons {
+            display: none;
+            /* Hide auth buttons in header on mobile? Or move to menu. For now, hide to fit or adapt. */
+        }
+
+        /* Show auth buttons in menu if needed, or keep simplified */
+        .navLinks .authButtonsMobile {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+    }
+
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0.5rem;
+    }
+
+    .hamburger span {
+        width: 24px;
+        height: 2px;
+        background: var(--foreground);
+        transition: all 0.3s;
+    }
+
+    @media (max-width: 768px) {
+        .hamburger {
+            display: flex;
+        }
+
+        /* When auth buttons hidden in header, show hamburger */
+    }
