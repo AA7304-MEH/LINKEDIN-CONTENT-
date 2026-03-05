@@ -5,9 +5,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import AuditWelcome from "./AuditWelcome";
 import AuditQuestion from "./AuditQuestion";
 import AuditResults from "./AuditResults";
-import styles from "./ResonateAudit.module.css";
+import styles from "./ResodinAudit.module.css";
 import LandingNavbar from "@/app/landing-components/LandingNavbar";
 import LandingFooter from "@/app/landing-components/LandingFooter";
+import FAQAccordion from "@/app/landing-components/FAQAccordion";
+import CommunityHub from "@/app/landing-components/CommunityHub";
 
 export type QuestionType = "choice" | "scale" | "text";
 
@@ -108,7 +110,7 @@ export default function AuditWizard() {
     };
 
     return (
-        <div className={`min-h-screen w-full flex flex-col ${styles.resonateNativeContainer}`}>
+        <div className={`min-h-screen w-full flex flex-col ${styles.resodinNativeContainer}`}>
             {/* @ts-ignore */}
             <LandingNavbar />
 
@@ -184,6 +186,9 @@ export default function AuditWizard() {
                     </AnimatePresence>
                 </div>
             </main>
+
+            <FAQAccordion />
+            <CommunityHub />
 
             {/* @ts-ignore */}
             <LandingFooter />
