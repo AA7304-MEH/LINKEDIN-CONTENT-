@@ -12,7 +12,7 @@ Run these tests after your Vercel deployment completes.
 ## 2. ADMIN SITE VERIFICATION
 - [ ] **Root Redirect**: Visit the root URL. It SHOULD redirect to `/admin`.
 - [ ] **Admin Login**: Visit `/admin/login`. Ensure the login form appears.
-- [ ] **OTP Delivery**: Enter `resonate.admin8153@protonmail.com`. Check ProtonMail for the OTP (powered by Zoho).
+- [ ] **OTP Delivery**: Enter `resodin.admin8153@protonmail.com`. Check ProtonMail for the OTP (powered by Zoho).
 - [ ] **Dashboard Access**: Enter the OTP and verify access to all engines (Marketing, Outreach, Support).
 - [ ] **SMTP Diagnostic**: Call `https://your-admin-url.com/api/admin/test-smtp` with secret header.
 

@@ -30,7 +30,7 @@ export interface SessionUser {
 }
 
 // --- Admin Session (Custom) ---
-const ADMIN_COOKIE_NAME = "resonate_admin_session";
+const ADMIN_COOKIE_NAME = "resodin_admin_session";
 
 export async function getAdminSession(): Promise<SessionUser | null> {
     const cookieStore = await cookies();
@@ -42,7 +42,7 @@ export async function getAdminSession(): Promise<SessionUser | null> {
     if (IS_BYPASS_ENABLED) {
         return {
             id: "bypass-admin",
-            email: "resonate.admin8153@protonmail.com",
+            email: "resodin.admin8153@protonmail.com",
             role: "admin",
         };
     }
@@ -52,7 +52,7 @@ export async function getAdminSession(): Promise<SessionUser | null> {
     if (token === "superadmin_token_bypass") {
         return {
             id: "bypass-admin",
-            email: "resonate.admin8153@protonmail.com", // Use the real admin email for consistency
+            email: "resodin.admin8153@protonmail.com", // Use the real admin email for consistency
             role: "admin",
         };
     }
@@ -117,7 +117,7 @@ export async function requireAdmin() {
         console.warn("⚠️ SECURITY BYPASS: Admin access granted without session.");
         return {
             id: "bypass-admin",
-            email: "resonate.admin8153@protonmail.com",
+            email: "resodin.admin8153@protonmail.com",
             role: "admin",
         } as SessionUser;
         // throw new Error("UNAUTHORIZED_ADMIN");

@@ -2,7 +2,7 @@
 # Zoho Mail SMTP Setup & Outreach Engine Guide
 
 ## 1. Description
-This module enables "Resonate" to send outreach emails and handle support tickets using your Zoho Mail account via SMTP.
+This module enables "Resodin" to send outreach emails and handle support tickets using your Zoho Mail account via SMTP.
 
 ## 2. Environment Setup (Required)
 Update your `.env.local` or `.env` file with real credentials.
@@ -12,15 +12,15 @@ Update your `.env.local` or `.env` file with real credentials.
 SMTP_HOST=smtp.zoho.com
 SMTP_PORT=587
 SMTP_SECURE=false
-SMTP_USER=resonateteam@zohomail.com
+SMTP_USER=resodinteam@zohomail.com
 SMTP_PASS=YOUR_ZOHO_APP_PASSWORD  <-- REQUIRED
-EMAIL_FROM_NAME=Resonate
-EMAIL_FROM_ADDRESS=resonateteam@zohomail.com
-EMAIL_REPLY_TO=resonateteam@zohomail.com
+EMAIL_FROM_NAME=Resodin
+EMAIL_FROM_ADDRESS=resodinteam@zohomail.com
+EMAIL_REPLY_TO=resodinteam@zohomail.com
 
 # Admin Notifications
-SUPPORT_NOTIFICATION_EMAIL=resonateteam@zohomail.com
-ADMIN_NOTIFICATION_EMAIL=resonateteam@zohomail.com
+SUPPORT_NOTIFICATION_EMAIL=resodinteam@zohomail.com
+ADMIN_NOTIFICATION_EMAIL=resodinteam@zohomail.com
 
 # Security
 UNSUBSCRIBE_SECRET=some_random_secret_string_here
@@ -31,7 +31,7 @@ APP_BASE_URL=https://your-domain.com
 1. Log in to your Zoho Mail account.
 2. Go to [Zoho Accounts Security](https://accounts.zoho.com/home#security/twofactor_auth).
 3. If 2FA is enabled (recommended), go to **App Passwords**.
-4. Generate a new app password named "Resonate App".
+4. Generate a new app password named "Resodin App".
 5. Use this password in `SMTP_PASS`. (Note: Zoho app passwords are usually 12-16 characters long).
 
 ## 3. Running Outreach Automation

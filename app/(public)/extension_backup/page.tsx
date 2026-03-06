@@ -9,10 +9,10 @@ export default function ExtensionPage() {
             <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
                 <h1 style={{ fontSize: '3rem', fontWeight: 'bold', marginBottom: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
                     <Puzzle size={48} color="#0070f3" />
-                    Resonate for Chrome
+                    Resodin for Chrome
                 </h1>
                 <p style={{ color: '#666', fontSize: '1.25rem', maxWidth: '600px', margin: '0 auto' }}>
-                    Generating content is only half the battle. Use our Chrome Extension to seamlessly integrate Resonate into your LinkedIn workflow.
+                    Generating content is only half the battle. Use our Chrome Extension to seamlessly integrate Resodin into your LinkedIn workflow.
                 </p>
             </div>
 

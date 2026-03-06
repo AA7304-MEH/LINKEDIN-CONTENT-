@@ -56,15 +56,14 @@ export default async function ProtectedLayout({
                 creditsLimit={creditsLimit}
                 userPlan={userPlan}
             />
-            <main style={{
-                flex: 1,
-                marginLeft: '280px',
-                padding: '2rem',
-                maxWidth: '1600px',
-                width: 'calc(100% - 280px)'
-            }}>
+            <main className="flex-1 w-full p-8 md:pl-[312px] pt-16 md:pt-8 max-w-[1920px]">
                 {children}
             </main>
+            {/* Added md:pl-[312px] = 280px sidebar + 32px padding gap approx, or just 280px if margin. 
+                Sidebar width is 280px fixed. 
+                So margin-left should be 280px on desktop. 
+                Let's stick to standard Tailwind `md:ml-[280px]`.
+            */}
         </div>
     );
 }

@@ -25,7 +25,7 @@ export default function ValueProps() {
                         </div>
                         <h3 className={styles.title}>Personal Content DNA</h3>
                         <p className={styles.description}>
-                            We don't just generate generic content. Resonate learns your writing style, tone, and expertise to create posts that sound exactly like you.
+                            We don't just generate generic content. Resodin learns your writing style, tone, and expertise to create posts that sound exactly like you.
                         </p>
                     </div>
 

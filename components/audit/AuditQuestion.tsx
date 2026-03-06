@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Question } from "./AuditWizard";
 import { useState, useEffect } from "react";
-import styles from "./ResonateAudit.module.css";
+import styles from "./ResodinAudit.module.css";
 
 interface AuditQuestionProps {
     question: Question;
@@ -59,17 +59,12 @@ export default function AuditQuestion({ question, onAnswer, currentAnswer }: Aud
                         ))}
 
                         {question.type === "scale" && (
-                            <div className="flex gap-6 justify-between pt-10">
+                            <div className="flex flex-wrap md:flex-nowrap gap-4 md:gap-6 justify-between pt-10">
                                 {[1, 2, 3, 4, 5].map((num) => (
                                     <button
                                         key={num}
                                         onClick={() => setSelected(num)}
-                                        style={{
-                                            minHeight: '180px',
-                                            fontSize: '4rem',
-                                            flex: 1
-                                        }}
-                                        className={`rounded-3xl font-black border-4 transition-all duration-300 transform active:scale-90
+                                        className={`rounded-3xl font-black border-4 transition-all duration-300 transform active:scale-90 flex-1 min-w-[60px] md:min-w-0 min-h-[120px] md:min-h-[180px] text-4xl md:text-6xl
                                             ${selected === num
                                                 ? "bg-[#00aaff] border-[#00aaff] text-white shadow-[0_0_50px_rgba(0,170,255,0.7)] scale-110 z-10"
                                                 : "bg-[#1a1a20] border-[#3a3a40] text-gray-400 hover:border-white hover:text-white hover:bg-[#25252b] hover:scale-105"

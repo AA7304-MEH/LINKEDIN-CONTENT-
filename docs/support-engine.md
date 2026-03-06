@@ -1,6 +1,6 @@
 # Support AI Engine Documentation
 
-This system integrates a Knowledge Base, AI Chat, and Ticketing system into Resonate.
+This system integrates a Knowledge Base, AI Chat, and Ticketing system into Resodin.
 
 ## Components
 
@@ -18,7 +18,7 @@ New models in `prisma/schema.prisma`:
 - **Tickets Tab**: View, filter, and manage support tickets.
 - **Knowledge Base Tab**: Create/Edit/Delete FAQs and Articles.
 - **Ticket Details**: Click "View" on a ticket to see the conversation and reply.
-  - Replies are sent via Zoho Mail (`resonateteam@zohomail.com`).
+  - Replies are sent via Zoho Mail (`resodinteam@zohomail.com`).
 
 ### 3. User Widget
 - Floating button in the bottom-right of the logged-in app.
@@ -36,7 +36,7 @@ Ensure these are set in `.env`:
 - `DATABASE_URL`: Postgres connection.
 - `GOOGLE_GENERATIVE_AI_API_KEY`: For Gemini.
 - `SMTP_USER` / `SMTP_PASS`: Zoho Mail credentials.
-- `SUPPORT_NOTIFICATION_EMAIL`: Email to receive ticket alerts (default: `resonateteam@zohomail.com`).
+- `SUPPORT_NOTIFICATION_EMAIL`: Email to receive ticket alerts (default: `resodinteam@zohomail.com`).
 - `APP_BASE_URL`: Base URL for links in emails (e.g., `http://localhost:3000`).
 
 ## Troubleshooting

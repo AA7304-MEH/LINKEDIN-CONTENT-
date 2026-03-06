@@ -16,9 +16,9 @@ async function main() {
                     {
                         stepNumber: 1,
                         delayMinutes: 0,
-                        subjectTemplate: "Welcome to Resonate! 🚀",
-                        bodyTemplateHtml: "<p>Hi {{name}},</p><p>Welcome to Resonate! We're excited to help you build your personal brand on LinkedIn.</p><p><strong>Tip:</strong> generating your first post takes less than 10 seconds.</p><p><a href='{{app_url}}'>Get Started Now</a></p>",
-                        bodyTemplateText: "Hi {{name}}, Welcome to Resonate! We're excited to help you build your personal brand on LinkedIn."
+                        subjectTemplate: "Welcome to Resodin! 🚀",
+                        bodyTemplateHtml: "<p>Hi {{name}},</p><p>Welcome to Resodin! We're excited to help you build your personal brand on LinkedIn.</p><p><strong>Tip:</strong> generating your first post takes less than 10 seconds.</p><p><a href='{{app_url}}'>Get Started Now</a></p>",
+                        bodyTemplateText: "Hi {{name}}, Welcome to Resodin! We're excited to help you build your personal brand on LinkedIn."
                     },
                     {
                         stepNumber: 2,

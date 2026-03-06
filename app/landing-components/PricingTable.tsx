@@ -35,7 +35,7 @@ export default function PricingTable() {
                 key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
                 amount: order.amount,
                 currency: order.currency,
-                name: "Resonate AI",
+                name: "Resodin AI",
                 description: `${plan} Subscription`,
                 order_id: order.id,
                 handler: async function (response: any) {

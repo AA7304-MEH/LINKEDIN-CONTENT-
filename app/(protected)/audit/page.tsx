@@ -2,7 +2,7 @@ import AuditWizard from "@/components/audit/AuditWizard";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Content DNA Audit | Resonate",
+    title: "Content DNA Audit | Resodin",
     description: "Analyze your LinkedIn content strategy.",
 };
 

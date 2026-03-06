@@ -41,10 +41,10 @@ export async function POST(request: Request) {
         });
 
         // Send Email Notification to Support Team
-        const adminEmail = process.env.SUPPORT_NOTIFICATION_EMAIL || 'resonateteam@zohomail.com';
+        const adminEmail = process.env.SUPPORT_NOTIFICATION_EMAIL || 'resodinteam@zohomail.com';
         await sendEmail({
             to: adminEmail,
-            subject: `[Resonate Support] New ticket #${ticket.id.slice(0, 8)}: ${subject}`,
+            subject: `[Resodin Support] New ticket #${ticket.id.slice(0, 8)}: ${subject}`,
             html: `
                 <p>New support ticket from <b>${email}</b></p>
                 <p><b>Subject:</b> ${subject}</p>

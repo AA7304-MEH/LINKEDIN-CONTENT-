@@ -1,13 +1,13 @@
-Write-Host "[ADMIN] === ADMIN REPO (matricphase-dot/resonateadmin) ==="
+Write-Host "[ADMIN] === ADMIN REPO (matricphase-dot/resodinadmin) ==="
 Set-Location "d:\linkedin content generator\admin-repo"
 if (!(Test-Path .git)) { git init }
-git remote add origin https://github.com/matricphase-dot/resonateadmin.git 2>$null
-git remote set-url origin https://github.com/matricphase-dot/resonateadmin.git
+git remote add origin https://github.com/matricphase-dot/resodinadmin.git 2>$null
+git remote set-url origin https://github.com/matricphase-dot/resodinadmin.git
 git checkout -b main 2>$null
 git add .
 git commit -m "v1.0 PRODUCTION - All engines + admin dashboard (Zoho SMTP)"
 git push -f origin main
-Write-Host "[SUCCESS] Admin repo pushed: https://github.com/matricphase-dot/resonateadmin"
+Write-Host "[SUCCESS] Admin repo pushed: https://github.com/matricphase-dot/resodinadmin"
 
 Write-Host "`n[PUBLIC] === PUBLIC REPO (AA7304-MEH/LINKEDIN-CONTENT-) ==="
 Set-Location "d:\linkedin content generator\public-repo"

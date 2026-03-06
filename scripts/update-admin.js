@@ -4,7 +4,7 @@ const crypto = require('crypto');
 
 const prisma = new PrismaClient();
 
-const email = 'resonate.admin8153@protonmail.com';
+const email = 'resodin.admin8153@protonmail.com';
 const password = 'linkedingen73043341379821508153';
 
 function hashPassword(password) {

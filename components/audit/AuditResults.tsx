@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import styles from "./ResonateAudit.module.css";
+import styles from "./ResodinAudit.module.css";
 import Link from 'next/link';
 
 interface AuditResultsProps {
@@ -49,8 +49,8 @@ export default function AuditResults({ answers }: AuditResultsProps) {
                             Viral Potential Index
                         </h3>
                         <div className="flex items-baseline gap-2">
-                            <span className="text-9xl font-black text-white tracking-tighter">{hookScore}</span>
-                            <span className="text-2xl text-gray-500 font-medium">/ 100</span>
+                            <span className="text-6xl md:text-9xl font-black text-white tracking-tighter">{hookScore}</span>
+                            <span className="text-xl md:text-2xl text-gray-500 font-medium">/ 100</span>
                         </div>
                     </div>
                     <div className="mt-auto pt-8">

@@ -1,32 +1,32 @@
 
 # Make.com Automation Integration
 
-Resonate supports fully automated social posting via Make.com (formerly Integromat).
+Resodin supports fully automated social posting via Make.com (formerly Integromat).
 This allows you to bypass complex direct API integrations (LinkedIn/Twitter) and use a visual scenario builder.
 
 ## 1. How it Works
-1.  **Resonate** checks for scheduled posts every 5 minutes (via Cron).
-2.  If a post is due and `Make Webhook URL` is configured, Resonate sends a POST request to Make.
+1.  **Resodin** checks for scheduled posts every 5 minutes (via Cron).
+2.  If a post is due and `Make Webhook URL` is configured, Resodin sends a POST request to Make.
 3.  **Make.com** receives the data, posts to LinkedIn/Twitter/etc.
-4.  (Optional) **Make.com** calls back to Resonate to confirm success or failure.
+4.  (Optional) **Make.com** calls back to Resodin to confirm success or failure.
 
 ## 2. Configuration (`/admin/marketing` -> Settings)
 *   **Make Webhook URL**: The URL provided by your Make "Custom Webhook" trigger.
 *   **Callback Secret**: A shared string (e.g., "my-secret-token") to secure the callback endpoint.
 
-## 3. Webhook Payload (Resonate -> Make)
-Resonate sends the following JSON body to your Make Webhook:
+## 3. Webhook Payload (Resodin -> Make)
+Resodin sends the following JSON body to your Make Webhook:
 
 ```json
 {
   "postId": "123e4567-e89b-12d3-a456-426614174000",
   "platform": "linkedin",
-  "content": "Check out our new AI tool! #AI \n\nhttps://resonate.app/r/123e...",
-  "trackingUrl": "https://resonate.app/r/123e...",
+  "content": "Check out our new AI tool! #AI \n\nhttps://resodin.app/r/123e...",
+  "trackingUrl": "https://resodin.app/r/123e...",
   "scheduledAt": "2025-01-01T12:00:00.000Z",
   "metadata": {
     "campaign": "launch-campaign",
-    "primaryWebsiteUrl": "https://resonate.app"
+    "primaryWebsiteUrl": "https://resodin.app"
   }
 }
 ```

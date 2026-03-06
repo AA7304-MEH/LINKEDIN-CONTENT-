@@ -1,6 +1,6 @@
 # Traffic & Marketing Module
 
-This module automates the generation, scheduling, and publishing of social media content for Resonate.
+This module automates the generation, scheduling, and publishing of social media content for Resodin.
 
 ## Overview
 -   **Admin Dashboard**: `/admin/marketing`

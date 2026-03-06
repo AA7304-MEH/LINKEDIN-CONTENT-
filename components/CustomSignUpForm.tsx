@@ -85,7 +85,7 @@ export default function CustomSignUpForm() {
         return (
             <div className={styles.container}>
                 <h1 className={styles.title}>Create Account</h1>
-                <p className={styles.subtitle}>Join Resonate and start growing your brand.</p>
+                <p className={styles.subtitle}>Join Resodin and start growing your brand.</p>
 
                 {error && <div className={styles.error}>{error}</div>}
 

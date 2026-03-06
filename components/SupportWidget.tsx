@@ -129,7 +129,7 @@ export default function SupportWidget() {
                         <div className="bg-blue-600 p-4 flex justify-between items-center text-white shrink-0">
                             <div className="flex items-center gap-2">
                                 <LifeBuoy size={20} />
-                                <h3 className="font-semibold">Resonate Help</h3>
+                                <h3 className="font-semibold">Resodin Help</h3>
                             </div>
                             <button onClick={() => setIsOpen(false)} className="hover:bg-blue-700 p-1 rounded">
                                 <X size={20} />

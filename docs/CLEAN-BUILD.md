@@ -1,6 +1,6 @@
 ## ✅ CLEAN PRODUCTION BUILD VERIFIED
 
-The Resonate Admin production environment is now optimized for Next.js 15 with zero build warnings.
+The Resodin Admin production environment is now optimized for Next.js 15 with zero build warnings.
 
 ### 🛠️ Improvements Made
 - **Middleware Migration**: Moved deprecated `middleware.ts` logic to the new `app/proxy.ts` pattern.
@@ -19,7 +19,7 @@ The Resonate Admin production environment is now optimized for Next.js 15 with z
 2. Run `vercel --prod` to deploy the optimized build.
 3. Verify SMTP via:
    ```bash
-   curl https://resonateadmin.vercel.app/api/admin/test-smtp \
+   curl https://resodinadmin.vercel.app/api/admin/test-smtp \
      -H "X-Admin-Bypass-Secret: temporary_emergency_secret_12345"
    ```
 

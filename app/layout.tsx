@@ -6,11 +6,11 @@ import SupportWidget from "@/components/SupportWidget";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 export const metadata: Metadata = {
-  title: "Resonate | AI-Powered Professional Posts",
+  title: "Resodin | AI-Powered Professional Posts",
   description: "Generate engaging, professional LinkedIn posts in seconds with our AI-powered tool. Boost your personal brand today.",
   keywords: ["LinkedIn", "Content Generator", "AI", "Professional", "Social Media"],
   openGraph: {
-    title: "Resonate",
+    title: "Resodin",
     description: "Generate engaging, professional LinkedIn posts in seconds.",
     type: "website",
   },

@@ -17,7 +17,7 @@ const testimonials = [
         rating: 5
     },
     {
-        quote: "Hook scores improved by 87%! Resonate knows exactly how to tweak my opening lines for maximum viral impact.",
+        quote: "Hook scores improved by 87%! Resodin knows exactly how to tweak my opening lines for maximum viral impact.",
         author: "Emily Rossi",
         role: "Senior Content Creator",
         rating: 5

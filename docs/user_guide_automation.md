@@ -4,13 +4,13 @@ Turn your marketing engine into a real robot that posts while you sleep.
 
 ## Prerequisites
 1.  A **Make.com** account (Free tier is fine).
-2.  Your **Resonate** Dashboard open.
+2.  Your **Resodin** Dashboard open.
 3.  Your **LinkedIn** account password handy.
 
 ---
 
 ## Step 1: Create the "Listener" (Webhook) 👂
-*This allows Resonate to shout "Hey, post this!" to Make.*
+*This allows Resodin to shout "Hey, post this!" to Make.*
 
 1.  Log in to [Make.com](https://www.make.com/).
 2.  Click **"+ Create a new scenario"**.
@@ -18,18 +18,18 @@ Turn your marketing engine into a real robot that posts while you sleep.
 4.  Search for **"Webhooks"** and select it.
 5.  Choose **"Custom Webhook"**.
 6.  Click **"Add"**.
-    *   **Webhook Name**: `Resonate Automation`.
+    *   **Webhook Name**: `Resodin Automation`.
     *   Click **Save**.
 7.  **COPY the URL** (it looks like `https://hook.us1.make.com/...`).
-8.  **Go to Resonate Dashboard**:
+8.  **Go to Resodin Dashboard**:
     *   `Settings` tab > `Automation Settings`.
     *   Paste the URL into **"Make Webhook URL"**.
     *   Click **Save Settings**.
 9.  **Keep Make Open!** It is waiting for data.
     *   Click **"Re-determine data structure"** (or ensure it's spinning/waiting).
-    *   **In Resonate Posts**: Click "Generate New Drafts". Wait for drafts.
+    *   **In Resodin Posts**: Click "Generate New Drafts". Wait for drafts.
     *   **Schedule One**: Find a draft, set `Schedule Date` to **NOW + 1 minute**.
-    *   **Wait**: When the time hits, Resonate sends data to Make.
+    *   **Wait**: When the time hits, Resodin sends data to Make.
     *   Make should say **"Successfully determined"** (Green Check). *Now it knows your data structure.*
 
 ---
@@ -44,7 +44,7 @@ Turn your marketing engine into a real robot that posts while you sleep.
 5.  **Connection**: Click "Add" and log in to your LinkedIn account.
 6.  **Content**:
     *   Click inside the **"Content"** (or Text) field.
-    *   A panel pops up with fields from Resonate.
+    *   A panel pops up with fields from Resodin.
     *   Select the **`content`** field (purple bubble).
 7.  **Visibility**: Public.
 8.  Click **OK**.
@@ -65,7 +65,7 @@ Turn your marketing engine into a real robot that posts while you sleep.
 3.  **You are DONE.**
 
 ## Testing It
-1.  Go to Resonate.
+1.  Go to Resodin.
 2.  Schedule a new post for 5 minutes from now.
 3.  Go grab a coffee. ☕
 4.  Check your LinkedIn Profile in 6 minutes. The post will be there!

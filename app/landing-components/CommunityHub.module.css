@@ -15,8 +15,6 @@
     /* Brand Colors */
     --linkedin: #0077b5;
     --twitter: #000000;
-    --instagram: #e1306c;
-    --facebook: #1877f2;
 
     background: var(--bg-dark);
     padding: 4rem 2rem;

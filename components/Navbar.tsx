@@ -7,7 +7,7 @@ export default function Navbar() {
     return (
         <nav className={styles.navbar}>
             <Link href="/" className={styles.logo}>
-                Resonate
+                Resodin
             </Link>
             <div className={styles.navLinks}>
                 <Link href="/#pricing" className={styles.link}>

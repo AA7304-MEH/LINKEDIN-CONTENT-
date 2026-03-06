@@ -41,7 +41,7 @@ async function main() {
         const info = await transporter.sendMail({
             from: `"${env.EMAIL_FROM_NAME}" <${env.EMAIL_FROM_ADDRESS}>`,
             to: env.SMTP_USER, // Send to self
-            subject: 'Resonate SMTP Validation',
+            subject: 'Resodin SMTP Validation',
             text: 'This email confirms that your Zoho SMTP configuration is correct and the Outreach engine can send emails.',
         });
         console.log('✅ Email sent successfully!');

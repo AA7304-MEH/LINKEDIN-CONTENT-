@@ -1,22 +1,22 @@
-# Resonate Deployment Checklist (2-Repo Architecture)
+# Resodin Deployment Checklist (2-Repo Architecture)
 
-## 1. ADMIN REPO: matricphase-dot/resonateadmin
+## 1. ADMIN REPO: matricphase-dot/resodinadmin
 **Goal**: Core engines, admin dashboard, SMTP logic.
 
 ### Deployment steps:
 1. `cd admin-repo`
 2. `vercel --prod`
-3. Connect to GitHub: `matricphase-dot/resonateadmin`
+3. Connect to GitHub: `matricphase-dot/resodinadmin`
 
 ### Environment Variables:
 - `SMTP_HOST=smtp.zoho.com`
 - `SMTP_PORT=587`
 - `SMTP_SECURE=false`
-- `SMTP_USER=resonateteam@zohomail.com`
+- `SMTP_USER=resodinteam@zohomail.com`
 - `SMTP_PASS=t6b3LFSMXB1P`
 - `ADMIN_BYPASS_SECRET=temporary_emergency_secret_12345`
-- `ADMIN_EMAIL_ALLOWLIST=resonate.admin8153@protonmail.com`
-- `APP_BASE_URL=https://resonateadmin-xyz.vercel.app`
+- `ADMIN_EMAIL_ALLOWLIST=resodin.admin8153@protonmail.com`
+- `APP_BASE_URL=https://resodinadmin-xyz.vercel.app`
 
 ---
 
@@ -41,7 +41,7 @@ Run from terminal to verify separate deployment:
 
 ### Test Admin API
 ```bash
-curl -X POST https://resonateadmin-xyz.vercel.app/api/admin/test-smtp \
+curl -X POST https://resodinadmin-xyz.vercel.app/api/admin/test-smtp \
   -H "X-Admin-Bypass-Secret: temporary_emergency_secret_12345" \
   -H "Content-Type: application/json" \
   -d '{}'

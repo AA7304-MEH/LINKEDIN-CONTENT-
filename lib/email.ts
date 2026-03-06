@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer';
 
 // Force Zoho and ignore system-level Gmail overrides
 const SMTP_HOST = process.env.SMTP_HOST || 'smtp.zoho.com';
-const SMTP_USER = process.env.SMTP_USER || 'resonateteam@zohomail.com';
+const SMTP_USER = process.env.SMTP_USER || 'resodinteam@zohomail.com';
 const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
 const SMTP_PASS = process.env.SMTP_PASS;
 
@@ -25,8 +25,8 @@ export async function sendEmail(options: {
     html: string;
 }) {
     try {
-        const fromName = process.env.EMAIL_FROM_NAME || 'Resonate';
-        const fromAddress = process.env.EMAIL_FROM_ADDRESS || 'resonateteam@zohomail.com';
+        const fromName = process.env.EMAIL_FROM_NAME || 'Resodin';
+        const fromAddress = process.env.EMAIL_FROM_ADDRESS || 'resodinteam@zohomail.com';
 
         const result = await transporter.sendMail({
             from: `"${fromName}" <${fromAddress}>`,

@@ -24,7 +24,7 @@ export default function LiveDemoSamples() {
         <section className={styles.section}>
             <div className={styles.container}>
                 <div className={styles.header}>
-                    <h2>See What Resonate Creates</h2>
+                    <h2>See What Resodin Creates</h2>
                     <p>Real examples of high-viral posts generated in seconds.</p>
                 </div>
 

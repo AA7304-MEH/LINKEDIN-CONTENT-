@@ -25,7 +25,7 @@ async function verifyMarketing() {
 
     try {
         const settings = {
-            productName: "Resonate AI",
+            productName: "Resodin AI",
         };
 
         const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;

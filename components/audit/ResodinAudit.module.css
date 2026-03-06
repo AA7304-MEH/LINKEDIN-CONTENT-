@@ -1,18 +1,18 @@
-/* Resonate Native App Theme (Pro Creator Identity) */
+/* Resodin Native App Theme (Pro Creator Identity) */
 
-.resonateNativeContainer {
-    --resonate-teal: #00aaff;
+.resodinNativeContainer {
+    --resodin-teal: #00aaff;
     /* #0af */
-    --resonate-teal-hover: #33bbff;
-    --resonate-bg-dark: #0d0d12;
-    --resonate-surface: #1a1a20;
+    --resodin-teal-hover: #33bbff;
+    --resodin-bg-dark: #0d0d12;
+    --resodin-surface: #1a1a20;
     /* Dark gray surface */
-    --resonate-border: #2a2a30;
-    --resonate-text-main: #ffffff;
-    --resonate-text-muted: #a0a0a0;
+    --resodin-border: #2a2a30;
+    --resodin-text-main: #ffffff;
+    --resodin-text-muted: #a0a0a0;
 
-    background-color: var(--resonate-bg-dark);
-    color: var(--resonate-text-main);
+    background-color: var(--resodin-bg-dark);
+    color: var(--resodin-text-main);
     font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
 }
@@ -20,31 +20,42 @@
 /* Typography Overrides */
 .headingXl {
     font-size: 3.5rem;
-    /* Larger per request (2.5rem+) */
     font-weight: 800;
     letter-spacing: -0.02em;
     line-height: 1.1;
-    color: var(--resonate-text-main);
+    color: var(--resodin-text-main);
 }
 
 .headingLg {
     font-size: 2.5rem;
-    /* Matches spec 2.5rem */
     font-weight: 700;
     letter-spacing: -0.01em;
-    color: var(--resonate-text-main);
+    color: var(--resodin-text-main);
 }
 
 .textBody {
-    color: var(--resonate-text-muted);
+    color: var(--resodin-text-muted);
     font-size: 1.25rem;
-    /* Increased body size */
     line-height: 1.6;
+}
+
+@media (max-width: 640px) {
+    .headingXl {
+        font-size: 2.5rem;
+    }
+
+    .headingLg {
+        font-size: 1.875rem;
+    }
+
+    .textBody {
+        font-size: 1.125rem;
+    }
 }
 
 /* Buttons - "Start Free Trial" Match */
 .btnPrimary {
-    background-color: var(--resonate-teal);
+    background-color: var(--resodin-teal);
     color: #ffffff;
     font-weight: 700;
     /* Bolder per buttons on main site */
@@ -64,7 +75,7 @@
 }
 
 .btnPrimary:hover:not(:disabled) {
-    background-color: var(--resonate-teal-hover);
+    background-color: var(--resodin-teal-hover);
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(0, 170, 255, 0.4);
 }
@@ -80,8 +91,8 @@
 
 /* Cards */
 .proCard {
-    background-color: var(--resonate-surface);
-    border: 1px solid var(--resonate-border);
+    background-color: var(--resodin-surface);
+    border: 1px solid var(--resodin-border);
     border-radius: 16px;
     /* Slightly softer corners */
     padding: 3rem;
@@ -90,8 +101,8 @@
 }
 
 .answerCard {
-    background-color: var(--resonate-surface);
-    border: 1px solid var(--resonate-border);
+    background-color: var(--resodin-surface);
+    border: 1px solid var(--resodin-border);
     border-radius: 12px;
     padding: 1.75rem;
     /* Increased padding */
@@ -114,10 +125,10 @@
 }
 
 .answerCardSelected {
-    border-color: var(--resonate-teal);
+    border-color: var(--resodin-teal);
     background-color: rgba(0, 170, 255, 0.08);
     /* Subtle teal tint */
-    box-shadow: 0 0 0 2px var(--resonate-teal), 0 8px 20px rgba(0, 170, 255, 0.15);
+    box-shadow: 0 0 0 2px var(--resodin-teal), 0 8px 20px rgba(0, 170, 255, 0.15);
     /* Stronger glow */
     transform: translateY(-2px) scale(1.01);
 }
@@ -134,7 +145,7 @@
 }
 
 .progressFill {
-    background: linear-gradient(90deg, var(--resonate-teal) 0%, #00ffff 100%);
+    background: linear-gradient(90deg, var(--resodin-teal) 0%, #00ffff 100%);
     height: 100%;
     transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     /* Bouncy fill */
@@ -220,7 +231,7 @@
     position: absolute;
     width: 300px;
     height: 300px;
-    background: var(--resonate-teal);
+    background: var(--resodin-teal);
     filter: blur(150px);
     opacity: 0.15;
     border-radius: 50%;

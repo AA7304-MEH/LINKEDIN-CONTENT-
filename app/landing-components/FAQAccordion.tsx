@@ -6,15 +6,15 @@ import styles from './FAQAccordion.module.css';
 const faqs = [
     {
         q: "How does the AI understand my personal tone?",
-        a: "Resonate uses a 'Personal Choice DNA' system. You upload 3-5 examples of your best previous posts, and our AI analyzes your sentence structure, vocabulary, and formatting preferences to mimic your style perfectly."
+        a: "Resodin uses a 'Personal Choice DNA' system. You upload 3-5 examples of your best previous posts, and our AI analyzes your sentence structure, vocabulary, and formatting preferences to mimic your style perfectly."
     },
     {
-        q: "Can I use Resonate for company pages?",
+        q: "Can I use Resodin for company pages?",
         a: "Absolutely. The Business plan allows you to manage multiple profiles, including personal profiles and company pages, with distinct voices for each."
     },
     {
         q: "Is there a free trial?",
-        a: "Yes! You can start with our Free plan to generate up to 5 posts per month forever. We also offer a 14-day free trial of the Pro plan so you can experience the full power of Resonate risk-free."
+        a: "Yes! You can start with our Free plan to generate up to 5 posts per month forever. We also offer a 14-day free trial of the Pro plan so you can experience the full power of Resodin risk-free."
     },
     {
         q: "Does this work for other platforms?",

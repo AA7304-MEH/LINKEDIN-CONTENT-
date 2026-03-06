@@ -10,5 +10,5 @@
 
 Expected: {"success":true}
 
-4. Check resonateteam@zohomail.com → Sent folder
-5. Check resonate.admin8153@protonmail.com → Inbox
+4. Check resodinteam@zohomail.com → Sent folder
+5. Check resodin.admin8153@protonmail.com → Inbox

@@ -182,7 +182,7 @@ export default function MarketingDashboard() {
             {/* Header Content */}
             <div className="mb-8">
                 <h1 className="text-2xl font-bold text-gray-900">Traffic & Marketing Engine</h1>
-                <p className="text-gray-500 mt-1">Manage your automated content strategy for Resonate.</p>
+                <p className="text-gray-500 mt-1">Manage your automated content strategy for Resodin.</p>
             </div>
 
             {/* Stats Overview */}
@@ -298,7 +298,7 @@ export default function MarketingDashboard() {
                                     <strong>How to Automate:</strong> Create a scenario in Make.com with a Custom Webhook. Paste the URL below.
                                 </p>
                                 <p className="text-xs text-blue-600">
-                                    Resonate will POST the content here when scheduled.
+                                    Resodin will POST the content here when scheduled.
                                 </p>
                             </div>
 

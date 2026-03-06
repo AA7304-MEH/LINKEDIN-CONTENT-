@@ -60,7 +60,7 @@ export async function POST(request: Request) {
         // 2. Ask Gemini
         const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
-        const systemPrompt = `You are the Resonate Support Assistant.
+        const systemPrompt = `You are the Resodin Support Assistant.
         Answer the user's question ONLY using the provided Knowledge Base context below.
         
         Rules:

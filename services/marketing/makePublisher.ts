@@ -34,7 +34,7 @@ export async function sendPostToMake(post: any, settings: any) {
     }
 
     // 2. Build Payload
-    const trackingUrl = `${settings.primaryWebsiteUrl || "https://resonate.app"}/r/${post.id}`;
+    const trackingUrl = `${settings.primaryWebsiteUrl || "https://resodin.app"}/r/${post.id}`;
 
     // Ensure content has tracking link if it's not already there (optional policy)
     // User didn't strictly ask to append it if missing, but "content of the post with URL included" hints at it.

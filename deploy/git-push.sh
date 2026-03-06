@@ -3,7 +3,7 @@ echo "🚀 Pushing ADMIN repo..."
 cd "d:\linkedin content generator\admin-repo"
 git init
 if ! git remote | grep -q 'origin'; then
-  git remote add origin https://github.com/matricphase-dot/resonateadmin.git
+  git remote add origin https://github.com/matricphase-dot/resodinadmin.git
 fi
 git checkout -b main
 git add .

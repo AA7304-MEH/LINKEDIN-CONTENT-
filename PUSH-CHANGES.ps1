@@ -3,7 +3,7 @@ Write-Host "🚀 STARTING PRODUCTION SYNC..." -ForegroundColor Cyan
 # 1. Admin Repo
 Write-Host "`n--- SYNCING ADMIN REPO ---" -ForegroundColor Yellow
 Set-Location "d:\linkedin content generator\admin-repo"
-git remote set-url origin https://github.com/AA7304-MEH/resonateadmin.git
+git remote set-url origin https://github.com/AA7304-MEH/resodinadmin.git
 git add .
 git commit -m "FIX: Hardened Zoho SMTP + Detailed Error Logging + Build Stability"
 git push -f origin main

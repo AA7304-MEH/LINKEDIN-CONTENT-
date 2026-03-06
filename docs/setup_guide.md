@@ -24,10 +24,10 @@ This allows the app to post to LinkedIn/Twitter automatically.
     *   Click the big purple "+" button.
     *   Search for **"Webhooks"** -> Select **"Custom webhook"**.
 3.  **Configure Webhook**:
-    *   Click "Add" -> Name it "Resonate Post Receiver".
+    *   Click "Add" -> Name it "Resodin Post Receiver".
     *   Click "Save".
     *   **Copy the URL** (Address) shown (e.g., `https://hook.us1.make.com/abcdef12345...`).
-4.  **Paste it in Resonate**:
+4.  **Paste it in Resodin**:
     *   Go to your dashboard: [http://localhost:3000/admin/marketing](http://localhost:3000/admin/marketing)
     *   Click **Settings** tab.
     *   Scroll to **Automation Settings** and paste the URL.
@@ -38,7 +38,7 @@ This allows the app to post to LinkedIn/Twitter automatically.
 2.  **Schedule it** for 5 minutes from now.
 3.  **Wait**:
     *   In Make.com, click **"Run once"** to listen for the test.
-    *   When the time comes, Resonate will send the data.
+    *   When the time comes, Resodin will send the data.
     *   If Make receives it (green checkmark), you are connected! ✅
 
 ---

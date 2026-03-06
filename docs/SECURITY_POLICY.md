@@ -8,14 +8,14 @@
 ## Roles
 - **Public**: Unauthenticated visitors.
 - **User**: Authenticated customers.
-- **Admin**: Authenticated super-admin (`resonate.admin8153@protonmail.com`).
+- **Admin**: Authenticated super-admin (`resodin.admin8153@protonmail.com`).
 - **Cron**: Requests with valid `x-cron-secret` header.
 - **Webhook**: Requests with valid provider signature/secret.
 
 ## Access Rules
 
 ### 1. Admin Access
-- **Who**: Only `resonate.admin8153@protonmail.com` can access `/admin/*` (except login) and `/api/admin/*`.
+- **Who**: Only `resodin.admin8153@protonmail.com` can access `/admin/*` (except login) and `/api/admin/*`.
 - **Enforcement**:
     - UI: `requireAdmin()` in `app/admin/layout.tsx`.
     - API: `requireAdmin()` at the start of every admin route handler.

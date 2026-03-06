@@ -9,7 +9,7 @@
 - [ ] Enter a NON-admin email.
     - [ ] Result: Check "Access Denied" or generic success (check Network tab for 403 or success).
     - [ ] Check console Logs for `SECURITY_AUDIT` even `ACCESS_DENIED_GENERIC` or similar.
-- [ ] Enter valid admin email (`resonate.admin8153@protonmail.com`).
+- [ ] Enter valid admin email (`resodin.admin8153@protonmail.com`).
     - [ ] Result: Page redirects to `/admin/verify`.
     - [ ] Email: Check Zoho mail for OTP code.
 - [ ] Go to `/admin/verify`.

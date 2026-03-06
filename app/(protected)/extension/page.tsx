@@ -12,13 +12,13 @@ export default function ExtensionPage() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                     </svg>
                 </div>
-                <h1 className={styles.title}>Resonate for Chrome</h1>
+                <h1 className={styles.title}>Resodin for Chrome</h1>
                 <p className={styles.description}>
                     Bring the power of AI directly into your LinkedIn feed. Generate comments, analyze posts, and save hooks with one click.
                 </p>
 
                 <div className={styles.downloadSection}>
-                    <a href="/resonate-extension.zip" download className={styles.downloadBtn} style={{ textDecoration: 'none', display: 'inline-block' }}>
+                    <a href="/resodin-extension.zip" download className={styles.downloadBtn} style={{ textDecoration: 'none', display: 'inline-block' }}>
                         Download Extension (.zip)
                     </a>
                     <p className={styles.versionInfo}>Version 1.0.2 • Updated Jan 11, 2026</p>

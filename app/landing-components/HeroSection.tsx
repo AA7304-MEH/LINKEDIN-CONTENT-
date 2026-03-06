@@ -155,7 +155,7 @@ export default function HeroSection() {
                         </button>
                         <img
                             src="/demo-video.webp"
-                            alt="Resonate Demo Video"
+                            alt="Resodin Demo Video"
                             style={{ width: '100%', height: 'auto', display: 'block' }}
                         />
                     </div>

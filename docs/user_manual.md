@@ -1,4 +1,4 @@
-# 📘 Resonate Traffic Engine: User Manual
+# 📘 Resodin Traffic Engine: User Manual
 
 Welcome to your AI Marketing command center. Here is how to use it to grow your audience.
 
@@ -35,7 +35,7 @@ Welcome to your AI Marketing command center. Here is how to use it to grow your 
 3.  Open LinkedIn/Twitter in a new tab.
 4.  **Paste** the text. Add an image if you like.
 5.  **Post it!**
-6.  Back in Resonate, click **"Mark as Posted"** (or "Action" button) so you know it's done.
+6.  Back in Resodin, click **"Mark as Posted"** (or "Action" button) so you know it's done.
 
 #### Option B: Auto-Pilot (Requires Make.com)
 1.  If you set up the **Make Webhook** (in Settings):
