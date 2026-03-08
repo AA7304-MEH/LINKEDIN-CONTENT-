@@ -40,21 +40,21 @@ export default function AuditResults({ answers }: AuditResultsProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                 {/* Score Card - Typographic Focus */}
-                <div className={`${styles.proCard} flex flex-col justify-between relative overflow-hidden group min-h-[300px]`}>
-                    <div className="absolute top-0 right-0 p-6 opacity-20 group-hover:opacity-40 transition-opacity">
-                        <span className="text-8xl">📈</span>
+                <div className={`${styles.proCard} flex flex-col justify-between relative overflow-hidden group min-h-[250px] md:min-h-[300px]`}>
+                    <div className="absolute top-0 right-0 p-4 md:p-6 opacity-20 group-hover:opacity-40 transition-opacity">
+                        <span className="text-6xl md:text-8xl">📈</span>
                     </div>
                     <div>
-                        <h3 className="text-gray-500 font-bold text-sm w-full uppercase tracking-widest border-b border-[#2a2a30] pb-4 mb-6">
+                        <h3 className="text-gray-500 font-bold text-xs md:text-sm w-full uppercase tracking-widest border-b border-[#2a2a30] pb-3 md:pb-4 mb-4 md:mb-6">
                             Viral Potential Index
                         </h3>
                         <div className="flex items-baseline gap-2">
                             <span className="text-6xl md:text-9xl font-black text-white tracking-tighter">{hookScore}</span>
-                            <span className="text-xl md:text-2xl text-gray-500 font-medium">/ 100</span>
+                            <span className="text-lg md:text-2xl text-gray-500 font-medium">/ 100</span>
                         </div>
                     </div>
-                    <div className="mt-auto pt-8">
-                        <div className="w-full h-3 bg-[#1a1a20] rounded-full overflow-hidden">
+                    <div className="mt-auto pt-6 md:pt-8">
+                        <div className="w-full h-2 md:h-3 bg-[#1a1a20] rounded-full overflow-hidden">
                             <motion.div
                                 initial={{ width: 0 }}
                                 animate={{ width: `${hookScore}%` }}
@@ -62,8 +62,8 @@ export default function AuditResults({ answers }: AuditResultsProps) {
                                 className="h-full bg-[#00aaff] shadow-[0_0_20px_#00aaff]"
                             />
                         </div>
-                        <p className="mt-4 text-sm text-[#00aaff] font-bold flex items-center gap-2 bg-[#00aaff]/10 py-2 px-3 rounded inline-block">
-                            <span className="w-2 h-2 rounded-full bg-[#00aaff] animate-pulse"></span>
+                        <p className="mt-3 md:mt-4 text-[10px] md:text-sm text-[#00aaff] font-bold flex items-center gap-2 bg-[#00aaff]/10 py-1.5 md:py-2 px-2 md:px-3 rounded inline-block">
+                            <span className="w-1.5 md:w-2 h-1.5 md:h-2 rounded-full bg-[#00aaff] animate-pulse"></span>
                             Top 15% of Creators
                         </p>
                     </div>
@@ -99,9 +99,9 @@ export default function AuditResults({ answers }: AuditResultsProps) {
                 </div>
             </div>
 
-            <div className="max-w-xl mx-auto mt-16 relative z-10 space-y-6 text-center">
+            <div className="max-w-xl mx-auto mt-12 md:mt-16 relative z-10 space-y-6 text-center px-4">
                 <Link href="/pricing" className="block w-full">
-                    <button className={`${styles.btnPrimary} w-full py-6 text-2xl shadow-[0_10px_50px_rgba(0,170,255,0.2)] uppercase tracking-wide hover:scale-[1.02] active:scale-[0.98] font-black border-2 border-[#00aaff]/20`}>
+                    <button className={`${styles.btnPrimary} w-full py-5 md:py-6 text-xl md:text-2xl shadow-[0_10px_50px_rgba(0,170,255,0.2)] uppercase tracking-wide hover:scale-[1.02] active:scale-[0.98] font-black border-2 border-[#00aaff]/20`}>
                         Unlock Full Strategy & Trial
                     </button>
                 </Link>

@@ -56,7 +56,7 @@ export default function LandingFooter() {
                     <div>
                         <h3 className={styles.socialHeading}>Connect</h3>
                         <div className={styles.socialLinks}>
-                            <Link href="https://www.linkedin.com/company/resodin-ai/about/?viewAsMember=true" target="_blank" rel="noopener noreferrer" className={styles.socialIconLink} aria-label="LinkedIn">
+                            <Link href="https://www.linkedin.com/company/resodin-ai" target="_blank" rel="noopener noreferrer" className={styles.socialIconLink} aria-label="LinkedIn">
                                 <Linkedin size={20} />
                             </Link>
                             <Link href="https://x.com/Resonate462882" target="_blank" rel="noopener noreferrer" className={styles.socialIconLink} aria-label="Twitter">

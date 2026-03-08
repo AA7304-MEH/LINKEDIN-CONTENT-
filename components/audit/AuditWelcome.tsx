@@ -9,17 +9,7 @@ interface AuditWelcomeProps {
 export default function AuditWelcome({ onStart }: AuditWelcomeProps) {
     return (
         <section
-            style={{
-                position: 'relative',
-                width: '100%',
-                minHeight: '85vh',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: '#0d0d12',
-                overflow: 'hidden',
-                padding: '4rem 2rem'
-            }}
+            className="flex flex-col items-center justify-center relative w-full overflow-hidden bg-[#0d0d12] px-6 py-12 md:px-8 md:py-16 min-h-[70vh] md:min-h-[85vh]"
         >
             {/* Glow Orb - Teal */}
             <div

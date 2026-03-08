@@ -1,11 +1,18 @@
 .hero {
-    padding: 4rem 2rem;
+    padding: 3rem 1.5rem;
     background: radial-gradient(circle at 50% 10%, rgba(0, 160, 220, 0.1) 0%, rgba(255, 255, 255, 0) 60%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4rem;
+    gap: 2.5rem;
     overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .hero {
+        padding: 4rem 2rem;
+        gap: 4rem;
+    }
 }
 
 .container {
@@ -212,7 +219,7 @@
 
 @media (max-width: 1024px) {
     .headline {
-        font-size: 2.5rem;
+        font-size: 2.25rem;
     }
 
     .container {

@@ -13,7 +13,7 @@ Write-Host "`n--- SYNCING PUBLIC REPO ---" -ForegroundColor Yellow
 Set-Location "d:\linkedin content generator\public-repo"
 git remote set-url origin https://github.com/AA7304-MEH/LINKEDIN-CONTENT-.git
 git add .
-git commit -m "FIX: Security patch + Clean production build"
+git commit -m "FEAT: Full Mobile Responsiveness + Audit Wizard Landing Page Fix"
 git push -f origin main
 
 Write-Host "`n✅ ALL CHANGES PUSHED! Vercel is now building." -ForegroundColor Green

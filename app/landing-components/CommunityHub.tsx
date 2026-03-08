@@ -20,7 +20,7 @@ const socialLinks = [
     {
         platform: 'linkedin',
         name: 'LinkedIn',
-        url: 'https://www.linkedin.com/company/resodin-ai/about/?viewAsMember=true',
+        url: 'https://www.linkedin.com/company/resodin-ai',
         followers: 'Join our professional community',
         buttonText: 'Follow →',
         tooltip: 'Connect with us on LinkedIn',

@@ -39,17 +39,17 @@
     line-height: 1.6;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
     .headingXl {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 
     .headingLg {
-        font-size: 1.875rem;
+        font-size: 1.5rem;
     }
 
     .textBody {
-        font-size: 1.125rem;
+        font-size: 1rem;
     }
 }
 
@@ -94,10 +94,14 @@
     background-color: var(--resodin-surface);
     border: 1px solid var(--resodin-border);
     border-radius: 16px;
-    /* Slightly softer corners */
     padding: 3rem;
-    /* Generous padding (Spacing is King) */
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@media (max-width: 768px) {
+    .proCard {
+        padding: 1.5rem;
+    }
 }
 
 .answerCard {
@@ -105,7 +109,6 @@
     border: 1px solid var(--resodin-border);
     border-radius: 12px;
     padding: 1.75rem;
-    /* Increased padding */
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     cursor: pointer;
     text-align: left;
@@ -113,7 +116,12 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1rem;
-    /* Spacing between cards */
+}
+
+@media (max-width: 768px) {
+    .answerCard {
+        padding: 1.25rem;
+    }
 }
 
 .answerCard:hover {
