@@ -78,8 +78,8 @@ export async function POST(request: Request) {
             }
         }
 
-        // Using gemini-flash-latest as it is confirmed working for this project
-        const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
+        // Using gemini-1.5-flash for better stability and production readiness
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         let prompt = `Generate a LinkedIn post about "${topic}".
         
@@ -150,10 +150,26 @@ export async function POST(request: Request) {
         }
 
         return NextResponse.json(data);
-    } catch (error) {
+    } catch (error: any) {
         console.error("Generation error:", error);
+        
+        // Handle specific AI provider issues
+        if (error.message?.includes('leaked') || error.status === 403) {
+            return NextResponse.json(
+                { error: 'AI API Key is invalid or revoked. Please update GOOGLE_GENERATIVE_AI_API_KEY in Vercel settings.' },
+                { status: 403 }
+            );
+        }
+
+        if (error.message?.includes('not found') || error.status === 404) {
+            return NextResponse.json(
+                { error: 'AI Model not found. Please ensure the model name is correct and your API key has access.' },
+                { status: 404 }
+            );
+        }
+
         return NextResponse.json(
-            { error: 'Failed to generate content' },
+            { error: 'Failed to generate content. Please try again later.' },
             { status: 500 }
         );
     }

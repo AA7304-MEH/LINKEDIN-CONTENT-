@@ -38,7 +38,15 @@ async function verifyMarketing() {
         const prompt = `Generate 1 marketing tweet for ${settings.productName}. Return strictly valid JSON: ["tweet content"]`;
 
         console.log("Attempting AI generation...");
-        const result = await model.generateContent(prompt);
+        let result;
+        try {
+            result = await model.generateContent(prompt);
+        } catch (apiError) {
+            if (apiError.message?.includes("leaked")) {
+                throw new Error("API Key is LEAKED and REVOKED. Please get a new key.");
+            }
+            throw apiError;
+        }
         const response = await result.response;
         const text = response.text();
         console.log("✅ AI Response received:", text);

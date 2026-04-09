@@ -12,9 +12,10 @@ interface Hashtags {
 interface PostDisplayProps {
     content: string;
     hashtags?: Hashtags;
+    isFree?: boolean;
 }
 
-export default function PostDisplay({ content, hashtags }: PostDisplayProps) {
+export default function PostDisplay({ content, hashtags, isFree = true }: PostDisplayProps) {
     const [copied, setCopied] = useState(false);
 
     const handleCopy = async () => {
@@ -22,6 +23,9 @@ export default function PostDisplay({ content, hashtags }: PostDisplayProps) {
         if (hashtags) {
             const allTags = [...(hashtags.broad || []), ...(hashtags.niche || []), ...(hashtags.community || [])].join(' ');
             if (allTags) textToCopy += `\n\n${allTags}`;
+        }
+        if (isFree) {
+            textToCopy += `\n\n✨ Created with Resodin.ai — Try free → ${window.location.origin}`;
         }
         await navigator.clipboard.writeText(textToCopy);
         setCopied(true);
@@ -34,8 +38,12 @@ export default function PostDisplay({ content, hashtags }: PostDisplayProps) {
     };
 
     const handleDownload = () => {
+        let textToDownload = content;
+        if (isFree) {
+            textToDownload += `\n\n✨ Created with Resodin.ai — Try free → ${window.location.origin}`;
+        }
         const element = document.createElement("a");
-        const file = new Blob([content], { type: 'text/plain' });
+        const file = new Blob([textToDownload], { type: 'text/plain' });
         element.href = URL.createObjectURL(file);
         element.download = "linkedin-post.txt";
         document.body.appendChild(element);
@@ -66,7 +74,16 @@ export default function PostDisplay({ content, hashtags }: PostDisplayProps) {
                         {line || <br />}
                     </p>
                 ))}
+                
+                {isFree && (
+                    <div className="mt-8 pt-6 border-t border-white/5">
+                        <p className="text-gray-500 text-sm italic flex items-center gap-2">
+                            <span>✨</span> Created with <a href="/" className="text-blue-400 hover:underline">Resodin.ai</a> — Try free →
+                        </p>
+                    </div>
+                )}
             </div>
+
 
             {hashtags && (
                 <div className={styles.hashtagSection}>

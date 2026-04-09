@@ -65,7 +65,8 @@ export default function AuditWelcome({ onStart }: AuditWelcomeProps) {
                     zIndex: 10,
                     maxWidth: '900px',
                     width: '100%',
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    margin: '0 auto'
                 }}
             >
                 <motion.div
@@ -108,7 +109,10 @@ export default function AuditWelcome({ onStart }: AuditWelcomeProps) {
                             color: 'white',
                             lineHeight: 1.1,
                             marginBottom: '1.5rem',
-                            letterSpacing: '-0.02em'
+                            letterSpacing: '-0.02em',
+                            textAlign: 'center',
+                            margin: '0 auto 1.5rem',
+                            maxWidth: '850px'
                         }}
                     >
                         Decode Your{' '}
@@ -131,7 +135,8 @@ export default function AuditWelcome({ onStart }: AuditWelcomeProps) {
                             color: '#a0a0a0',
                             maxWidth: '650px',
                             margin: '0 auto 2.5rem',
-                            lineHeight: 1.6
+                            lineHeight: 1.6,
+                            textAlign: 'center'
                         }}
                     >
                         Stop guessing what works. Our AI analyzes your unique goals to reverse-engineer a content strategy that actually converts.
@@ -165,7 +170,9 @@ export default function AuditWelcome({ onStart }: AuditWelcomeProps) {
                             alignItems: 'center',
                             justifyContent: 'center',
                             gap: '12px',
-                            marginBottom: '3rem'
+                            marginBottom: '3rem',
+                            width: 'fit-content',
+                            margin: '0 auto 3rem'
                         }}
                     >
                         <div style={{ display: 'flex' }}>
@@ -193,10 +200,13 @@ export default function AuditWelcome({ onStart }: AuditWelcomeProps) {
                         style={{
                             display: 'flex',
                             justifyContent: 'center',
-                            gap: '4rem',
+                            gap: '3rem',
                             borderTop: '1px solid #2a2a35',
                             paddingTop: '2rem',
-                            flexWrap: 'wrap'
+                            flexWrap: 'wrap',
+                            width: '100%',
+                            maxWidth: '700px',
+                            margin: '0 auto'
                         }}
                     >
                         {[

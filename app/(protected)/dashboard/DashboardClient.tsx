@@ -7,11 +7,13 @@ import styles from './page.module.css';
 
 interface DashboardClientProps {
     initialPosts: any[];
+    userPlan: string;
 }
 
-export default function DashboardClient({ initialPosts }: DashboardClientProps) {
+export default function DashboardClient({ initialPosts, userPlan }: DashboardClientProps) {
     const [posts, setPosts] = useState(initialPosts);
     const [generatedPost, setGeneratedPost] = useState<any>(null);
+
     const [hookScore, setHookScore] = useState<number | null>(null);
 
     const handleGenerate = async (formData: any) => {
@@ -62,7 +64,12 @@ export default function DashboardClient({ initialPosts }: DashboardClientProps) 
                                 </div>
                             </div>
                         )}
-                        <PostDisplay content={generatedPost.content} hashtags={generatedPost.hashtags} />
+                        <PostDisplay 
+                            content={generatedPost.content} 
+                            hashtags={generatedPost.hashtags} 
+                            isFree={userPlan === 'FREE'}
+                        />
+
                     </div>
                 )}
             </div>

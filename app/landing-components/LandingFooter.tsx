@@ -34,19 +34,19 @@ export default function LandingFooter() {
                     <div>
                         <h3 className={styles.navHeading}>Resources</h3>
                         <ul className={styles.footerLinks}>
-                            <li><Link href="#" className={styles.footerLink}>Blog</Link></li>
-                            <li><Link href="#" className={styles.footerLink}>Help Center</Link></li>
-                            <li><Link href="#" className={styles.footerLink}>Case Studies</Link></li>
-                            <li><Link href="#" className={styles.footerLink}>API</Link></li>
+                            <li><Link href="/blog" className={styles.footerLink}>Blog</Link></li>
+                            <li><Link href="/help" className={styles.footerLink}>Help Center</Link></li>
+                            <li><Link href="/case-studies" className={styles.footerLink}>Case Studies</Link></li>
+                            <li><Link href="/api-docs" className={styles.footerLink}>API</Link></li>
                         </ul>
                     </div>
                     <div>
                         <h3 className={styles.navHeading}>Company</h3>
                         <ul className={styles.footerLinks}>
-                            <li><Link href="#" className={styles.footerLink}>About</Link></li>
-                            <li><Link href="#" className={styles.footerLink}>Careers</Link></li>
-                            <li><Link href="#" className={styles.footerLink}>Contact</Link></li>
-                            <li><Link href="#" className={styles.footerLink}>Privacy</Link></li>
+                            <li><Link href="/about" className={styles.footerLink}>About</Link></li>
+                            <li><Link href="/careers" className={styles.footerLink}>Careers</Link></li>
+                            <li><Link href="/contact" className={styles.footerLink}>Contact</Link></li>
+                            <li><Link href="/privacy" className={styles.footerLink}>Privacy Policy</Link></li>
                         </ul>
                     </div>
                 </nav>
@@ -65,9 +65,10 @@ export default function LandingFooter() {
                         </div>
                     </div>
                     <div className={styles.legal}>
-                        <p>&copy; {new Date().getFullYear()} Resodin Inc. All rights reserved.</p>
+                        <p>© 2026 Resodin Inc.</p>
                     </div>
                 </div>
+
             </div>
         </footer>
     );

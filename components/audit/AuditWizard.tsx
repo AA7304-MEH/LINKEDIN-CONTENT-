@@ -24,55 +24,42 @@ export interface Question {
 
 const QUESTIONS: Question[] = [
     {
+        id: "profile_info",
+        text: "What is your LinkedIn profile URL and primary goal?",
+        type: "text",
+        placeholder: "https://linkedin.com/in/yourprofile",
+        icon: "🔗"
+    },
+    {
         id: "goal",
-        text: "What is your primary content goal?",
+        text: "Choose your primary goal on LinkedIn:",
         type: "choice",
         options: [
-            "Generate High-Quality Leads",
-            "Build Personal Authority",
-            "Grow Audience Network",
-            "Attract Talent / Recruitment",
+            "Thought Leader",
+            "Job Seeker",
+            "Business Owner",
+            "Creator"
         ],
         icon: "🎯"
     },
     {
-        id: "blocker",
-        text: "What's holding you back the most?",
-        type: "choice",
+        id: "topics",
+        text: "What topics do you post about? (Multi-select)",
+        type: "choice", // Using choice with multi-select logic in AuditQuestion
         options: [
-            "Lack of Time / Consistency",
-            "Content Feels 'Generic'",
-            "Unsure What to Post",
-            "Engagement is Too Low",
+            "AI & Tech",
+            "Marketing & Sales",
+            "Leadership & Management",
+            "Career Growth",
+            "Startup Life",
+            "Personal Finance",
+            "Software Engineering",
+            "Design & UX"
         ],
-        icon: "🚧"
-    },
-    {
-        id: "frequency",
-        text: "How often do you post?",
-        type: "choice",
-        options: [
-            "Daily (5+ per week)",
-            "Weekly (1-3 per week)",
-            "Sporadically",
-            "Rarely / Never",
-        ],
-        icon: "📅"
-    },
-    {
-        id: "rating",
-        text: "Rate your current content confidence (1-5):",
-        type: "scale",
-        icon: "⭐"
-    },
-    {
-        id: "target",
-        text: "Who is your dream client/audience?",
-        type: "text",
-        placeholder: "e.g., Founders of SaaS startups...",
-        icon: "👥"
-    },
+        icon: "📝"
+    }
 ];
+
 
 export default function AuditWizard() {
     const [step, setStep] = useState<number>(0);

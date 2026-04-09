@@ -127,8 +127,13 @@ export default function DashboardSidebar({
                             <span style={{ fontSize: '1.25rem', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 20, height: 20 }}>🧩</span>
                             <span>Extension</span>
                         </Link>
+                        <Link href="/referral" className={`${styles.link} ${isActive('/referral') ? styles.active : ''}`}>
+                            <span style={{ fontSize: '1.25rem', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 20, height: 20 }}>🎁</span>
+                            <span>Referrals</span>
+                        </Link>
                     </div>
                 </nav>
+
 
                 <div className={styles.footer}>
                     <div className={styles.credits}>

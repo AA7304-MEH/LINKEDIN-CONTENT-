@@ -104,10 +104,10 @@ export default function PricingTable() {
                                 <span className={styles.check}>✓</span> 5 posts per month
                             </li>
                             <li className={styles.feature}>
-                                <span className={styles.check}>✓</span> Basic hook generator
+                                <span className={styles.check}>✓</span> Basic templates
                             </li>
                             <li className={styles.feature}>
-                                <span className={styles.check}>✓</span> Standard post templates
+                                <span className={styles.check}>✓</span> Forever free
                             </li>
                         </ul>
                         <Link href="/sign-up" className={`${styles.button} ${styles.buttonOutline}`}>
@@ -130,13 +130,13 @@ export default function PricingTable() {
                                 <span className={styles.check}>✓</span> Unlimited posts
                             </li>
                             <li className={styles.feature}>
-                                <span className={styles.check}>✓</span> Advanced AI Voice DNA
+                                <span className={styles.check}>✓</span> Personal Voice DNA
                             </li>
                             <li className={styles.feature}>
-                                <span className={styles.check}>✓</span> Viral Hook Engine access
+                                <span className={styles.check}>✓</span> Content Scheduling
                             </li>
                             <li className={styles.feature}>
-                                <span className={styles.check}>✓</span> Content repurposing
+                                <span className={styles.check}>✓</span> Advanced Analytics
                             </li>
                         </ul>
                         <Link
@@ -152,30 +152,31 @@ export default function PricingTable() {
                     <div className={styles.card}>
                         <h3 className={styles.planName}>Business</h3>
                         <div className={styles.price}>
-                            $99<span>/mo</span>
+                            $49<span>/mo</span>
                         </div>
                         <ul className={styles.features}>
                             <li className={styles.feature}>
                                 <span className={styles.check}>✓</span> Everything in Pro
                             </li>
                             <li className={styles.feature}>
-                                <span className={styles.check}>✓</span> 5 Team members
+                                <span className={styles.check}>✓</span> Multiple profiles
                             </li>
                             <li className={styles.feature}>
-                                <span className={styles.check}>✓</span> Collaborative workflow
+                                <span className={styles.check}>✓</span> Team collaboration
                             </li>
                             <li className={styles.feature}>
                                 <span className={styles.check}>✓</span> Priority support
                             </li>
                         </ul>
                         <button
-                            onClick={() => handlePayment('Business', 99)}
+                            onClick={() => handlePayment('Business', 49)}
                             className={`${styles.button} ${styles.buttonOutline}`}
                         >
-                            Contact Sales
+                            Start with Business
                         </button>
                     </div>
                 </div>
+
             </div>
         </section>
     );
