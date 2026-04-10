@@ -37,7 +37,19 @@ export async function generateMarketingArticle(options: ArticleOptions) {
     Do not wrap in \`\`\`markdown code blocks.
   `;
 
-    const result = await model.generateContent(prompt);
+    let result;
+    try {
+        result = await model.generateContent(prompt);
+    } catch (error: any) {
+        console.error("Article generation error:", error);
+        if (error.message?.includes('leaked') || error.status === 403) {
+            throw new Error('AI API Key is invalid or revoked. Please update configuration.');
+        }
+        if (error.message?.includes('not found') || error.status === 404) {
+            throw new Error('AI Model not found. Please check model name and API key access.');
+        }
+        throw error;
+    }
     const response = await result.response;
     const content = response.text().trim();
 

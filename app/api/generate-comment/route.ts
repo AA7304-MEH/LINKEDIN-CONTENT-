@@ -41,7 +41,7 @@ export async function POST(request: Request) {
             }
         }
 
-        const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         // Pick a random story to potentially use in the 'story' comment option
         const randomStory = userStories.length > 0 ? userStories[Math.floor(Math.random() * userStories.length)] : null;
@@ -76,10 +76,31 @@ export async function POST(request: Request) {
     } catch (error: any) {
         console.error("Comment generation error:", error);
 
-        let errorMessage = 'Failed to generate comments';
-        if (error.message && error.message.includes('404')) {
-            errorMessage = 'AI Model not found or API Key invalid. Please check server configuration.';
-        } else if (error.message) {
+        const errorMsg = error.message?.toLowerCase() || "";
+        
+        if (errorMsg.includes('leaked') || errorMsg.includes('revoked') || error.status === 403) {
+            return NextResponse.json(
+                { error: 'AI API Key is invalid or revoked. Please update configuration.' },
+                { status: 403 }
+            );
+        }
+
+        if (errorMsg.includes('invalid') || errorMsg.includes('expired') || error.status === 400) {
+            return NextResponse.json(
+                { error: 'AI API Key is expired or invalid. Please provide a new key.' },
+                { status: 400 }
+            );
+        }
+
+        if (errorMsg.includes('not found') || error.status === 404) {
+            return NextResponse.json(
+                { error: 'AI Model not found. Please check model name and API key access.' },
+                { status: 404 }
+            );
+        }
+
+        let errorMessage = 'Failed to generate comments. Please try again later.';
+        if (error.message) {
             errorMessage = error.message;
         }
 

@@ -41,7 +41,7 @@ export async function POST(request: Request) {
             textToProcess = `Content from ${url}`;
         }
 
-        const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         const prompt = `Repurpose the following content into LinkedIn formats:
     Content: "${textToProcess.substring(0, 5000)}"
@@ -74,10 +74,34 @@ export async function POST(request: Request) {
         if (!data.question) data.question = "could not generate question";
 
         return NextResponse.json(data);
-    } catch (error) {
+    } catch (error: any) {
         console.error("Repurpose error:", error);
+
+        const errorMsg = error.message?.toLowerCase() || "";
+        
+        if (errorMsg.includes('leaked') || errorMsg.includes('revoked') || error.status === 403) {
+            return NextResponse.json(
+                { error: 'AI API Key is invalid or revoked. Please update configuration.' },
+                { status: 403 }
+            );
+        }
+
+        if (errorMsg.includes('invalid') || errorMsg.includes('expired') || error.status === 400) {
+            return NextResponse.json(
+                { error: 'AI API Key is expired or invalid. Please provide a new key.' },
+                { status: 400 }
+            );
+        }
+
+        if (errorMsg.includes('not found') || error.status === 404) {
+            return NextResponse.json(
+                { error: 'AI Model not found. Please check model name and API key access.' },
+                { status: 404 }
+            );
+        }
+
         return NextResponse.json(
-            { error: 'Failed to repurpose content' },
+            { error: 'Failed to repurpose content. Please try again later.' },
             { status: 500 }
         );
     }

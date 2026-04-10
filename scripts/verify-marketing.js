@@ -42,8 +42,12 @@ async function verifyMarketing() {
         try {
             result = await model.generateContent(prompt);
         } catch (apiError) {
-            if (apiError.message?.includes("leaked")) {
+            const errorMsg = apiError.message?.toLowerCase() || "";
+            if (errorMsg.includes("leaked") || errorMsg.includes("revoked") || apiError.status === 403) {
                 throw new Error("API Key is LEAKED and REVOKED. Please get a new key.");
+            }
+            if (errorMsg.includes("invalid") || errorMsg.includes("expired") || apiError.status === 400) {
+                throw new Error("API Key is INVALID or EXPIRED. Please get a fresh key.");
             }
             throw apiError;
         }

@@ -113,9 +113,16 @@ export async function generateMarketingPosts(options: GenerateOptions) {
                 generatedPosts.push(post);
             }
 
-        } catch (error) {
+        } catch (error: any) {
             console.error(`Failed to generate for ${platform}:`, error);
-            // We continue to next platform even if one fails
+            
+            if (error.message?.includes('leaked') || error.status === 403) {
+                throw new Error('AI API Key is invalid or revoked. Please update configuration.');
+            }
+            if (error.message?.includes('not found') || error.status === 404) {
+                throw new Error('AI Model not found. Please check model name and API key access.');
+            }
+            // For other errors, we continue to next platform
         }
     }
 

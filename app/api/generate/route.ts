@@ -153,15 +153,23 @@ export async function POST(request: Request) {
     } catch (error: any) {
         console.error("Generation error:", error);
         
-        // Handle specific AI provider issues
-        if (error.message?.includes('leaked') || error.status === 403) {
+        const errorMsg = error.message?.toLowerCase() || "";
+        
+        if (errorMsg.includes('leaked') || errorMsg.includes('revoked') || error.status === 403) {
             return NextResponse.json(
                 { error: 'AI API Key is invalid or revoked. Please update GOOGLE_GENERATIVE_AI_API_KEY in Vercel settings.' },
                 { status: 403 }
             );
         }
 
-        if (error.message?.includes('not found') || error.status === 404) {
+        if (errorMsg.includes('invalid') || errorMsg.includes('expired') || error.status === 400) {
+            return NextResponse.json(
+                { error: 'AI API Key is expired or invalid. Please check your credentials.' },
+                { status: 400 }
+            );
+        }
+
+        if (errorMsg.includes('not found') || error.status === 404) {
             return NextResponse.json(
                 { error: 'AI Model not found. Please ensure the model name is correct and your API key has access.' },
                 { status: 404 }

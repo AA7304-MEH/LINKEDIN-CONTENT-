@@ -58,7 +58,7 @@ export async function POST(request: Request) {
         `).join('\n\n');
 
         // 2. Ask Gemini
-        const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         const systemPrompt = `You are the Resodin Support Assistant.
         Answer the user's question ONLY using the provided Knowledge Base context below.
@@ -93,8 +93,32 @@ export async function POST(request: Request) {
             confidence: scoredItems.length > 0 ? 'high' : 'low'
         });
 
-    } catch (error) {
+    } catch (error: any) {
         console.error("AI Support Error:", error);
-        return NextResponse.json({ error: 'Failed to process request' }, { status: 500 });
+
+        const errorMsg = error.message?.toLowerCase() || "";
+        
+        if (errorMsg.includes('leaked') || errorMsg.includes('revoked') || error.status === 403) {
+            return NextResponse.json(
+                { error: 'AI API Key is invalid or revoked. Please update configuration.' },
+                { status: 403 }
+            );
+        }
+
+        if (errorMsg.includes('invalid') || errorMsg.includes('expired') || error.status === 400) {
+            return NextResponse.json(
+                { error: 'AI API Key is expired or invalid. Please provide a new key.' },
+                { status: 400 }
+            );
+        }
+
+        if (errorMsg.includes('not found') || error.status === 404) {
+            return NextResponse.json(
+                { error: 'AI Model not found. Please check model name and API key access.' },
+                { status: 404 }
+            );
+        }
+
+        return NextResponse.json({ error: 'Failed to process support request. Please try again later.' }, { status: 500 });
     }
 }
