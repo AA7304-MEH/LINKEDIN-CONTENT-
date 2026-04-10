@@ -59,15 +59,15 @@ export default function AuditQuestion({ question, onAnswer, currentAnswer }: Aud
                         ))}
 
                         {question.type === "scale" && (
-                            <div className="flex flex-wrap md:flex-nowrap gap-3 md:gap-6 justify-between pt-6 md:pt-10">
+                            <div className="flex flex-wrap md:flex-nowrap gap-3 md:gap-4 justify-between pt-10">
                                 {[1, 2, 3, 4, 5].map((num) => (
                                     <button
                                         key={num}
                                         onClick={() => setSelected(num)}
-                                        className={`rounded-2xl md:rounded-3xl font-black border-2 md:border-4 transition-all duration-300 transform active:scale-90 flex-1 min-w-[50px] md:min-w-0 min-h-[80px] md:min-h-[180px] text-2xl md:text-6xl
+                                        className={`rounded-3xl font-black border transition-all duration-300 transform active:scale-95 flex-1 min-w-[50px] min-h-[120px] md:min-h-[160px] text-4xl md:text-5xl
                                             ${selected === num
-                                                ? "bg-[#00aaff] border-[#00aaff] text-white shadow-[0_0_50px_rgba(0,170,255,0.7)] scale-110 z-10"
-                                                : "bg-[#1a1a20] border-[#3a3a40] text-gray-400 hover:border-white hover:text-white hover:bg-[#25252b] hover:scale-105"
+                                                ? "bg-[#00e5ff] border-[#00e5ff] text-[#030303] shadow-[0_10px_40px_rgba(0,229,255,0.4)] scale-105 z-10"
+                                                : "bg-white/5 border-white/10 text-slate-500 hover:border-white/20 hover:text-white hover:bg-white/10"
                                             }`}
                                     >
                                         {num}
@@ -77,13 +77,13 @@ export default function AuditQuestion({ question, onAnswer, currentAnswer }: Aud
                         )}
 
                         {question.type === "text" && (
-                            <div className="pt-6 md:pt-10">
+                            <div className="pt-10">
                                 <input
                                     type="text"
                                     placeholder={question.placeholder}
                                     value={selected || ""}
                                     onChange={(e) => setSelected(e.target.value)}
-                                    className="w-full rounded-xl md:rounded-2xl bg-[#0d0d12] border-2 md:border-4 border-[#3a3a40] text-white focus:border-[#00aaff] focus:ring-4 focus:ring-[#00aaff]/30 focus:outline-none transition-all placeholder:text-gray-600 font-semibold text-xl md:text-4xl p-4 md:p-8"
+                                    className="w-full rounded-2xl bg-white/5 border border-white/10 text-white focus:border-[#00e5ff] focus:ring-4 focus:ring-[#00e5ff]/20 focus:outline-none transition-all placeholder:text-slate-700 font-bold text-2xl md:text-3xl p-6 md:p-8"
                                     autoFocus
                                     onKeyDown={(e) => {
                                         if (e.key === "Enter" && selected) {
@@ -95,13 +95,13 @@ export default function AuditQuestion({ question, onAnswer, currentAnswer }: Aud
                         )}
                     </div>
 
-                    <div className="pt-6 flex justify-end">
+                    <div className="pt-12 flex justify-center">
                         <button
                             onClick={handleNext}
                             disabled={!selected}
-                            className={`${styles.btnPrimary} w-full md:w-auto min-w-[140px]`}
+                            className={`${styles.btnPrimary} w-full md:w-auto px-12 py-5 rounded-2xl text-lg font-black tracking-tight`}
                         >
-                            Next Step →
+                            Next Step
                         </button>
                     </div>
                 </div>

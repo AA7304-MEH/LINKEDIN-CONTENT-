@@ -1,6 +1,6 @@
 .section {
-    padding: 6rem 2rem;
-    background: white;
+    padding: 8rem 2rem;
+    background: #030303;
 }
 
 .container {
@@ -10,38 +10,45 @@
 
 .title {
     text-align: center;
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 3rem;
-    color: var(--foreground);
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 5rem;
+    color: white;
+    letter-spacing: -0.04em;
 }
 
 .accordion {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.25rem;
 }
 
 .item {
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
+    border: 1px solid var(--surface-glass-border);
+    border-radius: 20px;
     overflow: hidden;
+    background: var(--surface-glass);
+    transition: all 0.3s ease;
+}
+
+.item:hover {
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .question {
     width: 100%;
-    padding: 1.5rem;
+    padding: 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: white;
+    background: transparent;
     border: none;
     cursor: pointer;
     text-align: left;
-    font-weight: 600;
-    font-size: 1.05rem;
-    color: var(--foreground);
-    transition: background 0.2s ease;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: white;
+    transition: all 0.3s ease;
 }
 
 .question:hover {
@@ -49,25 +56,31 @@
 }
 
 .answer {
-    padding: 0 1.5rem;
+    padding: 0 2rem;
     max-height: 0;
     overflow: hidden;
-    transition: all 0.3s ease;
-    background: white;
-    color: var(--text-secondary);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    color: var(--text-muted);
+    font-weight: 500;
     line-height: 1.6;
 }
 
 .answer.open {
-    padding: 0 1.5rem 1.5rem 1.5rem;
-    max-height: 300px;
-    /* Arbitrary large height */
+    padding: 0 2rem 2rem 2rem;
+    max-height: 400px;
 }
 
 .icon {
-    transition: transform 0.3s ease;
-    font-size: 1.25rem;
-    color: var(--text-secondary);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    font-size: 0.8rem;
+    color: var(--primary);
+    background: rgba(0, 229, 255, 0.1);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
 }
 
 .icon.open {

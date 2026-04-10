@@ -9,231 +9,77 @@ interface AuditWelcomeProps {
 export default function AuditWelcome({ onStart }: AuditWelcomeProps) {
     return (
         <section
-            className="flex flex-col items-center justify-center relative w-full overflow-hidden bg-[#0d0d12] px-6 py-12 md:px-8 md:py-16 min-h-[70vh] md:min-h-[85vh]"
+            className="flex flex-col items-center justify-center relative w-full overflow-hidden bg-[#030303] px-6 py-20 md:px-8 md:py-32 min-h-[70vh] md:min-h-[85vh]"
         >
-            {/* Glow Orb - Teal */}
-            <div
-                style={{
-                    position: 'absolute',
-                    top: '-150px',
-                    left: '-150px',
-                    width: '500px',
-                    height: '500px',
-                    background: 'radial-gradient(circle, rgba(0,170,255,0.25) 0%, transparent 60%)',
-                    borderRadius: '50%',
-                    filter: 'blur(80px)',
-                    pointerEvents: 'none'
-                }}
-            />
+            {/* Glossy Accents */}
+            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#00e5ff]/10 blur-[120px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-[#0077b5]/10 blur-[100px] rounded-full pointer-events-none" />
 
-            {/* Glow Orb - Purple */}
-            <div
-                style={{
-                    position: 'absolute',
-                    bottom: '-150px',
-                    right: '-150px',
-                    width: '500px',
-                    height: '500px',
-                    background: 'radial-gradient(circle, rgba(138,43,226,0.2) 0%, transparent 60%)',
-                    borderRadius: '50%',
-                    filter: 'blur(80px)',
-                    pointerEvents: 'none'
-                }}
-            />
-
-            {/* Grid Pattern Overlay */}
-            <div
-                style={{
-                    position: 'absolute',
-                    inset: 0,
-                    backgroundImage: `
-                        linear-gradient(rgba(40, 40, 50, 0.4) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(40, 40, 50, 0.4) 1px, transparent 1px)
-                    `,
-                    backgroundSize: '60px 60px',
-                    maskImage: 'radial-gradient(circle at center, black 30%, transparent 70%)',
-                    WebkitMaskImage: 'radial-gradient(circle at center, black 30%, transparent 70%)',
-                    pointerEvents: 'none',
-                    zIndex: 0
-                }}
-            />
-
-            {/* Main Content */}
-            <div
-                style={{
-                    position: 'relative',
-                    zIndex: 10,
-                    maxWidth: '900px',
-                    width: '100%',
-                    textAlign: 'center',
-                    margin: '0 auto'
-                }}
-            >
+            {/* Content Container */}
+            <div className="relative z-10 max-w-5xl w-full text-center mx-auto">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
                 >
-                    {/* Badge */}
-                    <div
-                        style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            padding: '8px 16px',
-                            borderRadius: '9999px',
-                            backgroundColor: 'rgba(0,170,255,0.1)',
-                            border: '1px solid rgba(0,170,255,0.3)',
-                            marginBottom: '2rem'
-                        }}
-                    >
-                        <span
-                            style={{
-                                width: '8px',
-                                height: '8px',
-                                borderRadius: '50%',
-                                backgroundColor: '#00aaff',
-                                animation: 'pulse 2s infinite'
-                            }}
-                        />
-                        <span style={{ color: '#00aaff', fontSize: '14px', fontWeight: 600 }}>
-                            Free Content Strategy Audit
+                    {/* Futuristic Badge */}
+                    <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-12 group hover:border-[#00e5ff]/30 transition-all duration-300">
+                        <span className="relative flex h-2 w-2">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00e5ff] opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00e5ff]"></span>
+                        </span>
+                        <span className="text-[#00e5ff] text-xs font-bold tracking-[0.2em] uppercase">
+                            AI Content Diagnostic v2.0
                         </span>
                     </div>
 
-                    {/* Headline */}
-                    <h1
-                        style={{
-                            fontSize: 'clamp(2.5rem, 8vw, 5rem)',
-                            fontWeight: 800,
-                            color: 'white',
-                            lineHeight: 1.1,
-                            marginBottom: '1.5rem',
-                            letterSpacing: '-0.02em',
-                            textAlign: 'center',
-                            margin: '0 auto 1.5rem',
-                            maxWidth: '850px'
-                        }}
-                    >
-                        Decode Your{' '}
-                        <span
-                            style={{
-                                background: 'linear-gradient(135deg, #00aaff 0%, #00ffff 100%)',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
-                                backgroundClip: 'text'
-                            }}
-                        >
-                            Content DNA
-                        </span>
+                    {/* Elite Headline */}
+                    <h1 className="text-6xl md:text-8xl font-black text-white leading-[0.9] mb-10 tracking-tighter">
+                        Decode Your <br/>
+                        <span className="text-gradient accent-glow">Content DNA</span>
                     </h1>
 
-                    {/* Subheadline */}
-                    <p
-                        style={{
-                            fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
-                            color: '#a0a0a0',
-                            maxWidth: '650px',
-                            margin: '0 auto 2.5rem',
-                            lineHeight: 1.6,
-                            textAlign: 'center'
-                        }}
-                    >
-                        Stop guessing what works. Our AI analyzes your unique goals to reverse-engineer a content strategy that actually converts.
+                    {/* Precision Subheadline */}
+                    <p className="text-slate-400 text-xl md:text-2xl max-w-2xl mx-auto mb-16 font-medium leading-relaxed">
+                        Stop guessing your strategy. Our diagnostic engine reverse-engineers your unique inputs into an authority-building growth plan.
                     </p>
 
-                    {/* CTA Button */}
-                    <motion.button
-                        onClick={onStart}
-                        whileHover={{ scale: 1.05, y: -3 }}
-                        whileTap={{ scale: 0.98 }}
-                        style={{
-                            background: 'linear-gradient(135deg, #00aaff 0%, #0088cc 100%)',
-                            color: 'white',
-                            fontSize: '1.3rem',
-                            fontWeight: 700,
-                            padding: '1.2rem 3.5rem',
-                            borderRadius: '14px',
-                            border: 'none',
-                            cursor: 'pointer',
-                            boxShadow: '0 10px 50px rgba(0,170,255,0.4), 0 0 0 3px rgba(0,170,255,0.15)',
-                            marginBottom: '2rem'
-                        }}
-                    >
-                        Start My Free Audit →
-                    </motion.button>
+                    {/* Glassmorphic Action Area */}
+                    <div className="flex flex-col items-center gap-10">
+                        <motion.button
+                            onClick={onStart}
+                            whileHover={{ scale: 1.05, y: -4 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="bg-white text-[#030303] text-xl font-black px-12 py-6 rounded-3xl shadow-[0_20px_50px_rgba(255,255,255,0.15)] hover:bg-[#00e5ff] transition-colors duration-300"
+                        >
+                            Begin Diagnostic Tool
+                        </motion.button>
 
-                    {/* Social Proof */}
-                    <div
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: '12px',
-                            marginBottom: '3rem',
-                            width: 'fit-content',
-                            margin: '0 auto 3rem'
-                        }}
-                    >
-                        <div style={{ display: 'flex' }}>
-                            {[1, 2, 3, 4].map((i) => (
-                                <div
-                                    key={i}
-                                    style={{
-                                        width: '32px',
-                                        height: '32px',
-                                        borderRadius: '50%',
-                                        backgroundColor: '#3a3a45',
-                                        border: '2px solid #0d0d12',
-                                        marginLeft: i > 1 ? '-8px' : 0
-                                    }}
-                                />
-                            ))}
+                        <div className="flex items-center gap-4 text-slate-500 font-semibold tracking-wide">
+                            <div className="flex -space-x-3">
+                                {[1, 2, 3, 4].map((i) => (
+                                    <div key={i} className="w-10 h-10 rounded-full border-4 border-[#030303] bg-slate-800" />
+                                ))}
+                            </div>
+                            <span>Join 2,000+ top-tier creators</span>
                         </div>
-                        <span style={{ color: '#888', fontSize: '15px' }}>
-                            Trusted by <span style={{ color: 'white', fontWeight: 600 }}>12,000+ Creators</span>
-                        </span>
                     </div>
 
-                    {/* Stats Row */}
-                    <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            gap: '3rem',
-                            borderTop: '1px solid #2a2a35',
-                            paddingTop: '2rem',
-                            flexWrap: 'wrap',
-                            width: '100%',
-                            maxWidth: '700px',
-                            margin: '0 auto'
-                        }}
-                    >
+                    {/* Metrics Footer */}
+                    <div className="mt-32 pt-16 border-t border-white/5 grid grid-cols-3 gap-8 max-w-3xl mx-auto">
                         {[
-                            { value: '2 Min', label: 'Analysis' },
-                            { value: '100%', label: 'Personalized' },
-                            { value: 'Free', label: 'Report' }
+                            { value: '2m', label: 'Diagnostic' },
+                            { value: '100', label: 'Archetypes' },
+                            { value: '0$', label: 'Commitment' }
                         ].map((stat) => (
-                            <div key={stat.label} style={{ textAlign: 'center' }}>
-                                <div style={{ fontSize: '2rem', fontWeight: 700, color: 'white' }}>
-                                    {stat.value}
-                                </div>
-                                <div style={{ fontSize: '0.85rem', color: '#666', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-                                    {stat.label}
-                                </div>
+                            <div key={stat.label} className="flex flex-col items-center">
+                                <div className="text-3xl font-black text-white mb-2">{stat.value}</div>
+                                <div className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">{stat.label}</div>
                             </div>
                         ))}
                     </div>
                 </motion.div>
             </div>
-
-            {/* Pulse Animation Keyframes */}
-            <style jsx global>{`
-                @keyframes pulse {
-                    0%, 100% { opacity: 1; }
-                    50% { opacity: 0.5; }
-                }
-            `}</style>
         </section>
     );
 }

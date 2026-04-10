@@ -31,37 +31,43 @@ const testimonials = [
 
 export default function TestimonialsSection() {
     return (
-        <section className="py-24 bg-[#0d0d12] border-y border-white/5">
+        <section className="py-32 bg-[#030303] border-y border-white/5 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Trusted by the next generation of leaders</h2>
-                    <p className="text-gray-400">Join 2,000+ professionals building their authority with Resodin.</p>
+                <div className="text-center mb-24">
+                    <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tighter">Velocity of <span className="text-gradient">influence</span></h2>
+                    <p className="text-slate-400 text-xl font-medium max-w-2xl mx-auto tracking-tight">Join 2,000+ top-tier professionals scaling their presence with precision.</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {testimonials.map((t, index) => (
                         <motion.div
                             key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className="p-8 rounded-2xl bg-[#13131a] border border-white/5 hover:bg-[#161620] transition-colors"
+                            className="p-10 rounded-[2rem] premium-glass relative group"
                         >
-                            <div className="flex items-center gap-4 mb-6">
-                                <div className={`w-12 h-12 rounded-full ${t.color} flex items-center justify-center text-white font-bold text-lg shadow-lg`}>
+                            <div className="flex items-center gap-5 mb-8">
+                                <div className={`w-14 h-14 rounded-2xl ${t.color} flex items-center justify-center text-white font-black text-xl shadow-2xl rotate-3 group-hover:rotate-0 transition-transform duration-300`}>
                                     {t.initials}
                                 </div>
-                                <div>
-                                    <h3 className="text-white font-semibold">{t.name}</h3>
-                                    <p className="text-gray-500 text-sm">{t.title}</p>
+                                <div className="text-left">
+                                    <h3 className="text-white font-bold text-lg leading-tight">{t.name}</h3>
+                                    <p className="text-slate-500 text-xs font-black uppercase tracking-widest">{t.title}</p>
                                 </div>
                             </div>
-                            <p className="text-gray-300 italic mb-6 leading-relaxed">
+                            <p className="text-slate-300 font-medium italic mb-8 leading-relaxed text-sm opacity-90">
                                 "{t.quote}"
                             </p>
-                            <div className="pt-6 border-t border-white/5 text-blue-400 font-medium flex items-center gap-2">
-                                <span className="text-lg">📈</span> {t.metric}
+                            <div className="pt-6 border-t border-white/5 flex items-center justify-between">
+                                <div className="flex items-center gap-3 text-[#00e5ff] font-black text-xs tracking-widest uppercase">
+                                    <span className="w-2 h-2 rounded-full bg-[#00e5ff] animate-pulse"></span>
+                                    Verified Result
+                                </div>
+                                <div className="text-white font-black text-xs">
+                                    {t.metric.split(' ')[1]} {t.metric.split(' ')[2]}
+                                </div>
                             </div>
                         </motion.div>
                     ))}

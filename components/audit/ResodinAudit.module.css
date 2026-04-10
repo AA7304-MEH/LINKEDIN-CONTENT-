@@ -1,19 +1,17 @@
 /* Resodin Native App Theme (Pro Creator Identity) */
 
 .resodinNativeContainer {
-    --resodin-teal: #00aaff;
-    /* #0af */
-    --resodin-teal-hover: #33bbff;
-    --resodin-bg-dark: #0d0d12;
-    --resodin-surface: #1a1a20;
-    /* Dark gray surface */
-    --resodin-border: #2a2a30;
+    --resodin-teal: var(--primary);
+    --resodin-teal-hover: var(--primary-hover);
+    --resodin-bg-dark: var(--bg-obsidian);
+    --resodin-surface: var(--surface-glass);
+    --resodin-border: var(--surface-glass-border);
     --resodin-text-main: #ffffff;
-    --resodin-text-muted: #a0a0a0;
+    --resodin-text-muted: var(--text-muted);
 
     background-color: var(--resodin-bg-dark);
     color: var(--resodin-text-main);
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
 }
 
@@ -91,11 +89,14 @@
 
 /* Cards */
 .proCard {
-    background-color: var(--resodin-surface);
-    border: 1px solid var(--resodin-border);
-    border-radius: 16px;
+    background: var(--surface-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--surface-glass-border);
+    border-radius: 24px;
     padding: 3rem;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 }
 
 @media (max-width: 768px) {
@@ -105,8 +106,9 @@
 }
 
 .answerCard {
-    background-color: var(--resodin-surface);
-    border: 1px solid var(--resodin-border);
+    background-color: var(--surface-glass);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--surface-glass-border);
     border-radius: 12px;
     padding: 1.75rem;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -134,10 +136,8 @@
 
 .answerCardSelected {
     border-color: var(--resodin-teal);
-    background-color: rgba(0, 170, 255, 0.08);
-    /* Subtle teal tint */
-    box-shadow: 0 0 0 2px var(--resodin-teal), 0 8px 20px rgba(0, 170, 255, 0.15);
-    /* Stronger glow */
+    background-color: rgba(0, 229, 255, 0.05);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.2), inset 0 0 0 1px var(--resodin-teal);
     transform: translateY(-2px) scale(1.01);
 }
 

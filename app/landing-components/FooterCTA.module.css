@@ -1,9 +1,20 @@
-/* CTA Section */
 .ctaSection {
-    padding: 6rem 2rem;
-    background: linear-gradient(135deg, var(--linkedin-blue), var(--light-blue));
+    padding: 10rem 2rem;
+    background: radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.1) 0%, rgba(3, 3, 3, 0) 70%);
     text-align: center;
-    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.ctaSection::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--surface-glass-border), transparent);
 }
 
 .ctaContainer {
@@ -12,9 +23,12 @@
 }
 
 .ctaTitle {
-    font-size: 2.5rem;
-    font-weight: 800;
-    margin-bottom: 2rem;
+    font-size: 4rem;
+    font-weight: 900;
+    margin-bottom: 2.5rem;
+    color: white;
+    letter-spacing: -0.04em;
+    line-height: 1;
 }
 
 .ctaForm {
@@ -34,20 +48,21 @@
 }
 
 .ctaButton {
-    background: var(--foreground);
-    color: white;
-    padding: 1rem 2rem;
-    border-radius: 8px;
-    font-weight: 700;
+    background: white;
+    color: #030303;
+    padding: 1.25rem 2.5rem;
+    border-radius: 999px;
+    font-weight: 800;
     border: none;
     cursor: pointer;
     white-space: nowrap;
-    transition: transform 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .ctaButton:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    background: var(--primary);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 229, 255, 0.4);
 }
 
 .ctaSub {
@@ -58,11 +73,10 @@
 /* Footer */
 /* Footer */
 .footer {
-    background: #0d0d12;
-    color: #9ca3af;
-    padding: 6rem 2rem 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    font-family: var(--font-inter, sans-serif);
+    background: #030303;
+    color: var(--text-muted);
+    padding: 8rem 2rem 4rem;
+    border-top: 1px solid var(--surface-glass-border);
 }
 
 .footerContainer {
@@ -125,15 +139,16 @@
 }
 
 .footerLink {
-    color: #9ca3af;
-    font-size: 0.95rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: all 0.2s ease;
+    font-weight: 500;
 }
 
 .footerLink:hover {
-    color: #00aaff;
-    /* Teal accent */
+    color: white;
+    transform: translateX(4px);
 }
 
 /* Column 3: Social & Legal */
@@ -162,18 +177,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    color: #fff;
-    transition: all 0.2s ease;
+    width: 44px;
+    height: 44px;
+    background: var(--surface-glass);
+    border: 1px solid var(--surface-glass-border);
+    border-radius: 12px;
+    color: white;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .socialIconLink:hover {
-    background: #00aaff;
-    color: #fff;
-    transform: translateY(-2px);
+    background: white;
+    color: #030303;
+    transform: translateY(-4px) rotate(5deg);
 }
 
 .legal {

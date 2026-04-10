@@ -31,34 +31,34 @@ export default function HeroSection() {
             <div className={styles.container}>
                 <div className={styles.leftContent}>
                     <h1 className={styles.headline}>
-                        Stop Struggling with LinkedIn. <span className={styles.highlight}>Start Growing.</span>
+                        Stop Guessing. <span className={styles.highlight}>Start Growing.</span>
                     </h1>
                     <p className={styles.subheadline}>
-                        AI-powered content generation that understands your personal voice and creates scroll-stopping posts in 30 seconds.
+                        The first AI content engine that decodes your personal voice to create high-impact LinkedIn posts that actually convert.
                     </p>
 
                     <div className={styles.ctaGroup}>
-                        <Link href="/sign-up" className={`${styles.primaryBtn} pulse-button`}>
-                            Start Free Trial →
+                        <Link href="/sign-up" className={styles.primaryBtn}>
+                            Analyze My Voice
                         </Link>
                         <button className={styles.secondaryBtn} onClick={() => setShowVideo(true)}>
-                            <svg fill="currentColor" viewBox="0 0 24 24" height="20" width="20">
-                                <path d="M8 5v14l11-7z" />
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" height="20" width="20" strokeWidth="2">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            Watch Demo
+                            Explore Demo
                         </button>
-                    </div>
-                    {/* Testimonial added below CTA */}
-                    <div style={{ textAlign: 'center', margin: '1rem 0', fontSize: '0.9rem', color: '#666' }}>
-                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', margin: '0.5rem' }}>
-                            <span style={{ color: 'gold' }}>★★★★★</span>
-                            <span>"Generated 3 viral posts in first week!"</span>
-                            <span style={{ opacity: 0.7, fontSize: '0.8rem' }}>(Based on early user feedback)</span>
-                        </div>
                     </div>
 
                     <div className={styles.trust}>
-                        Join professionals building their brand on LinkedIn
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                            <div style={{ display: 'flex', marginLeft: '0.5rem' }}>
+                                {[1, 2, 3, 4].map(i => (
+                                    <div key={i} style={{ width: '28px', height: '28px', borderRadius: '50%', border: '2px solid #030303', background: '#1a1a20', marginLeft: '-8px' }}></div>
+                                ))}
+                            </div>
+                            <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Trusted by 2,000+ creators</span>
+                        </div>
                     </div>
                 </div>
 
@@ -70,22 +70,26 @@ export default function HeroSection() {
                             <div className={`${styles.dot} ${styles.green}`}></div>
                         </div>
                         {/* Abstract representation of content */}
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                            <div style={{ width: '60%', height: '12px', background: '#f0f0f0', borderRadius: '4px' }}></div>
-                            <div style={{ width: '80%', height: '12px', background: '#f0f0f0', borderRadius: '4px' }}></div>
-                            <div style={{ width: '90%', height: '12px', background: '#f0f0f0', borderRadius: '4px' }}></div>
-                            <div style={{ width: '75%', height: '12px', background: '#f0f0f0', borderRadius: '4px' }}></div>
-                            <div style={{ marginTop: '1rem', width: '100%', height: '100px', background: '#f8f9fa', borderRadius: '8px' }}></div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                            <div style={{ width: '40%', height: '10px', background: 'rgba(255,255,255,0.1)', borderRadius: '10px' }}></div>
+                            <div style={{ width: '85%', height: '10px', background: 'rgba(255,255,255,0.05)', borderRadius: '10px' }}></div>
+                            <div style={{ width: '70%', height: '10px', background: 'rgba(255,255,255,0.05)', borderRadius: '10px' }}></div>
+                            <div style={{ marginTop: '1.5rem', width: '100%', height: '140px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(0, 229, 255, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--primary)', boxShadow: '0 0 15px var(--primary)' }}></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div className={styles.demoWidget}>
-                        <div className={styles.widgetTitle}>Test Your Hook Score</div>
+                        <div className={styles.widgetTitle}>Viral Hook Score (Beta)</div>
                         <div className={styles.inputGroup}>
                             <input
                                 type="text"
                                 className={styles.input}
-                                placeholder="Topic (e.g. Remote Work)"
+                                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}
+                                placeholder="Enter a topic..."
                                 value={topic}
                                 onChange={(e) => setTopic(e.target.value)}
                             />
@@ -94,7 +98,7 @@ export default function HeroSection() {
                                 className={styles.analyzeBtn}
                                 disabled={loading}
                             >
-                                {loading ? 'Analyzing...' : 'Test Your Hook Score'}
+                                {loading ? '...' : 'Analyze'}
                             </button>
                         </div>
 

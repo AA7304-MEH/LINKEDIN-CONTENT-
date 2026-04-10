@@ -9,7 +9,7 @@ import LandingFooter from "@/app/landing-components/LandingFooter";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#0d0d12] scroll-smooth">
+    <main className="min-h-screen bg-[#030303] scroll-smooth">
       <LandingNavbar />
       <HeroSection />
       <ProductDemoSection />

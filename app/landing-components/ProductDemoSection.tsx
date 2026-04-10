@@ -24,38 +24,40 @@ How are you using AI in your workflow this year? 👇
 #PersonalBranding #AI #FutureOfWork #Resodin`;
 
     return (
-        <section className="py-24 bg-[#0d0d12]">
+        <section className="py-32 bg-[#030303] relative">
+            <div className="absolute top-1/2 left-0 -translate-y-1/2 w-full h-[400px] bg-[#00e5ff]/5 blur-[120px] rounded-full -z-10" />
+            
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-16">
-                    <h2 className="text-4xl font-bold text-white mb-4">See Resodin in action</h2>
-                    <p className="text-gray-400">Generate high-authority posts that sound exactly like you, in seconds.</p>
+                <div className="text-center mb-24">
+                    <h2 className="text-5xl font-black text-white mb-6 tracking-tighter">Your voice, <span className="text-gradient">amplified</span></h2>
+                    <p className="text-slate-400 text-xl font-medium max-w-2xl mx-auto">Generate high-authority posts that sound exactly like you, with zero creative friction.</p>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     {/* Left side: Input Card */}
                     <motion.div 
-                        initial={{ opacity: 0, x: -20 }}
+                        initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        className="p-8 rounded-3xl bg-[#1a1a24] border border-white/10 shadow-2xl"
+                        className="p-10 rounded-[2.5rem] premium-glass shadow-2xl relative overflow-hidden group"
                     >
-                        <div className="space-y-6">
+                        <div className="space-y-8 relative z-10">
                             <div>
-                                <label className="block text-sm font-medium text-gray-400 mb-2">Topic or Hook</label>
+                                <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-3">Target Topic</label>
                                 <textarea 
-                                    className="w-full bg-[#0d0d12] border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                                    className="w-full bg-[#030303]/50 border border-white/10 rounded-2xl p-5 text-white focus:outline-none focus:border-[#00e5ff] transition-all text-lg font-medium"
                                     rows={3}
                                     value={topic}
                                     onChange={(e) => setTopic(e.target.value)}
-                                    placeholder="Enter your topic..."
+                                    placeholder="What do you want to talk about?"
                                 />
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-2">Tone</label>
+                                    <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-3">Creator Persona</label>
                                     <select 
-                                        className="w-full bg-[#0d0d12] border border-white/10 rounded-xl p-3 text-white focus:outline-none"
+                                        className="w-full bg-[#030303]/50 border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-[#00e5ff]"
                                         value={tone}
                                         onChange={(e) => setTone(e.target.value)}
                                     >
@@ -66,9 +68,9 @@ How are you using AI in your workflow this year? 👇
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-2">Type</label>
+                                    <label className="block text-xs font-black text-slate-500 uppercase tracking-widest mb-3">Content Framework</label>
                                     <select 
-                                        className="w-full bg-[#0d0d12] border border-white/10 rounded-xl p-3 text-white focus:outline-none"
+                                        className="w-full bg-[#030303]/50 border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-[#00e5ff]"
                                         value={postType}
                                         onChange={(e) => setPostType(e.target.value)}
                                     >
@@ -80,54 +82,55 @@ How are you using AI in your workflow this year? 👇
                                 </div>
                             </div>
 
-                            <button className="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all shadow-[0_0_20px_rgba(37,99,235,0.3)]">
-                                Generate 10 Variations →
+                            <button className="w-full py-5 bg-white text-[#030303] hover:bg-[#00e5ff] font-black text-lg rounded-2xl transition-all shadow-[0_10px_30px_rgba(255,255,255,0.1)] active:scale-[0.98]">
+                                Analyze & Generate
                             </button>
                         </div>
+                        <div className="absolute bottom-0 right-0 w-48 h-48 bg-[#00e5ff]/5 blur-[60px] -mr-24 -mb-24 rounded-full group-hover:bg-[#00e5ff]/10 transition-all duration-700" />
                     </motion.div>
 
                     {/* Right side: LinkedIn Mockup */}
                     <motion.div 
-                        initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                         className="relative"
                     >
                         {/* Decorative background element */}
-                        <div className="absolute -top-10 -right-10 w-64 h-64 bg-blue-600/20 blur-[80px] rounded-full -z-10" />
+                        <div className="absolute -top-16 -right-16 w-80 h-80 bg-[#00e5ff]/10 blur-[100px] rounded-full -z-10 animate-pulse" />
                         
-                        <div className="max-w-md mx-auto bg-white rounded-lg shadow-2xl overflow-hidden">
-                            <div className="p-4 border-b border-gray-100 flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600">
-                                    YOU
+                        <div className="max-w-md mx-auto bg-white rounded-3xl shadow-[0_40px_100px_rgba(0,0,0,0.5)] overflow-hidden scale-105 border border-white/20">
+                            <div className="p-6 border-b border-gray-100 flex items-center gap-4">
+                                <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-400">
+                                    AI
                                 </div>
                                 <div>
-                                    <div className="text-sm font-bold text-gray-900">Your Name (AI Generated)</div>
-                                    <div className="text-xs text-gray-500">Expert in {topic.split(' ')[0]} • 1m</div>
+                                    <div className="text-sm font-black text-gray-900 tracking-tight">Personal Voice Engine</div>
+                                    <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Model: RESODIN-v4</div>
                                 </div>
-                                <div className="ml-auto text-gray-400">•••</div>
+                                <div className="ml-auto text-gray-300">•••</div>
                             </div>
-                            <div className="p-4 text-sm text-gray-800 whitespace-pre-wrap leading-relaxed font-sans">
+                            <div className="p-6 text-[13px] text-gray-700 whitespace-pre-wrap leading-relaxed font-sans font-medium">
                                 {mockPost}
                             </div>
-                            <div className="p-3 border-t border-gray-50 flex justify-between px-6 text-gray-500 text-sm">
-                                <div className="flex items-center gap-1 hover:text-blue-600 cursor-pointer">👍 Like</div>
-                                <div className="flex items-center gap-1 hover:text-blue-600 cursor-pointer">💬 Comment</div>
-                                <div className="flex items-center gap-1 hover:text-blue-600 cursor-pointer">🔄 Repost</div>
-                                <div className="flex items-center gap-1 hover:text-blue-600 cursor-pointer">📤 Send</div>
+                            <div className="p-4 border-t border-gray-50 flex justify-between px-8 text-slate-400 text-[10px] font-black uppercase tracking-widest">
+                                <div className="hover:text-[#00e5ff] cursor-pointer">Agree</div>
+                                <div className="hover:text-[#00e5ff] cursor-pointer">Insight</div>
+                                <div className="hover:text-[#00e5ff] cursor-pointer">Expand</div>
+                                <div className="hover:text-[#00e5ff] cursor-pointer">Share</div>
                             </div>
                         </div>
 
                         {/* Floater Badge */}
                         <motion.div 
-                            animate={{ y: [0, -10, 0] }}
-                            transition={{ repeat: Infinity, duration: 3 }}
-                            className="absolute -bottom-6 -left-6 md:-left-12 bg-white p-4 rounded-2xl shadow-xl border border-blue-50 flex items-center gap-3"
+                            animate={{ y: [0, -12, 0] }}
+                            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+                            className="absolute -bottom-10 -left-6 md:-left-16 bg-black/80 backdrop-blur-xl p-6 rounded-[2rem] shadow-2xl border border-white/10 flex items-center gap-5"
                         >
-                            <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-xl">🚀</div>
+                            <div className="w-12 h-12 rounded-2xl bg-[#00e5ff]/20 flex items-center justify-center text-2xl shadow-[0_0_20px_rgba(0,229,255,0.2)]">🔥</div>
                             <div>
-                                <div className="text-xs font-bold text-gray-900">Viral Potential</div>
-                                <div className="text-lg font-black text-blue-600">9.4/10</div>
+                                <div className="text-[10px] font-black text-[#00e5ff] uppercase tracking-[0.2em] mb-1">Viral Score</div>
+                                <div className="text-2xl font-black text-white leading-none">9.8<span className="text-sm text-slate-500">/10</span></div>
                             </div>
                         </motion.div>
                     </motion.div>
