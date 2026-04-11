@@ -55,7 +55,7 @@ export default function Home() {
           <FadeIn delay={0.1}>
             <h1 className="text-center tracking-tight mb-6" 
                 style={{ fontSize: '44px', fontWeight: 800, fontFamily: "'Plus Jakarta Sans', sans-serif", lineHeight: 1.1, color: '#F9FAFB' }}>
-              <span className="block md:text-[72px]">Your LinkedIn posts, </span>
+              <span className="block md:text-[72px]">Your LinkedIn posts,</span>
               <span className="block md:text-[72px]" style={{ color: '#00E5FF' }}> written in your voice.</span>
             </h1>
           </FadeIn>
@@ -80,9 +80,9 @@ export default function Home() {
             
             <div className="flex flex-wrap items-center justify-center gap-2 mb-4 text-sm text-zinc-500 font-medium">
               <span>No credit card required</span>
-              <span className="text-zinc-700 mx-2"> · </span>
+              <span className="text-zinc-600 mx-2"> · </span>
               <span>5 free posts/month</span>
-              <span className="text-zinc-700 mx-2"> · </span>
+              <span className="text-zinc-600 mx-2"> · </span>
               <span>Cancel anytime</span>
             </div>
           </FadeIn>
@@ -413,7 +413,6 @@ export default function Home() {
         </div>
       </section>
 
-    </div>
 
     {/* Footer Section */}
     <footer className="bg-[#070C18] border-t border-white/[0.06] pt-24 pb-12 px-6">
@@ -459,7 +458,7 @@ export default function Home() {
       </div>
 
       <div className="max-w-6xl mx-auto pt-8 border-t border-white/[0.06] flex justify-between items-center">
-        <p className="text-zinc-600 text-xs">© 2026 Resodin Inc.</p>
+        <p className="text-zinc-600 text-xs">© 2026 Resodin Inc. All rights reserved.</p>
         <div className="flex gap-6 text-xs text-zinc-600">
           <span>Powered by Gemini 2.0</span>
           <span>Handcrafted for excellence</span>
@@ -467,3 +466,5 @@ export default function Home() {
       </div>
     </footer>
   </div>
+  );
+}
