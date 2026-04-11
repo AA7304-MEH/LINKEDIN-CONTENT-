@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import AuditWelcome from "./AuditWelcome";
 import AuditQuestion from "./AuditQuestion";
 import AuditResults from "./AuditResults";
-import styles from "./ResodinAudit.module.css";
 import LandingNavbar from "@/app/landing-components/LandingNavbar";
 import LandingFooter from "@/app/landing-components/LandingFooter";
 import FAQAccordion from "@/app/landing-components/FAQAccordion";
@@ -45,7 +44,7 @@ const QUESTIONS: Question[] = [
     {
         id: "topics",
         text: "What topics do you post about? (Multi-select)",
-        type: "choice", // Using choice with multi-select logic in AuditQuestion
+        type: "choice", 
         options: [
             "AI & Tech",
             "Marketing & Sales",
@@ -97,8 +96,7 @@ export default function AuditWizard() {
     };
 
     return (
-        <div className={`min-h-screen w-full flex flex-col ${styles.resodinNativeContainer}`}>
-            {/* @ts-ignore */}
+        <div className="min-h-screen w-full flex flex-col bg-[#030303] text-white font-sans antialiased">
             <LandingNavbar />
 
             <main ref={topRef} className={`flex-grow flex flex-col items-center justify-start ${step === 0 ? '' : 'py-20 px-4'}`}>
@@ -106,10 +104,10 @@ export default function AuditWizard() {
                 {/* Feature Header (Only show AFTER start) */}
                 {step > 0 && (
                     <div className="text-center mb-10 max-w-2xl">
-                        <h1 className={`${styles.headingLg} mb-3 tracking-tight`}>
+                        <h1 className="text-4xl md:text-[2.5rem] font-bold tracking-tight mb-3">
                             Decode Your Content DNA
                         </h1>
-                        <p className={`${styles.textBody} text-base md:text-lg`}>
+                        <p className="text-[#94a3b8] text-base md:text-lg leading-relaxed">
                             Stop guessing. Our AI analyzes your inputs to reveal your unique creator archetype.
                         </p>
                     </div>
@@ -119,16 +117,16 @@ export default function AuditWizard() {
                 {step > 0 && step <= totalSteps && (
                     <div className="w-full max-w-lg mb-12">
                         <div className="flex flex-row justify-between items-end mb-2 w-full">
-                            <span className="text-[#00aaff] text-sm font-semibold tracking-wide whitespace-nowrap">
+                            <span className="text-[#00e5ff] text-sm font-semibold tracking-wide whitespace-nowrap">
                                 QUESTION {step} OF {totalSteps}
                             </span>
                             <span className="text-gray-500 text-xs font-mono whitespace-nowrap ml-4">
                                 {Math.round(((step - 1) / totalSteps) * 100)}% COMPLETE
                             </span>
                         </div>
-                        <div className={styles.progressContainer}>
+                        <div className="bg-[#2a2a30] rounded-full overflow-hidden h-3 mt-0.5">
                             <motion.div
-                                className={styles.progressFill}
+                                className="bg-gradient-to-r from-[#00e5ff] to-[#00ffff] h-full shadow-[0_0_12px_rgba(0,170,255,0.6)]"
                                 initial={{ width: 0 }}
                                 animate={{ width: `${((step - 1) / totalSteps) * 100}%` }}
                                 transition={{ duration: 0.5 }}
@@ -177,7 +175,6 @@ export default function AuditWizard() {
             <FAQAccordion />
             <CommunityHub />
 
-            {/* @ts-ignore */}
             <LandingFooter />
         </div>
     );
