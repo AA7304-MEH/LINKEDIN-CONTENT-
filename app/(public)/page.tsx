@@ -57,7 +57,7 @@ export default function Home() {
             <h1 className="text-center tracking-tight mb-6" 
                 style={{ fontSize: '44px', fontWeight: 800, fontFamily: "'Plus Jakarta Sans', sans-serif", lineHeight: 1.1, color: '#F9FAFB' }}>
               <span className="block md:text-[72px]">Your LinkedIn posts,</span>
-              <span className="block md:text-[72px]" style={{ color: '#00E5FF' }}>written in your voice.</span>
+              <span className="block md:text-[72px]" style={{ color: '#00E5FF' }}> written in your voice.</span>
             </h1>
           </FadeIn>
 
@@ -93,7 +93,7 @@ export default function Home() {
             <motion.div
               animate={{ y: [-10, 10, -10] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="relative shadow-[0_0_60px_rgba(0,229,255,0.08)] p-6 flex flex-col md:flex-row gap-6 bg-[#111111] border border-[#1E1E1E] rounded-2xl"
+              className="bg-[#111111] border border-[#1E1E1E] rounded-2xl shadow-[0_0_60px_rgba(0,229,255,0.08)] p-6 flex flex-col md:flex-row gap-6"
             >
               <div className="flex-1 space-y-4">
                 <div>
@@ -103,21 +103,21 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <div className="bg-[#0A0F1E] border border-[#06B6D4] text-[#06B6D4] text-xs px-3 py-1.5 rounded-lg">Professional Tone</div>
+                  <div className="bg-[#0A0F1E] border border-[#00E5FF] text-[#00E5FF] text-xs px-3 py-1.5 rounded-lg">Professional Tone</div>
                   <div className="bg-[#0A0F1E] border border-white/[0.06] text-[#9CA3AF] text-xs px-3 py-1.5 rounded-lg flex items-center gap-1">Regenerate <Zap size={12} /></div>
                 </div>
                 <div className="pt-2">
-                  <button className="w-full bg-[#06B6D4] text-[#0A0F1E] font-bold py-2.5 rounded-xl text-sm">Generate</button>
+                  <button className="w-full bg-[#00E5FF] text-[#0A0F1E] font-bold py-2.5 rounded-xl text-sm">Generate</button>
                 </div>
               </div>
               <div className="flex-[1.5] bg-[#0A0F1E] rounded-xl border border-white/[0.06] p-5 relative">
-                <div className="absolute -right-4 -top-4 bg-[#06B6D4] text-[#0A0F1E] text-xs font-bold px-3 py-2 rounded-xl shadow-lg transform rotate-3 z-10 flex items-center gap-1.5">
+                <div className="absolute -right-4 -top-4 bg-[#00E5FF] text-[#0A0F1E] text-xs font-bold px-3 py-2 rounded-xl shadow-lg transform rotate-3 z-10 flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-[#0A0F1E] animate-pulse"></span>
                   42,891 impressions
                 </div>
                 
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#06B6D4] to-[#8B5CF6] flex items-center justify-center font-bold text-xs">YN</div>
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#00E5FF] to-[#8B5CF6] flex items-center justify-center font-bold text-xs text-white">YN</div>
                   <div>
                     <div className="text-sm font-semibold">Your Name</div>
                     <div className="text-xs text-[#9CA3AF]">Founder & CEO • 1st</div>
@@ -127,7 +127,7 @@ export default function Home() {
                   <p>Entering a new market isn't about being the loudest in the room.</p>
                   <p>It's about listening to the quietest problems.</p>
                   <p>When we expanded to Europe last year, we threw out our entire US playbook. Why? Because the pain points weren't the same. The regulations weren't the same. The culture wasn't the same.</p>
-                  <p style={{ color: '#06B6D4' }}>#Growth #Startups #Leadership</p>
+                  <p className="text-[#00E5FF]">#Growth #Startups #Leadership</p>
                 </div>
               </div>
             </motion.div>
@@ -139,10 +139,10 @@ export default function Home() {
       <section className="py-16 md:py-24 border-y border-white/[0.06]" style={{ backgroundColor: '#0A0F1E' }}>
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col items-center justify-center gap-10">
-            <p className="text-zinc-500 text-sm font-semibold tracking-widest uppercase">As featured in</p>
-            <div className="flex flex-wrap items-center justify-center gap-12 md:gap-20">
-              {['TechCrunch', 'Forbes', 'IndieHackers', 'Product Hunt', 'Morning Brew'].map((brand) => (
-                <span key={brand} className="font-semibold text-[15px] tracking-[0.05em] text-[#3F3F46] opacity-60" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <p className="text-zinc-500 text-xs font-bold tracking-[0.2em] uppercase">As featured in</p>
+            <div className="flex flex-wrap items-center justify-center gap-12 md:gap-20 grayscale opacity-40 hover:opacity-100 transition-opacity">
+              {['TechCrunch', 'Forbes', 'Entrepreneur', 'Wired', 'Bloomberg'].map((brand) => (
+                <span key={brand} className="font-bold text-xl md:text-2xl tracking-tighter text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   {brand}
                 </span>
               ))}
