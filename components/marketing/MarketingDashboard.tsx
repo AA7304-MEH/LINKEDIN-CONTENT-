@@ -7,7 +7,7 @@ import {
     FileText, User, Globe, Hash, Monitor, Youtube,
     PenTool, Calendar, Send, MoreHorizontal
 } from "lucide-react";
-import { generateMarketingPosts, MarketingPost } from "@/services/marketing/generator";
+import { generateMarketingPosts } from "@/services/marketing/generator";
 import { generateMarketingArticle } from "@/services/marketing/articleGenerator";
 
 type Settings = {

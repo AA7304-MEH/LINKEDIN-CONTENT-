@@ -31,6 +31,29 @@ const pressLogos = [
     { name: "ProductHunt", url: "https://producthunt.com", style: { fontWeight: 700 } }
 ];
 
+export function FeaturedLogos() {
+    return (
+        <div className={styles.pressSection}>
+            <h3 className={styles.pressLabel}>AS FEATURED IN</h3>
+            <div className={styles.featuredLogos}>
+                {pressLogos.map((logo, i) => (
+                    <Link
+                        key={i}
+                        href={logo.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.logoLink}
+                    >
+                        <span className={styles.logoPlaceholder} style={logo.style as any}>
+                            {logo.name}
+                        </span>
+                    </Link>
+                ))}
+            </div>
+        </div>
+    );
+}
+
 export default function SocialProof() {
     return (
         <section className={styles.section} id="testimonials">
@@ -53,24 +76,7 @@ export default function SocialProof() {
                     ))}
                 </div>
 
-                <div className={styles.pressSection}>
-                    <h3 className={styles.pressLabel}>AS FEATURED IN</h3>
-                    <div className={styles.featuredLogos}>
-                        {pressLogos.map((logo, i) => (
-                            <Link
-                                key={i}
-                                href={logo.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={styles.logoLink}
-                            >
-                                <span className={styles.logoPlaceholder} style={logo.style as any}>
-                                    {logo.name}
-                                </span>
-                            </Link>
-                        ))}
-                    </div>
-                </div>
+                <FeaturedLogos />
             </div>
         </section>
     );

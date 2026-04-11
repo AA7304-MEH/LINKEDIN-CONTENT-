@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
     LayoutDashboard,
-    anchor, // Hook icon proxy?
+    Anchor, // Hook icon proxy?
     Repeat, // Repurpose
     Calendar,
     MessageSquare, // Comments

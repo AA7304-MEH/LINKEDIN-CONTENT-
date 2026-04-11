@@ -34,19 +34,17 @@
   margin: 0;
 }
 
-html,
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  font-family: var(--font-sans);
-  background-color: var(--bg-obsidian);
-  color: var(--foreground);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: smooth;
-  letter-spacing: -0.01em;
 }
-
 
 a {
   color: inherit;
@@ -55,10 +53,15 @@ a {
 
 /* Global Premium Utilities */
 .premium-glass {
-  background: var(--surface-glass);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--surface-glass-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.section-padding {
+  padding: 120px 0;
 }
 
 .text-gradient {

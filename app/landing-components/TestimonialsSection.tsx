@@ -34,7 +34,7 @@ export default function TestimonialsSection() {
         <section className="py-32 bg-[#030303] border-y border-white/5 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-24">
-                    <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tighter">Velocity of <span className="text-gradient">influence</span></h2>
+                    <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tighter">Velocity of <span className="text-[#00e5ff]">influence</span></h2>
                     <p className="text-slate-400 text-xl font-medium max-w-2xl mx-auto tracking-tight">Join 2,000+ top-tier professionals scaling their presence with precision.</p>
                 </div>
 
@@ -42,31 +42,31 @@ export default function TestimonialsSection() {
                     {testimonials.map((t, index) => (
                         <motion.div
                             key={index}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className="p-10 rounded-[2rem] premium-glass relative group"
+                            transition={{ duration: 0.6, delay: index * 0.1 }}
+                            className="p-10 rounded-[2.5rem] premium-glass group flex flex-col h-full"
                         >
                             <div className="flex items-center gap-5 mb-8">
-                                <div className={`w-14 h-14 rounded-2xl ${t.color} flex items-center justify-center text-white font-black text-xl shadow-2xl rotate-3 group-hover:rotate-0 transition-transform duration-300`}>
+                                <div className={`w-14 h-14 rounded-2xl ${t.color} flex items-center justify-center text-white font-black text-xl shadow-2xl transition-all duration-300 group-hover:scale-110`}>
                                     {t.initials}
                                 </div>
                                 <div className="text-left">
                                     <h3 className="text-white font-bold text-lg leading-tight">{t.name}</h3>
-                                    <p className="text-slate-500 text-xs font-black uppercase tracking-widest">{t.title}</p>
+                                    <p className="text-slate-500 text-[10px] font-black uppercase tracking-widest mt-1">{t.title}</p>
                                 </div>
                             </div>
-                            <p className="text-slate-300 font-medium italic mb-8 leading-relaxed text-sm opacity-90">
+                            <p className="text-slate-300 font-medium italic mb-10 leading-relaxed text-lg opacity-90 flex-grow">
                                 "{t.quote}"
                             </p>
-                            <div className="pt-6 border-t border-white/5 flex items-center justify-between">
-                                <div className="flex items-center gap-3 text-[#00e5ff] font-black text-xs tracking-widest uppercase">
-                                    <span className="w-2 h-2 rounded-full bg-[#00e5ff] animate-pulse"></span>
-                                    Verified Result
+                            <div className="pt-8 border-t border-white/5 flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-2.5 h-2.5 rounded-full bg-[#00e5ff] shadow-[0_0_10px_rgba(0,229,255,0.8)]"></div>
+                                    <span className="text-white font-black text-[10px] uppercase tracking-widest">Verified Growth</span>
                                 </div>
-                                <div className="text-white font-black text-xs">
-                                    {t.metric.split(' ')[1]} {t.metric.split(' ')[2]}
+                                <div className="text-[#00e5ff] font-black text-xs tracking-tighter">
+                                    {t.metric}
                                 </div>
                             </div>
                         </motion.div>
