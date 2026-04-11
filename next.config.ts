@@ -1,13 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  experimental: {},
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: false,
+  serverExternalPackages: ["nodemailer"],
+  images: {
+    domains: [],
   },
 };
 
 export default nextConfig;
+
