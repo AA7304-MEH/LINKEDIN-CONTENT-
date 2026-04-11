@@ -21,7 +21,6 @@ const FadeIn = ({ children, delay = 0, className = "" }: { children: React.React
 };
 
 export default function Home() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [annualBilling, setAnnualBilling] = useState(false);
   const [activeTone, setActiveTone] = useState("Authoritative");
   const [activeType, setActiveType] = useState("Thought leadership");
@@ -30,55 +29,6 @@ export default function Home() {
     <div className="min-h-screen selection:bg-[#06B6D4]/30 selection:text-white" 
          style={{ backgroundColor: '#0A0F1E', color: '#F9FAFB', fontFamily: "'Inter', sans-serif", margin: 0 }}>
       
-      {/* SECTION 1 — NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.08]" 
-           style={{ background: 'rgba(10,10,10,0.85)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}>
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="flex justify-between items-center h-20">
-            <Link href="/" className="font-bold text-white tracking-tight" 
-                  style={{ fontSize: '24px', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              Resodin.ai
-            </Link>
-
-            {/* Desktop Nav */}
-            <div className="hidden md:flex items-center space-x-8">
-              <Link href="#features" className="text-white hover:text-[#06B6D4] transition-colors font-medium">Features</Link>
-              <Link href="#pricing" className="text-white hover:text-[#06B6D4] transition-colors font-medium">Pricing</Link>
-              <Link href="/audit" className="text-white hover:text-[#06B6D4] transition-colors font-medium">Free Audit</Link>
-              <Link href="/blog" className="text-white hover:text-[#06B6D4] transition-colors font-medium">Blog</Link>
-            </div>
-
-            <div className="hidden md:flex items-center space-x-4">
-              <Link href="/sign-in" className="text-white hover:text-[#06B6D4] transition-colors font-medium px-4 py-2">
-                Log in
-              </Link>
-              <Link href="/sign-up" className="font-bold transition-transform hover:scale-105 active:scale-95 flex items-center justify-center" 
-                    style={{ backgroundColor: '#06B6D4', color: '#0A0F1E', borderRadius: '100px', padding: '10px 24px', fontSize: '15px' }}>
-                Start free
-              </Link>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button className="md:hidden p-2" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-              {isMobileMenuOpen ? <X className="text-white" /> : <Menu className="text-white" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Nav */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden bg-[#0A0F1E] border-b border-white/[0.08] px-4 pt-2 pb-6 space-y-4 shadow-xl">
-            <Link href="#features" className="block text-white hover:text-[#06B6D4] py-2" onClick={() => setIsMobileMenuOpen(false)}>Features</Link>
-            <Link href="#pricing" className="block text-white hover:text-[#06B6D4] py-2" onClick={() => setIsMobileMenuOpen(false)}>Pricing</Link>
-            <Link href="/audit" className="block text-white hover:text-[#06B6D4] py-2" onClick={() => setIsMobileMenuOpen(false)}>Free Audit</Link>
-            <Link href="/blog" className="block text-white hover:text-[#06B6D4] py-2" onClick={() => setIsMobileMenuOpen(false)}>Blog</Link>
-            <div className="pt-4 border-t border-white/[0.08] flex flex-col space-y-3">
-              <Link href="/sign-in" className="text-center text-white px-4 py-2 border border-white/[0.08] rounded-xl">Log in</Link>
-              <Link href="/sign-up" className="text-center font-bold px-4 py-2 rounded-xl" style={{ backgroundColor: '#06B6D4', color: '#0A0F1E' }}>Start free</Link>
-            </div>
-          </div>
-        )}
-      </nav>
 
       {/* SECTION 2 — HERO */}
       <section className="relative flex items-center justify-center overflow-hidden py-16 md:py-24" 
@@ -463,47 +413,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 9 — FOOTER */}
-      <footer className="pt-24 pb-12 px-6 border-t border-white/[0.06]" style={{ backgroundColor: '#0A0F1E' }}>
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-            <div>
-              <Link href="/" className="font-bold text-white tracking-tight mb-4 block" style={{ fontSize: '20px', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Resodin.ai</Link>
-              <p style={{ color: '#9CA3AF', fontSize: '14px', lineHeight: 1.6 }}>AI-powered LinkedIn content that sounds like you.</p>
-            </div>
-            <div>
-              <h4 className="text-white font-semibold mb-6">Product</h4>
-              <ul className="space-y-4 text-sm text-[#9CA3AF]">
-                <li><Link href="#features" className="hover:text-white transition-colors">Features</Link></li>
-                <li><Link href="#pricing" className="hover:text-white transition-colors">Pricing</Link></li>
-                <li><Link href="/audit" className="hover:text-white transition-colors">Free Audit</Link></li>
-                <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-white font-semibold mb-6">Resources</h4>
-              <ul className="space-y-4 text-sm text-[#9CA3AF]">
-                <li><Link href="#" className="hover:text-white transition-colors">How it Works</Link></li>
-                <li><Link href="#" className="hover:text-white transition-colors">Voice DNA</Link></li>
-                <li><Link href="#" className="hover:text-white transition-colors">Templates</Link></li>
-                <li><Link href="#" className="hover:text-white transition-colors">API Docs</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-white font-semibold mb-6">Company</h4>
-              <ul className="space-y-4 text-sm text-[#9CA3AF]">
-                <li><Link href="#" className="hover:text-white transition-colors">About</Link></li>
-                <li><Link href="#" className="hover:text-white transition-colors">Contact</Link></li>
-                <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
-                <li><Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
-              </ul>
-            </div>
-          </div>
-          <div className="pt-8 border-t border-white/[0.06] text-center">
-            <p style={{ color: '#9CA3AF', fontSize: '14px' }}>© 2026 Resodin Inc. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
