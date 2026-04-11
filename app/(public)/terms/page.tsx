@@ -1,71 +1,84 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { Scale, CheckCircle, AlertCircle, Clock } from "lucide-react";
 
 export default function TermsPage() {
+  const lastUpdated = "April 11, 2026";
+
   return (
-    <div className="min-h-screen bg-[#0A0F1E] pt-32 pb-24">
-      <div className="max-w-4xl mx-auto px-6">
-        <Link href="/" className="inline-flex items-center gap-2 text-zinc-500 hover:text-white transition-colors mb-12 group">
-          <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-          Back to Home
-        </Link>
-
-        <div className="bg-zinc-900/10 border border-white/[0.08] rounded-[40px] p-8 md:p-12 backdrop-blur-sm">
-          <h1 className="text-4xl font-extrabold text-white mb-4" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Terms of Service</h1>
-          <p className="mb-12 text-zinc-500 font-medium tracking-tight uppercase text-xs">Last updated: April 2026</p>
-
-          <div className="space-y-12 text-zinc-400 leading-relaxed">
-            <section>
-              <h2 className="text-2xl font-bold text-white mb-4">1. Acceptance of Terms</h2>
-              <p>
-                By accessing or using Resodin.ai, you agree to be bound by these Terms of Service. If you do not agree to all of these terms, do not use our services.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-bold text-white mb-4">2. Account Usage</h2>
-              <p>
-                You are responsible for maintaining the security of your account. You agree not to share your account credentials with third parties. We reserve the right to suspend accounts that engage in fraudulent or abusive behavior.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-bold text-white mb-4">3. Content and AI</h2>
-              <p>
-                Our platform uses AI to generate content based on your inputs. While we strive for high quality, we do not guarantee the accuracy or appropriateness of generated content. You are responsible for final proofreading and publishing.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-bold text-white mb-4">4. Payment and Refunds</h2>
-              <p>
-                We offer various subscription tiers. Payments are processed via Razorpay. You can cancel your subscription at any time. Refunds are handled on a case-by-case basis according to our pricing policy.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-bold text-white mb-4">5. Limitation of Liability</h2>
-              <p>
-                Resodin Inc. shall not be liable for any damages resulting from your use or inability to use the service, including but not limited to any changes to LinkedIn's algorithms or account policies.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-bold text-white mb-4">6. Governing Law</h2>
-              <p>
-                These terms shall be governed by and construed in accordance with the laws of the jurisdiction in which Resodin Inc. is registered.
-              </p>
-            </section>
+    <div className="min-h-screen py-16 px-6">
+      <div className="max-w-3xl mx-auto">
+        <div className="flex items-center gap-4 mb-8">
+          <div className="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-500">
+            <Scale size={24} />
           </div>
+          <div>
+            <h1 className="text-3xl font-extrabold text-white tracking-tight">Terms of Service</h1>
+            <p className="text-zinc-500 text-sm">Last updated: {lastUpdated}</p>
+          </div>
+        </div>
 
-          <div className="mt-20 pt-12 border-t border-white/[0.08] text-center">
-            <p className="text-zinc-500 italic text-sm">
-              For any questions regarding these terms, please contact us at <a href="mailto:support@resodin.ai" className="text-[#00E5FF] hover:underline">support@resodin.ai</a>.
+        <div className="prose prose-invert max-w-none space-y-12 text-zinc-400">
+          <section>
+            <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <CheckCircle size={18} className="text-[#00E5FF]" /> 
+              1. Acceptance of Terms
+            </h2>
+            <p className="leading-relaxed">
+              By accessing Resodin.ai, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our platform. These terms apply to all visitors, users, and others who access the Service.
             </p>
-          </div>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-white mb-4">2. Account Responsibility</h2>
+            <p className="leading-relaxed">
+              You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account. You must notify us immediately upon becoming aware of any breach of security or unauthorized use of your account.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-white mb-4">3. Content Ownership & Rights</h2>
+            <p className="leading-relaxed mb-4">
+              <strong>Your Content:</strong> You retain all rights to the raw content you provide for analysis. By using Resodin, you grant us a license to process this content to generate new posts.
+            </p>
+            <p className="leading-relaxed">
+              <strong>Generated Content:</strong> You own the copyright to the content generated by Resodin for you. We do not claim ownership of the posts you create using our tool.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <AlertCircle size={18} className="text-amber-500" /> 
+              4. Prohibited Uses
+            </h2>
+            <p className="leading-relaxed mb-4">
+              You agree NOT to use Resodin to:
+            </p>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Generate hate speech, harassment, or illegal content.</li>
+              <li>Impersonate others without authorization.</li>
+              <li>Scrape or attempt to reverse engineer our proprietary Voice DNA models.</li>
+              <li>Spam or automate LinkedIn interactions in violation of their Terms of Service.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <Clock size={18} className="text-[#00E5FF]" /> 
+              5. Subscription & Cancellation
+            </h2>
+            <p className="leading-relaxed">
+              Subscriptions are billed in advance on a monthly or annual basis. You can cancel your subscription at any time through the billing portal. No refunds are provided for partial months of service upon cancellation.
+            </p>
+          </section>
+
+          <section className="bg-zinc-900/50 border border-white/[0.06] p-8 rounded-2xl">
+            <h3 className="text-white font-bold mb-4 italic text-sm">Limitation of Liability</h3>
+            <p className="text-sm leading-relaxed">
+              Resodin is provided "as is". We make no warranties regarding the specific results or engagement your content will receive. In no event shall Resodin be liable for any indirect, incidental, or consequential damages arising out of your use of the service.
+            </p>
+          </section>
         </div>
       </div>
     </div>

@@ -1,160 +1,128 @@
 "use client";
 
 import React, { useState } from "react";
-import { Mail, Send, Loader2, MessageSquare, Globe, Zap } from "lucide-react";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { Mail, MessageCircle, Send, MapPin, Globe } from "lucide-react";
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: ""
-  });
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({ name: "", email: "", company: "", message: "" });
+  const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
-    
-    try {
-      const response = await fetch("/api/support/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: formData.email,
-          subject: `Contact Form: ${formData.name}`,
-          message: `Name: ${formData.name}\n\n${formData.message}`
-        })
-      });
-      
-      if (!response.ok) throw new Error("Failed to send message.");
-      
-      setSuccess(true);
-      setFormData({ name: "", email: "", message: "" });
-    } catch (err: any) {
-      console.error(err);
-      setError("Something went wrong. Please try again or email us directly.");
-    } finally {
-      setLoading(false);
-    }
+    setSubmitted(true);
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0F1E] pt-32 pb-24">
-      <div className="max-w-6xl mx-auto px-6">
-        <Link href="/" className="inline-flex items-center gap-2 text-zinc-500 hover:text-white transition-colors mb-12 group">
-          <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-          Back to Home
-        </Link>
+    <div className="min-h-screen py-16 px-6">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-16">
+        {/* Info Column */}
+        <div className="md:w-1/3">
+          <h1 className="text-4xl font-extrabold text-white mb-6 tracking-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            Let's Talk <br />
+            <span className="text-[#00E5FF]">Optimization</span>
+          </h1>
+          <p className="text-zinc-500 mb-12 text-lg">
+            Have a question about Enterprise plans, API access, or just want to tell us how much time you've saved? Reach out below.
+          </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
-          <div>
-            <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              Get in <span className="text-[#00E5FF]">touch</span>
-            </h1>
-            <p className="text-zinc-400 text-xl leading-relaxed mb-12">
-              Have a question about Resodin? Want to discuss a custom plan? 
-              Our team is here to help you sound like your best self.
-            </p>
+          <div className="space-y-8">
+            <div className="flex gap-4">
+              <div className="w-10 h-10 rounded-xl bg-[#00E5FF]/10 flex items-center justify-center text-[#00E5FF] flex-shrink-0">
+                <Mail size={20} />
+              </div>
+              <div>
+                <h4 className="text-white font-bold mb-1">Email us</h4>
+                <p className="text-zinc-500 text-sm">hello@resodin.ai</p>
+              </div>
+            </div>
 
-            <div className="space-y-8">
-              {[
-                { icon: <Mail className="text-[#00E5FF]" />, title: "Support Email", detail: "support@resodin.ai", sub: "We typically reply within 24 hours" },
-                { icon: <MessageSquare className="text-[#00E5FF]" />, title: "Live Chat", detail: "Available for Pro users", sub: "Instant response during EST hours" },
-                { icon: <Globe className="text-[#00E5FF]" />, title: "Headquarters", detail: "Remote-first team", sub: "Based in New York & San Francisco" }
-              ].map((item, i) => (
-                <div key={i} className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/[0.08] flex items-center justify-center shrink-0">
-                    {item.icon}
-                  </div>
-                  <div>
-                    <div className="text-white font-bold">{item.title}</div>
-                    <div className="text-[#00E5FF] font-medium">{item.detail}</div>
-                    <div className="text-zinc-500 text-sm">{item.sub}</div>
-                  </div>
-                </div>
-              ))}
+            <div className="flex gap-4">
+              <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 flex-shrink-0">
+                <MessageCircle size={20} />
+              </div>
+              <div>
+                <h4 className="text-white font-bold mb-1">Support chat</h4>
+                <p className="text-zinc-500 text-sm">Available 9am - 6pm EST</p>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 flex-shrink-0">
+                <MapPin size={20} />
+              </div>
+              <div>
+                <h4 className="text-white font-bold mb-1">Headquarters</h4>
+                <p className="text-zinc-500 text-sm">New York, NY (Remote-First)</p>
+              </div>
             </div>
           </div>
+        </div>
 
-          <div className="relative">
-            <div className="absolute -inset-4 bg-[#00E5FF]/5 blur-3xl rounded-[40px] pointer-events-none" />
-            <div className="relative bg-zinc-900/30 border border-white/[0.08] rounded-[40px] p-8 md:p-12 backdrop-blur-sm">
-              {!success ? (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-semibold text-zinc-400 mb-2">Name</label>
-                      <input 
-                        type="text" 
-                        required
-                        value={formData.name}
-                        onChange={(e) => setFormData({...formData, name: e.target.value})}
-                        className="w-full bg-[#0A0F1E] border border-white/[0.08] rounded-2xl px-4 py-4 text-white focus:outline-none focus:border-[#00E5FF] transition-colors placeholder:text-zinc-800"
-                        placeholder="Arjun Mehta"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-zinc-400 mb-2">Email</label>
-                      <input 
-                        type="email" 
-                        required
-                        value={formData.email}
-                        onChange={(e) => setFormData({...formData, email: e.target.value})}
-                        className="w-full bg-[#0A0F1E] border border-white/[0.08] rounded-2xl px-4 py-4 text-white focus:outline-none focus:border-[#00E5FF] transition-colors placeholder:text-zinc-800"
-                        placeholder="arjun@example.com"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-zinc-400 mb-2">Message</label>
-                    <textarea 
+        {/* Form Column */}
+        <div className="flex-1">
+          {!submitted ? (
+            <div className="bg-zinc-900/40 border border-white/[0.08] rounded-3xl p-8 md:p-12 shadow-2xl">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-xs text-zinc-500 font-bold uppercase tracking-widest pl-1">Name</label>
+                    <input 
+                      type="text" 
                       required
-                      rows={5}
-                      value={formData.message}
-                      onChange={(e) => setFormData({...formData, message: e.target.value})}
-                      className="w-full bg-[#0A0F1E] border border-white/[0.08] rounded-2xl px-4 py-4 text-white focus:outline-none focus:border-[#00E5FF] transition-colors resize-none placeholder:text-zinc-800"
-                      placeholder="How can we help you?"
-                    ></textarea>
+                      placeholder="John Doe"
+                      className="w-full bg-[#0A0F1E] border border-white/[0.08] rounded-xl px-5 py-3.5 text-white focus:outline-none focus:border-[#00E5FF] transition-all"
+                      value={formData.name}
+                      onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    />
                   </div>
-                  
-                  {error && <p className="text-red-400 text-sm font-medium">{error}</p>}
-                  
-                  <button 
-                    type="submit"
-                    disabled={loading}
-                    className="w-full bg-[#00E5FF] text-[#0A0F1E] font-bold py-5 rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50 shadow-lg shadow-[#00E5FF]/10 group"
-                  >
-                    {loading ? <Loader2 className="animate-spin" size={20} /> : <><Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" /> Send Message</>}
-                  </button>
-
-                  <p className="text-center text-zinc-600 text-sm mt-8">
-                    Or email us directly at <a href="mailto:support@resodin.ai" className="text-zinc-400 hover:text-[#00E5FF] transition-colors">support@resodin.ai</a>
-                  </p>
-                </form>
-              ) : (
-                <div className="text-center py-12">
-                  <div className="w-20 h-20 bg-[#00E5FF]/10 rounded-3xl flex items-center justify-center mx-auto mb-8 rotate-12">
-                    <Zap className="text-[#00E5FF]" size={40} />
+                  <div className="space-y-2">
+                    <label className="text-xs text-zinc-500 font-bold uppercase tracking-widest pl-1">Email</label>
+                    <input 
+                      type="email" 
+                      required
+                      placeholder="john@company.com"
+                      className="w-full bg-[#0A0F1E] border border-white/[0.08] rounded-xl px-5 py-3.5 text-white focus:outline-none focus:border-[#00E5FF] transition-all"
+                      value={formData.email}
+                      onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    />
                   </div>
-                  <h3 className="text-3xl font-bold text-white mb-4">Message Sent!</h3>
-                  <p className="text-zinc-400 text-lg mb-10 leading-relaxed">
-                    Thanks for reaching out, {formData.name.split(' ')[0]}. We've received your ticket and will get back to you shortly.
-                  </p>
-                  <button 
-                    onClick={() => setSuccess(false)}
-                    className="bg-white/5 border border-white/10 text-white font-bold px-8 py-4 rounded-2xl hover:bg-white/10 transition-colors"
-                  >
-                    Send another message
-                  </button>
                 </div>
-              )}
+
+                <div className="space-y-2">
+                  <label className="text-xs text-zinc-500 font-bold uppercase tracking-widest pl-1">Message</label>
+                  <textarea 
+                    required
+                    placeholder="Tell us about your needs..."
+                    rows={5}
+                    className="w-full bg-[#0A0F1E] border border-white/[0.08] rounded-xl px-5 py-3.5 text-white focus:outline-none focus:border-[#00E5FF] transition-all resize-none"
+                    value={formData.message}
+                    onChange={(e) => setFormData({...formData, message: e.target.value})}
+                  ></textarea>
+                </div>
+
+                <button 
+                  type="submit"
+                  className="w-full bg-[#00E5FF] text-[#0A0F1E] font-bold py-4 rounded-xl transition-all hover:scale-[1.02] shadow-xl flex items-center justify-center gap-2"
+                >
+                  Send Message <Send size={20} />
+                </button>
+              </form>
             </div>
-          </div>
+          ) : (
+            <div className="bg-[#00E5FF]/10 border border-[#00E5FF]/20 rounded-3xl p-16 text-center space-y-6 animate-in fade-in zoom-in duration-500">
+               <div className="w-20 h-20 rounded-full bg-[#00E5FF] text-[#0A0F1E] flex items-center justify-center mx-auto text-3xl">✓</div>
+               <h3 className="text-3xl font-bold text-white">Message Received</h3>
+               <p className="text-zinc-400 max-w-sm mx-auto text-lg leading-relaxed">
+                 Thanks for reaching out! One of our team members will get back to you within 24 hours.
+               </p>
+               <button 
+                 onClick={() => setSubmitted(false)}
+                 className="text-[#00E5FF] font-semibold hover:underline"
+               >
+                 Send another message
+               </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

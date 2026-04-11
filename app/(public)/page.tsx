@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { motion, useAnimation } from "framer-motion";
-import { Mic, RefreshCw, Edit3, Users, Menu, X, Check, ArrowRight, Twitter, Linkedin, Zap, ThumbsUp, MessageSquare, Repeat, Send } from "lucide-react";
+import { motion } from "framer-motion";
+import { Mic, RefreshCw, Edit3, Users, ArrowRight, Zap, ThumbsUp, MessageSquare, Repeat, Send } from "lucide-react";
 
 // Fade-in animation wrapper
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => {
@@ -23,7 +23,6 @@ const FadeIn = ({ children, delay = 0, className = "" }: { children: React.React
 export default function Home() {
   const [annualBilling, setAnnualBilling] = useState(false);
   const [activeTone, setActiveTone] = useState("Authoritative");
-  const [activeType, setActiveType] = useState("Thought leadership");
 
   return (
     <div className="min-h-screen selection:bg-[#06B6D4]/30 selection:text-white" 
@@ -56,7 +55,7 @@ export default function Home() {
           <FadeIn delay={0.1}>
             <h1 className="text-center tracking-tight mb-6" 
                 style={{ fontSize: '44px', fontWeight: 800, fontFamily: "'Plus Jakarta Sans', sans-serif", lineHeight: 1.1, color: '#F9FAFB' }}>
-              <span className="block md:text-[72px]">Your LinkedIn posts,</span>
+              <span className="block md:text-[72px]">Your LinkedIn posts, </span>
               <span className="block md:text-[72px]" style={{ color: '#00E5FF' }}> written in your voice.</span>
             </h1>
           </FadeIn>
@@ -68,10 +67,10 @@ export default function Home() {
             </p>
           </FadeIn>
 
-          <FadeIn delay={0.3} className="w-full">
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
-              <Link href="/sign-up" className="w-full sm:w-auto text-center h-12 flex items-center justify-center transition-transform hover:scale-105 active:scale-95" 
-                    style={{ backgroundColor: '#06B6D4', color: '#0A0F1E', borderRadius: '100px', padding: '14px 32px', fontWeight: 600, fontSize: '16px', border: 'none' }}>
+          <FadeIn delay={0.3} className="w-full text-center">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+              <Link href="/sign-up" className="w-full sm:w-auto text-center h-12 flex items-center justify-center transition-transform hover:scale-105 active:scale-95 px-8" 
+                    style={{ backgroundColor: '#06B6D4', color: '#0A0F1E', borderRadius: '100px', fontWeight: 600, fontSize: '16px', border: 'none' }}>
                 Start writing free
               </Link>
               <Link href="#demo" className="w-full sm:w-auto text-center bg-transparent border border-white/[0.08] hover:border-white/20 text-white font-medium px-8 h-12 flex items-center justify-center rounded-full transition-transform hover:scale-105 active:scale-95">
@@ -79,16 +78,17 @@ export default function Home() {
               </Link>
             </div>
             
-            <div className="flex items-center justify-center space-x-2 text-sm text-zinc-500">
+            <div className="flex flex-wrap items-center justify-center gap-2 mb-4 text-sm text-zinc-500 font-medium">
               <span>No credit card required</span>
-              <span className="text-zinc-700">·</span>
+              <span className="text-zinc-700 mx-2"> · </span>
               <span>5 free posts/month</span>
-              <span className="text-zinc-700">·</span>
+              <span className="text-zinc-700 mx-2"> · </span>
               <span>Cancel anytime</span>
             </div>
           </FadeIn>
 
           {/* Floating Product Mockup */}
+          {/* ... (mockup content) */}
           <FadeIn delay={0.5} className="mt-16 w-full max-w-4xl px-4">
             <motion.div
               animate={{ y: [-10, 10, -10] }}
@@ -136,6 +136,7 @@ export default function Home() {
       </section>
 
       {/* SECTION 3 — SOCIAL PROOF BAR */}
+      {/* ... (brands content) */}
       <section className="py-16 md:py-24 border-y border-white/[0.06]" style={{ backgroundColor: '#0A0F1E' }}>
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col items-center justify-center gap-10">
@@ -210,7 +211,6 @@ export default function Home() {
                     {["Authoritative", "Conversational", "Storytelling", "Contrarian"].map((tone) => (
                       <button 
                         key={tone} 
-                        onClick={() => setActiveTone(tone)}
                         className={`text-xs px-3 py-1.5 rounded-md border transition-all ${activeTone === tone ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500' : 'bg-zinc-800 text-zinc-400 border-zinc-700'}`}
                       >
                         {tone}
@@ -340,7 +340,7 @@ export default function Home() {
                    <li>✓ Basic tone settings</li>
                    <li>✓ 1 profile</li>
                  </ul>
-                 <Link href="/sign-up" className="w-full py-3 rounded-xl border border-white/10 text-white font-medium hover:bg-white/5 transition-colors">Start for free</Link>
+                 <Link href="/sign-up" className="w-full py-3 rounded-xl border border-white/10 text-white font-medium hover:bg-white/5 transition-colors text-center">Start for free</Link>
               </div>
             </FadeIn>
             

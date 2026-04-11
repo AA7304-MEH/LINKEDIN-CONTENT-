@@ -1,75 +1,58 @@
 "use client";
 
 import React from "react";
-import { Shield, Sparkles, Users, ArrowLeft, Heart, Zap, Target } from "lucide-react";
-import Link from "next/link";
+import { Users, Target, Rocket, Shield } from "lucide-react";
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-[#0A0F1E] pt-32 pb-24">
-      <div className="max-w-6xl mx-auto px-6">
-        <Link href="/" className="inline-flex items-center gap-2 text-zinc-500 hover:text-white transition-colors mb-12 group">
-          <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-          Back to Home
-        </Link>
-
-        <div className="max-w-4xl mb-24">
+    <div className="min-h-screen py-16 px-6">
+      <div className="max-w-4xl mx-auto">
+        {/* Hero Section */}
+        <div className="text-center mb-24">
           <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-8 tracking-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-            Mission & <span className="text-[#00E5FF]">Vision</span>
+            The Mission to <br />
+            <span className="text-[#00E5FF]">Humanize AI Content</span>
           </h1>
-          <p className="text-zinc-400 text-xl md:text-2xl leading-relaxed">
-            We're on a mission to make every professional sound like their best self — at scale. In a world increasingly filled with generic AI noise, your unique voice is your most valuable asset.
+          <p className="text-zinc-400 text-xl leading-relaxed max-w-2xl mx-auto">
+            We believe AI should be a mirror, not a mask. Resodin was born from the frustration of seeing brilliant minds reduced to generic corporate-speak by standard AI tools.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32">
+        {/* Values Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-32">
           {[
-            { 
-              icon: <Sparkles className="text-[#00E5FF]" />, 
-              title: "Voice-first AI", 
-              desc: "Most AI tools try to replace you. Resodin is built specifically to map your DNA and amplify what makes you unique." 
-            },
-            { 
-              icon: <Shield className="text-[#00E5FF]" />, 
-              title: "Privacy-first", 
-              desc: "Your data is yours. We don't train our base models on your private content, and we protect your Voice DNA with encryption." 
-            },
-            { 
-              icon: <Users className="text-[#00E5FF]" />, 
-              title: "Creator-built", 
-              desc: "Founded by LinkedIn power-users who were tired of sounding like robots. We build for the nuances of human connection." 
-            }
-          ].map((value) => (
-            <div key={value.title} className="bg-zinc-900/30 border border-white/[0.08] rounded-[32px] p-8 hover:border-[#00E5FF]/30 transition-all group">
-              <div className="w-14 h-14 rounded-2xl bg-zinc-900 border border-white/[0.08] flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+            { icon: <Target className="text-[#00E5FF]" />, title: "Precision Voice Decoding", desc: "Our proprietary Voice DNA technology doesn't just copy words; it maps the logic, rhythm, and sentence structures that make you, you." },
+            { icon: <Shield className="text-[#00E5FF]" />, title: "Authority First", desc: "We don't optimize for 'engagement' (vague). We optimize for authority—the kind that leads to DMs, sales, and real opportunities." },
+            { icon: <Rocket className="text-[#00E5FF]" />, title: "Efficiency with Soul", desc: "Save 10+ hours a week without sacrificing your digital identity. Spend that time on actually building your business." },
+            { icon: <Users className="text-[#00E5FF]" />, title: "Creator Led", desc: "Resodin is built by creators, for creators. Every feature is battle-tested in the LinkedIn feed before it reaches your dashboard." }
+          ].map((value, i) => (
+            <div key={i} className="bg-zinc-900/40 border border-white/[0.06] rounded-2xl p-8 hover:border-[#00E5FF]/30 transition-colors">
+              <div className="w-12 h-12 rounded-xl bg-[#00E5FF]/10 flex items-center justify-center mb-6">
                 {value.icon}
               </div>
-              <h3 className="text-xl font-bold text-white mb-4">{value.title}</h3>
-              <p className="text-zinc-400 leading-relaxed">{value.desc}</p>
+              <h3 className="text-white font-bold text-xl mb-3">{value.title}</h3>
+              <p className="text-zinc-500 leading-relaxed">{value.desc}</p>
             </div>
           ))}
         </div>
 
-        <div className="bg-zinc-900/20 border border-white/[0.08] rounded-[48px] p-12 md:p-20 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#00E5FF]/5 blur-[120px] -mr-48 -mt-48" />
-          <div className="max-w-3xl mx-auto text-center relative z-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-12">The values that drive us</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
-              <div className="space-y-4">
-                <div className="flex items-center gap-3 text-white font-bold">
-                   <Heart className="text-pink-500" size={20} />
-                   Authenticity Over All
+        {/* Team Section */}
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-white mb-12">Built by the best in AI & Growth</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12">
+            {[
+              { name: "Alex Rivers", role: "Co-Founder & CEO", avatar: "AR", color: "bg-purple-600" },
+              { name: "Sarah J. Miller", role: "Head of AI Research", avatar: "SM", color: "bg-[#00E5FF]" },
+              { name: "David Chen", role: "Growth Strategy", avatar: "DC", color: "bg-emerald-600" }
+            ].map((member, i) => (
+              <div key={i} className="flex flex-col items-center">
+                <div className={`w-24 h-24 rounded-full ${member.color} flex items-center justify-center text-2xl font-bold text-white mb-4 shadow-lg`}>
+                  {member.avatar}
                 </div>
-                <p className="text-zinc-500 text-sm leading-relaxed">We believe the best content comes from human truth. AI should only be the bridge from thought to digital ink.</p>
+                <h4 className="text-white font-bold">{member.name}</h4>
+                <p className="text-zinc-500 text-sm">{member.role}</p>
               </div>
-              <div className="space-y-4">
-                <div className="flex items-center gap-3 text-white font-bold">
-                   <Target className="text-[#00E5FF]" size={20} />
-                   Precision Engineering
-                </div>
-                <p className="text-zinc-500 text-sm leading-relaxed">A 90% match isn't enough. We strive for 100% voice alignment, ensuring every word feels like it was whispered into the machine by you.</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
