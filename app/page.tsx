@@ -54,15 +54,15 @@ export default function Home() {
 
           <FadeIn delay={0.1}>
             <h1 className="text-center tracking-tight mb-6" 
-                style={{ fontSize: '44px', fontWeight: 800, fontFamily: "'Plus Jakarta Sans', sans-serif", lineHeight: 1.1, color: '#F9FAFB' }}>
+                style={{ fontSize: '64px', fontWeight: 700, fontFamily: "'Plus Jakarta Sans', sans-serif", lineHeight: 1.1, color: '#F9FAFB' }}>
               <span className="block md:text-[72px]">Your LinkedIn posts,</span>
-              <span className="block md:text-[72px]" style={{ color: '#00E5FF' }}> written in your voice.</span>
+              <span className="block md:text-[72px]" style={{ color: '#06B6D4' }}> written in your voice.</span>
             </h1>
           </FadeIn>
 
           <FadeIn delay={0.2}>
             <p className="text-center max-w-[560px] mx-auto mb-10" 
-               style={{ color: '#9CA3AF', fontSize: '20px', lineHeight: 1.6 }}>
+               style={{ color: '#9CA3AF', fontSize: '16px', lineHeight: 1.7 }}>
               Resodin learns your unique tone and style to generate high-authority LinkedIn content that sounds exactly like you — and converts.
             </p>
           </FadeIn>
@@ -70,7 +70,7 @@ export default function Home() {
           <FadeIn delay={0.3} className="w-full text-center">
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
               <Link href="/sign-up" className="w-full sm:w-auto text-center h-12 flex items-center justify-center transition-transform hover:scale-105 active:scale-95 px-8" 
-                    style={{ backgroundColor: '#06B6D4', color: '#0A0F1E', borderRadius: '100px', fontWeight: 600, fontSize: '16px', border: 'none' }}>
+                    style={{ backgroundColor: '#06B6D4', color: '#0A0F1E', borderRadius: '100px', padding: '14px 32px', fontWeight: 600, fontSize: '16px', border: 'none', cursor: 'pointer' }}>
                 Start writing free
               </Link>
               <Link href="#demo" className="w-full sm:w-auto text-center bg-transparent border border-white/[0.08] hover:border-white/20 text-white font-medium px-8 h-12 flex items-center justify-center rounded-full transition-transform hover:scale-105 active:scale-95">
@@ -137,7 +137,7 @@ export default function Home() {
 
       {/* SECTION 3 — SOCIAL PROOF BAR */}
       {/* ... (brands content) */}
-      <section className="py-16 md:py-24 border-y border-white/[0.06]" style={{ backgroundColor: '#0A0F1E' }}>
+      <section className="py-16 md:py-24 border-y border-white/[0.06]" style={{ backgroundColor: '#0A0F1E', padding: '100px 24px', maxWidth: '1200px', margin: '0 auto' }}>
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col items-center justify-center gap-10">
             <p className="text-zinc-500 text-xs font-bold tracking-[0.2em] uppercase">As featured in</p>
@@ -153,7 +153,7 @@ export default function Home() {
       </section>
 
       {/* SECTION 4 — FEATURES */}
-      <section id="features" className="py-16 md:py-24 max-w-6xl mx-auto px-6">
+      <section id="features" className="py-16 md:py-24 max-w-6xl mx-auto px-6" style={{ padding: '100px 24px', maxWidth: '1200px', margin: '0 auto' }}>
         <FadeIn>
           <div className="text-center mb-16">
             <span className="text-[#00E5FF] text-[11px] font-bold tracking-[0.1em] uppercase mb-4 block">WHAT MAKES RESODIN DIFFERENT</span>
@@ -171,7 +171,7 @@ export default function Home() {
           ].map((feat, idx) => (
             <FadeIn key={feat.title} delay={idx * 0.1}>
               <div className="group transition-all duration-300 hover:scale-[1.02] flex flex-col h-full border-l-2 border-[#00E5FF]/40 hover:border-[#00E5FF] transition-colors" 
-                   style={{ backgroundColor: '#111827', borderRadius: '0 16px 16px 0', padding: '28px' }}>
+                   style={{ backgroundColor: '#111827', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px', padding: '28px' }}>
                 <div className="mb-6">
                   {feat.icon}
                 </div>
@@ -187,7 +187,7 @@ export default function Home() {
       </section>
 
       {/* SECTION 5 — PRODUCT DEMO */}
-      <section id="demo" className="border-y border-white/[0.04]" style={{ padding: '100px 24px', backgroundColor: '#111827' }}>
+      <section id="demo" className="border-y border-white/[0.04]" style={{ backgroundColor: '#111827', padding: '100px 24px', maxWidth: '1200px', margin: '0 auto' }}>
         <div className="max-w-[1200px] mx-auto">
           <FadeIn>
             <div className="text-center mb-16">
@@ -273,7 +273,7 @@ export default function Home() {
       </section>
 
       {/* SECTION 6 — TESTIMONIALS */}
-      <section style={{ padding: '0', maxWidth: '1200px', margin: '0 auto' }} className="py-16 md:py-24 px-6 max-w-6xl mx-auto">
+      <section style={{ padding: '100px 24px', maxWidth: '1200px', margin: '0 auto' }} className="py-16 md:py-24 px-6 max-w-6xl mx-auto">
         <FadeIn>
           <div className="text-center mb-16">
             <span className="text-[#00E5FF] text-[11px] font-bold tracking-[0.1em] uppercase mb-4 block">REAL RESULTS</span>
@@ -293,7 +293,7 @@ export default function Home() {
                 <div className="mb-6">
                   <div className="text-[28px] font-extrabold text-[#00E5FF] mb-1">{t.stat}</div>
                 </div>
-                <p className="flex-1 italic mb-8" style={{ color: '#9CA3AF', fontSize: '15px', lineHeight: 1.7 }}>"{t.quote}"</p>
+                <p className="flex-1 italic mb-8" style={{ color: '#9CA3AF', fontSize: '16px', lineHeight: 1.7 }}>"{t.quote}"</p>
                 <div className="flex items-center gap-3">
                   <div className={`w-11 h-11 rounded-full ${t.avatarBg} flex items-center justify-center font-semibold text-white`}>
                     {t.avatar}
@@ -307,7 +307,7 @@ export default function Home() {
       </section>
 
       {/* SECTION 7 — PRICING */}
-      <section id="pricing" className="border-y border-white/[0.04] py-16 md:py-24" style={{ backgroundColor: '#111827' }}>
+      <section id="pricing" className="border-y border-white/[0.04] py-16 md:py-24" style={{ backgroundColor: '#111827', padding: '100px 24px', maxWidth: '1200px', margin: '0 auto' }}>
         <div className="max-w-6xl mx-auto px-6 text-center">
           <FadeIn>
             <span className="text-[#00E5FF] text-[11px] font-bold tracking-[0.1em] uppercase mb-4 block">SIMPLE PRICING</span>
@@ -346,14 +346,7 @@ export default function Home() {
             
             {/* Pro Card (Highlighted) */}
             <FadeIn delay={0.1}>
-              <div style={{ 
-                border: '1px solid rgba(0, 229, 255, 0.5)', 
-                boxShadow: '0 0 40px rgba(0, 229, 255, 0.12)', 
-                backgroundColor: '#111827', 
-                borderRadius: '16px', 
-                padding: '32px',
-                transform: 'scale(1.03)'
-              }} className="h-full flex flex-col relative z-10">
+              <div style={{ border: '2px solid #06B6D4', boxShadow: '0 0 40px rgba(6,182,212,0.15)', backgroundColor: '#111827', borderRadius: '16px', padding: '32px' }} className="h-full flex flex-col relative z-10">
                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#00E5FF] text-[#0A0F1E] text-[10px] font-bold px-3 py-1 rounded-full uppercase">Most Popular</div>
                  <h3 className="text-xl font-bold text-white mb-2">Pro</h3>
                  <div className="text-3xl font-bold text-white mb-8">
