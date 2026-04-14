@@ -5,10 +5,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import AuditWelcome from "./AuditWelcome";
 import AuditQuestion from "./AuditQuestion";
 import AuditResults from "./AuditResults";
-import LandingNavbar from "@/app/landing-components/LandingNavbar";
-import LandingFooter from "@/app/landing-components/LandingFooter";
-import FAQAccordion from "@/app/landing-components/FAQAccordion";
-import CommunityHub from "@/app/landing-components/CommunityHub";
 
 export type QuestionType = "choice" | "scale" | "text";
 
@@ -96,9 +92,7 @@ export default function AuditWizard() {
     };
 
     return (
-        <div className="min-h-screen w-full flex flex-col bg-[#030303] text-white font-sans antialiased">
-            <LandingNavbar />
-
+        <div className="w-full flex flex-col text-white font-sans antialiased">
             <main ref={topRef} className={`flex-grow flex flex-col items-center justify-start ${step === 0 ? '' : 'py-20 px-4'}`}>
 
                 {/* Feature Header (Only show AFTER start) */}
@@ -171,11 +165,6 @@ export default function AuditWizard() {
                     </AnimatePresence>
                 </div>
             </main>
-
-            <FAQAccordion />
-            <CommunityHub />
-
-            <LandingFooter />
         </div>
     );
 }

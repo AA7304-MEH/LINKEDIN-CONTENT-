@@ -8,8 +8,6 @@ export const metadata: Metadata = {
 
 export default function PublicAuditPage() {
     return (
-        <main className="min-h-screen bg-[#0d0d12]">
-            <AuditWizard />
-        </main>
+        <AuditWizard />
     );
 }
