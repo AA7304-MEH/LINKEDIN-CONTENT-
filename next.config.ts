@@ -1,11 +1,13 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  serverExternalPackages: ["nodemailer"],
   images: {
-    domains: [],
+    remotePatterns: [
+      { protocol: 'https', hostname: '**.googleusercontent.com' },
+      { protocol: 'https', hostname: '**.clerk.com' },
+    ],
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig
 

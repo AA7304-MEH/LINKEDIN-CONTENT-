@@ -13,6 +13,18 @@ interface GenerateOptions {
     campaignName?: string;
 }
 
+export type MarketingPost = {
+  id: string
+  content: string
+  platform: 'linkedin' | 'twitter' | 'reddit' | 'youtube_script'
+  status: 'draft' | 'scheduled' | 'published' | 'failed' | 'posted'
+  remoteStatus?: string | null
+  scheduledAt?: Date | string | null
+  publishedAt?: Date | string | null
+  errorMessage?: string | null
+  createdAt: Date | string
+}
+
 export async function generateMarketingPosts(options: GenerateOptions) {
     // 1. Fetch Settings
     const settings = await prisma.marketingSettings.findFirst();

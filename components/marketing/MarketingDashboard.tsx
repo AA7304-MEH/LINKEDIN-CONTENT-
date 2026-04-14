@@ -7,7 +7,7 @@ import {
     FileText, User, Globe, Hash, Monitor, Youtube,
     PenTool, Calendar, Send, MoreHorizontal
 } from "lucide-react";
-import { generateMarketingPosts } from "@/services/marketing/generator";
+import { generateMarketingPosts, MarketingPost } from "@/services/marketing/generator";
 import { generateMarketingArticle } from "@/services/marketing/articleGenerator";
 
 type Settings = {
@@ -21,17 +21,6 @@ type Settings = {
     enabledPlatforms: string;
     timeZone: string;
     automationConfig?: string;
-};
-
-type Post = {
-    id: string;
-    platform: string;
-    content: string;
-    status: string;
-    remoteStatus?: string;
-    scheduledAt: string | null;
-    publishedAt: string | null;
-    errorMessage: string | null;
 };
 
 export default function MarketingDashboard() {
@@ -49,7 +38,7 @@ export default function MarketingDashboard() {
         postsPerDay: 3,
         timeZone: "UTC",
     });
-    const [posts, setPosts] = useState<Post[]>([]);
+    const [posts, setPosts] = useState<MarketingPost[]>([]);
     const [analytics, setAnalytics] = useState<{ clicksByPlatform: Record<string, number>; topPosts: any[] } | null>(null);
     const [articles, setArticles] = useState<any[]>([]);
 

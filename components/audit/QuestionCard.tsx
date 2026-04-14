@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Question, QuestionType } from "./AuditWizard";
 import { useState } from "react";
 
@@ -17,9 +17,9 @@ export default function QuestionCard({
 }: QuestionCardProps) {
     const [textValue, setTextValue] = useState(defaultValue || "");
 
-    const containerVariants = {
+    const containerVariants: Variants = {
         hidden: { opacity: 0, x: 50 },
-        visible: { opacity: 1, x: 0, transition: { duration: 0.4, ease: "easeOut" as const } },
+        visible: { opacity: 1, x: 0, transition: { duration: 0.4, ease: "easeOut" } },
         exit: { opacity: 0, x: -50, transition: { duration: 0.3 } },
     };
 
