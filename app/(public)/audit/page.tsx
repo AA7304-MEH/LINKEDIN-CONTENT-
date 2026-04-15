@@ -1,13 +1,5 @@
-import AuditWizard from "@/components/audit/AuditWizard";
-import { Metadata } from "next";
+import AuditWizard from '@/components/audit/AuditWizard'
 
-export const metadata: Metadata = {
-    title: "Free Content DNA Audit | Resodin",
-    description: "Analyze your LinkedIn content strategy and get personalized recommendations.",
-};
-
-export default function PublicAuditPage() {
-    return (
-        <AuditWizard />
-    );
+export default function AuditPage() {
+  return <AuditWizard />
 }
