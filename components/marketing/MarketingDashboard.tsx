@@ -7,7 +7,8 @@ import {
     FileText, User, Globe, Hash, Monitor, Youtube,
     PenTool, Calendar, Send, MoreHorizontal
 } from "lucide-react";
-import { generateMarketingPosts, MarketingPost } from "@/services/marketing/generator";
+import { generateMarketingPosts } from "@/services/marketing/generator";
+import type { MarketingPost } from "@/services/marketing/generator";
 import { generateMarketingArticle } from "@/services/marketing/articleGenerator";
 
 type Settings = {
@@ -168,10 +169,9 @@ export default function MarketingDashboard() {
 
     return (
         <div>
-            {/* Header Content */}
-            <div className="mb-8">
-                <h1 className="text-2xl font-bold text-gray-900">Traffic & Marketing Engine</h1>
-                <p className="text-gray-500 mt-1">Manage your automated content strategy for Resodin.</p>
+            <div className="mb-8 p-6 bg-zinc-900/50 rounded-2xl border border-white/[0.06] backdrop-blur-sm shadow-2xl">
+                <h1 className="text-3xl font-bold text-white tracking-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Traffic & Marketing Engine</h1>
+                <p className="text-zinc-400 mt-1">Manage your automated content strategy for <span className="text-[#00E5FF]">Resodin</span>.</p>
             </div>
 
             {/* Stats Overview */}
@@ -338,7 +338,7 @@ export default function MarketingDashboard() {
                     <div className={styles.generateCard}>
                         <div className={styles.generateInput}>
                             <label className={styles.label}>Generate New Content</label>
-                            <p className="text-sm text-gray-500 mb-2">Create new drafts based on your current settings.</p>
+                            <p className="text-sm text-zinc-500 mb-4">Create new high-authority drafts based on your current Voice DNA settings.</p>
                             <div className="flex gap-4 items-center">
                                 <div className="w-24">
                                     <input type="number" className={styles.input} value={generateCount} onChange={(e) => setGenerateCount(parseInt(e.target.value))} min={1} max={10} />

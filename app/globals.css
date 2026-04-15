@@ -18,8 +18,13 @@
   
   --accent-glow: radial-gradient(circle at center, rgba(0, 229, 255, 0.15) 0%, transparent 70%);
   
+  --card-bg: #0A0A0A;
+  --card-border: rgba(255, 255, 255, 0.08);
   --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
   --card-shadow-hover: 0 20px 40px -15px rgba(0, 0, 0, 0.8);
+  
+  --sidebar-text: #94a3b8;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
 
   --radius-lg: 1.25rem;
   --radius-md: 0.75rem;

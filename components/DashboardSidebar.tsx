@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
     LayoutDashboard,
-    Anchor, // Hook icon proxy?
     Repeat, // Repurpose
     Calendar,
     MessageSquare, // Comments
@@ -130,6 +129,10 @@ export default function DashboardSidebar({
                         <Link href="/referral" className={`${styles.link} ${isActive('/referral') ? styles.active : ''}`}>
                             <span style={{ fontSize: '1.25rem', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 20, height: 20 }}>🎁</span>
                             <span>Referrals</span>
+                        </Link>
+                        <Link href="/marketing" className={`${styles.link} ${isActive('/marketing') ? styles.active : ''}`}>
+                            <span style={{ fontSize: '1.25rem', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 20, height: 20 }}>📣</span>
+                            <span>Marketing</span>
                         </Link>
                     </div>
                 </nav>

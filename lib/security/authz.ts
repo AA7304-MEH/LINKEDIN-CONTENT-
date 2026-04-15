@@ -9,8 +9,11 @@ import { currentUser, auth } from "@clerk/nextjs/server";
 function getEnv(key: string): string {
     const val = process.env[key];
     if (!val) {
-        if (key === "ADMIN_EMAIL_ALLOWLIST") {
-            throw new Error(`Security configuration error: ${key} is missing.`);
+        if (key === "ADMIN_USER_IDS" || key === "ADMIN_EMAIL_ALLOWLIST") {
+            // We allow missing in dev but warn
+            if (process.env.NODE_ENV === "production") {
+                throw new Error(`Security configuration error: ${key} is missing.`);
+            }
         }
         return "";
     }
@@ -18,6 +21,7 @@ function getEnv(key: string): string {
 }
 
 const ADMIN_EMAIL = getEnv("ADMIN_EMAIL_ALLOWLIST");
+const ADMIN_USER_IDS = getEnv("ADMIN_USER_IDS");
 const SESSION_SECRET = getEnv("AUTH_SESSION_SECRET");
 const CRON_SECRET = getEnv("INTERNAL_CRON_SECRET");
 const WEBHOOK_SECRET = getEnv("MAKE_SOCIAL_CALLBACK_SECRET");
@@ -29,73 +33,20 @@ export interface SessionUser {
     role: "user" | "admin";
 }
 
-// --- Admin Session (Custom) ---
-const ADMIN_COOKIE_NAME = "resodin_admin_session";
+// --- Combined Session Helper ---
 
-export async function getAdminSession(): Promise<SessionUser | null> {
-    const cookieStore = await cookies();
-    const token = cookieStore.get(ADMIN_COOKIE_NAME)?.value;
-
-    // Temporarily allow bypass for development/testing
-    const IS_BYPASS_ENABLED = false; // Match IS_BYPASS_ENABLED in proxy.ts
-
-    if (IS_BYPASS_ENABLED) {
-        return {
-            id: "bypass-admin",
-            email: "resodin.admin8153@protonmail.com",
-            role: "admin",
-        };
-    }
-
-    if (!token) return null;
-
-    if (token === "superadmin_token_bypass") {
-        return {
-            id: "bypass-admin",
-            email: "resodin.admin8153@protonmail.com", // Use the real admin email for consistency
-            role: "admin",
-        };
-    }
-
-    const payload = await verify(token, SESSION_SECRET);
-    if (!payload) return null;
-
-    // Check expiration (manual claim)
-    if (payload.exp && Date.now() > payload.exp) return null;
-
-    if (payload.email === ADMIN_EMAIL && payload.role === "admin") {
-        return {
-            id: payload.sub || "admin",
-            email: payload.email,
-            role: "admin",
-        };
-    }
-    return null;
-}
-
-// --- User Session (Clerk) ---
-async function getUserSession(): Promise<SessionUser | null> {
+export async function getSessionUser(): Promise<SessionUser | null> {
     const user = await currentUser();
     if (!user) return null;
 
+    const email = user.emailAddresses[0]?.emailAddress || "";
+    const isAdmin = ADMIN_USER_IDS.split(',').includes(user.id) || email === ADMIN_EMAIL;
+
     return {
         id: user.id,
-        email: user.emailAddresses[0].emailAddress,
-        role: "user",
+        email,
+        role: isAdmin ? "admin" : "user",
     };
-}
-
-
-// --- Central Authorization Helpers ---
-
-export async function getSessionUser(): Promise<SessionUser | null> {
-    const admin = await getAdminSession();
-    if (admin) return admin;
-
-    const user = await getUserSession();
-    if (user) return user;
-
-    return null;
 }
 
 export async function requireUser() {
@@ -106,23 +57,38 @@ export async function requireUser() {
     return user;
 }
 
-export function isAdminEmail(email: string) {
-    return email === ADMIN_EMAIL;
+export async function requireAdmin() {
+    const { userId } = await auth();
+    if (!userId) {
+        throw new Error("UNAUTHORIZED_ADMIN");
+    }
+
+    const adminIds = ADMIN_USER_IDS.split(',').filter(Boolean);
+    
+    // Check if ID is in list
+    if (!adminIds.includes(userId)) {
+        // Fallback to email check if needed, but primary is ID
+        const user = await currentUser();
+        if (user && user.emailAddresses[0]?.emailAddress === ADMIN_EMAIL) {
+            return {
+                id: user.id,
+                email: user.emailAddresses[0].emailAddress,
+                role: "admin"
+            } as SessionUser;
+        }
+        throw new Error("UNAUTHORIZED_ADMIN");
+    }
+
+    const user = await currentUser();
+    return {
+        id: userId,
+        email: user?.emailAddresses[0]?.emailAddress || "",
+        role: "admin",
+    } as SessionUser;
 }
 
-export async function requireAdmin() {
-    const admin = await getAdminSession();
-    if (!admin) {
-        // Temporarily allow bypass for development/testing
-        console.warn("⚠️ SECURITY BYPASS: Admin access granted without session.");
-        return {
-            id: "bypass-admin",
-            email: "resodin.admin8153@protonmail.com",
-            role: "admin",
-        } as SessionUser;
-        // throw new Error("UNAUTHORIZED_ADMIN");
-    }
-    return admin;
+export function isAdminEmail(email: string) {
+    return email === ADMIN_EMAIL;
 }
 
 export function requireCron(req: NextRequest) {
@@ -159,7 +125,7 @@ export async function handleAuthError(err: any, req?: NextRequest) {
     }
     if (err.message === "UNAUTHORIZED_ADMIN") {
         await logSecurityEvent("AUTH_FAIL_ADMIN", meta);
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
     if (err.message === "UNAUTHORIZED_CRON") {
         await logSecurityEvent("AUTH_FAIL_CRON", meta);
@@ -175,18 +141,17 @@ export async function handleAuthError(err: any, req?: NextRequest) {
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
 }
 
-// --- Cookie Setter for Login ---
-export async function setAdminSession(email: string) {
-    const exp = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
-    const payload = { email, role: "admin", sub: "admin-id", exp };
-    const token = await sign(payload, SESSION_SECRET);
-
-    const cookieStore = await cookies();
-    cookieStore.set(ADMIN_COOKIE_NAME, token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        path: "/",
-        maxAge: 60 * 60 * 24, // 24 hours
-    });
+// Custom session JWTs are deprecated in favor of Clerk but kept for compatibility if needed elsewhere
+export async function getAdminSession(): Promise<SessionUser | null> {
+    const { userId } = await auth();
+    if (!userId) return null;
+    const adminIds = ADMIN_USER_IDS.split(',').filter(Boolean);
+    if (!adminIds.includes(userId)) return null;
+    
+    const user = await currentUser();
+    return {
+        id: userId,
+        email: user?.emailAddresses[0]?.emailAddress || "",
+        role: "admin"
+    };
 }
