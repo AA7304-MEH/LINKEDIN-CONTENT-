@@ -2,15 +2,11 @@
 
 import React from "react";
 import { Users, Target, Rocket, Shield } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-[#0A0A0A] flex flex-col">
-      <Navbar />
-      <div className="flex-1 py-32 px-6">
-        <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-[#0A0A0A] flex flex-col py-32 px-6">
+      <div className="max-w-4xl mx-auto">
           {/* Hero Section */}
           <div className="text-center mb-24">
             <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-8 tracking-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -59,9 +55,7 @@ export default function AboutPage() {
               ))}
             </div>
           </div>
-        </div>
       </div>
-      <Footer />
     </div>
   );
 }

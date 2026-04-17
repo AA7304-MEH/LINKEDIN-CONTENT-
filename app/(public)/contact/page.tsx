@@ -1,6 +1,4 @@
 "use client";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { useState } from "react";
 
 export default function ContactPage() {
@@ -13,9 +11,8 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A]">
-      <Navbar />
-      <div className="max-w-5xl mx-auto px-6 py-32">
+    <div className="min-h-screen bg-[#0A0A0A] py-32 px-6">
+      <div className="max-w-5xl mx-auto">
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold text-white mb-4">Get in touch</h1>
           <p className="text-zinc-400 text-lg">Have a question? We'd love to hear from you.</p>
@@ -81,7 +78,6 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

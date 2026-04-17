@@ -2,8 +2,6 @@
 
 import React, { useState } from "react";
 import { Send, Zap, Bell } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 
 export default function BlogPage() {
   const [email, setEmail] = useState("");
@@ -18,9 +16,8 @@ export default function BlogPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] flex flex-col">
-      <Navbar />
-      <div className="flex-1 flex flex-col items-center justify-center px-6 py-24 relative overflow-hidden">
+    <div className="min-h-screen bg-[#0A0A0A] flex flex-col py-24 px-6 relative overflow-hidden">
+      <div className="flex-1 flex flex-col items-center justify-center">
         {/* Background elements */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#00E5FF]/5 blur-[120px] rounded-full pointer-events-none" />
         
@@ -77,7 +74,6 @@ export default function BlogPage() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

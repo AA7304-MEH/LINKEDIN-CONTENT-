@@ -1,11 +1,7 @@
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-[#0A0A0A]">
-      <Navbar />
-      <div className="max-w-3xl mx-auto px-6 py-32">
+    <div className="min-h-screen bg-[#0A0A0A] py-32 px-6">
+      <div className="max-w-3xl mx-auto">
         <h1 className="text-4xl font-bold text-white mb-3">Terms of Service</h1>
         <span className="inline-block bg-zinc-800 text-zinc-400 text-xs px-3 py-1 rounded-full mb-12">
           Last updated: April 11, 2026
@@ -26,7 +22,6 @@ export default function TermsPage() {
           </div>
         ))}
       </div>
-      <Footer />
     </div>
   );
 }
