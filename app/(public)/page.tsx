@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Mic, RefreshCw, Edit3, Users, ArrowRight, Zap, ThumbsUp, MessageSquare, Repeat, Send } from "lucide-react";
+import { useUser } from "@clerk/nextjs";
 
 // Fade-in animation wrapper
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => {
@@ -21,6 +22,7 @@ const FadeIn = ({ children, delay = 0, className = "" }: { children: React.React
 };
 
 export default function Home() {
+  const { isSignedIn } = useUser();
   const [annualBilling, setAnnualBilling] = useState(false);
   const [activeTone, setActiveTone] = useState("Authoritative");
 
@@ -69,9 +71,9 @@ export default function Home() {
 
           <FadeIn delay={0.3} className="w-full text-center">
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-              <Link href="/sign-up" className="w-full sm:w-auto text-center h-12 flex items-center justify-center transition-transform hover:scale-105 active:scale-95 px-8" 
+              <Link href={isSignedIn ? "/dashboard" : "/sign-up"} className="w-full sm:w-auto text-center h-12 flex items-center justify-center transition-transform hover:scale-105 active:scale-95 px-8" 
                     style={{ backgroundColor: '#06B6D4', color: '#0A0F1E', borderRadius: '100px', padding: '14px 32px', fontWeight: 600, fontSize: '16px', border: 'none', cursor: 'pointer' }}>
-                Start writing free
+                {isSignedIn ? "Go to Dashboard" : "Start writing free"}
               </Link>
               <Link href="#demo" className="w-full sm:w-auto text-center bg-transparent border border-white/[0.08] hover:border-white/20 text-white font-medium px-8 h-12 flex items-center justify-center rounded-full transition-transform hover:scale-105 active:scale-95">
                 See how it works →
@@ -340,7 +342,9 @@ export default function Home() {
                    <li>✓ Basic tone settings</li>
                    <li>✓ 1 profile</li>
                  </ul>
-                 <Link href="/sign-up" className="w-full py-3 rounded-xl border border-white/10 text-white font-medium hover:bg-white/5 transition-colors text-center">Start for free</Link>
+                 <Link href={isSignedIn ? "/dashboard" : "/sign-up"} className="w-full py-3 rounded-xl border border-white/10 text-white font-medium hover:bg-white/5 transition-colors text-center">
+                   {isSignedIn ? "Go to Dashboard" : "Start for free"}
+                 </Link>
               </div>
             </FadeIn>
             
@@ -359,7 +363,9 @@ export default function Home() {
                    <li>✓ 3 profiles</li>
                  </ul>
                  <div className="space-y-3">
-                   <Link href="/sign-up" className="w-full py-3 rounded-xl font-bold bg-[#00E5FF] text-[#0A0F1E] block text-center">Start free trial</Link>
+                   <Link href={isSignedIn ? "/dashboard" : "/sign-up"} className="w-full py-3 rounded-xl font-bold bg-[#00E5FF] text-[#0A0F1E] block text-center">
+                     {isSignedIn ? "Go to Dashboard" : "Start free trial"}
+                   </Link>
                    <p className="text-xs text-[#9CA3AF] text-center">No credit card needed</p>
                  </div>
               </div>
@@ -394,8 +400,8 @@ export default function Home() {
             <div className="relative z-10">
               <h2 className="text-[#0A0F1E] mb-6" style={{ fontSize: '48px', fontWeight: 700, fontFamily: "'Plus Jakarta Sans', sans-serif", lineHeight: 1.1 }}>Your next viral post is one click away.</h2>
               <div className="flex flex-col items-center gap-6">
-                <Link href="/sign-up" className="inline-block transition-transform hover:scale-[1.03] rounded-full px-10 py-4 bg-white text-[#0A0F1E] font-bold text-lg shadow-xl">
-                  Write my first post free →
+                <Link href={isSignedIn ? "/dashboard" : "/sign-up"} className="inline-block transition-transform hover:scale-[1.03] rounded-full px-10 py-4 bg-white text-[#0A0F1E] font-bold text-lg shadow-xl">
+                  {isSignedIn ? "Go to Dashboard" : "Write my first post free →"}
                 </Link>
                 <div className="text-[#0A0F1E]/60 text-sm font-medium">
                   Join 12,000+ creators · No credit card · Cancel anytime

@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -26,13 +27,21 @@ export default function Navbar() {
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
-            <Link href="/sign-in" className="text-white hover:text-[#00E5FF] transition-colors font-medium px-4 py-2">
-              Log in
-            </Link>
-            <Link href="/sign-up" className="font-bold transition-transform hover:scale-105 active:scale-95 flex items-center justify-center" 
-                  style={{ backgroundColor: '#00E5FF', color: '#0A0F1E', borderRadius: '100px', padding: '10px 24px', fontSize: '15px' }}>
-              Start free
-            </Link>
+            <SignedOut>
+              <Link href="/sign-in" className="text-white hover:text-[#00E5FF] transition-colors font-medium px-4 py-2">
+                Log in
+              </Link>
+              <Link href="/sign-up" className="font-bold transition-transform hover:scale-105 active:scale-95 flex items-center justify-center" 
+                    style={{ backgroundColor: '#00E5FF', color: '#0A0F1E', borderRadius: '100px', padding: '10px 24px', fontSize: '15px' }}>
+                Start free
+              </Link>
+            </SignedOut>
+            <SignedIn>
+              <Link href="/dashboard" className="text-white hover:text-[#00E5FF] transition-colors font-medium px-4 py-2">
+                Dashboard
+              </Link>
+              <UserButton />
+            </SignedIn>
           </div>
 
           {/* Mobile Menu Button */}
@@ -50,8 +59,16 @@ export default function Navbar() {
           <Link href="/audit" className="block text-white hover:text-[#00E5FF] py-2" onClick={() => setIsMobileMenuOpen(false)}>Free Audit</Link>
           <Link href="/blog" className="block text-white hover:text-[#00E5FF] py-2" onClick={() => setIsMobileMenuOpen(false)}>Blog</Link>
           <div className="pt-4 border-t border-white/[0.08] flex flex-col space-y-3">
-            <Link href="/sign-in" className="text-center text-white px-4 py-2 border border-white/[0.08] rounded-xl">Log in</Link>
-            <Link href="/sign-up" className="text-center font-bold px-4 py-2 rounded-xl" style={{ backgroundColor: '#00E5FF', color: '#0A0F1E' }}>Start free</Link>
+            <SignedOut>
+              <Link href="/sign-in" className="text-center text-white px-4 py-2 border border-white/[0.08] rounded-xl" onClick={() => setIsMobileMenuOpen(false)}>Log in</Link>
+              <Link href="/sign-up" className="text-center font-bold px-4 py-2 rounded-xl" style={{ backgroundColor: '#00E5FF', color: '#0A0F1E' }} onClick={() => setIsMobileMenuOpen(false)}>Start free</Link>
+            </SignedOut>
+            <SignedIn>
+              <Link href="/dashboard" className="text-center text-white px-4 py-2 border border-white/[0.08] rounded-xl" onClick={() => setIsMobileMenuOpen(false)}>Dashboard</Link>
+              <div className="flex justify-center py-2">
+                <UserButton />
+              </div>
+            </SignedIn>
           </div>
         </div>
       )}
