@@ -10,10 +10,9 @@ function getEnv(key: string): string {
     const val = process.env[key];
     if (!val) {
         if (key === "ADMIN_USER_IDS" || key === "ADMIN_EMAIL_ALLOWLIST") {
-            // We allow missing in dev but warn
-            if (process.env.NODE_ENV === "production") {
-                throw new Error(`Security configuration error: ${key} is missing.`);
-            }
+            // Warn but don't crash — allows build to succeed even if not set yet.
+            // Admin routes will gracefully deny access at runtime.
+            console.warn(`[SECURITY] ${key} is not set. Admin features will be unavailable.`);
         }
         return "";
     }
