@@ -54,7 +54,7 @@ export default function Footer() {
             © 2026 Resodin Inc.
           </p>
           <div className="flex gap-6 text-xs text-zinc-600">
-            <span>Powered by Gemini 2.0</span>
+            <span>Built with Gemini 2.0</span>
             <span>Handcrafted for excellence</span>
           </div>
         </div>

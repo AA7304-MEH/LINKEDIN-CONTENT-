@@ -8,25 +8,22 @@ datasource db {
 }
 
 model User {
-  id        String   @id
-  email     String   @unique
-  createdAt DateTime @default(now())
-  posts     Post[]
-  onboardingComplete Boolean @default(false)
-  voiceProfile      String? // JSON string
-  hookAnalyses      HookAnalysis[]
-  plan              String   @default("FREE") // FREE, PRO, BUSINESS
-  subscriptionDate  DateTime?
-  creditsUsed       Int      @default(0)
-  creditsLimit      Int      @default(10)
-  
-  // REFERRAL SYSTEM
-  referralCode      String   @unique @default(uuid())
-  referredBy        String?
-  referralCount     Int      @default(0)
-  bonusPosts        Int      @default(0)
+  id                 String         @id
+  email              String         @unique
+  createdAt          DateTime       @default(now())
+  onboardingComplete Boolean        @default(false)
+  voiceProfile       String?
+  plan               String         @default("FREE")
+  subscriptionDate   DateTime?
+  creditsUsed        Int            @default(0)
+  creditsLimit       Int            @default(10)
+  bonusPosts         Int            @default(0)
+  referralCode       String         @unique @default(uuid())
+  referralCount      Int            @default(0)
+  referredBy         String?
+  hookAnalyses       HookAnalysis[]
+  posts              Post[]
 }
-
 
 model Post {
   id        String   @id @default(uuid())
@@ -34,57 +31,57 @@ model Post {
   tone      String?
   type      String?
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   hookScore Int?
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model HookAnalysis {
   id        String   @id @default(uuid())
   hookText  String
   score     Int
-  feedback  String // JSON string detailing badges and stats
+  feedback  String
   userId    String?
-  user      User?    @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id])
 }
 
 model MarketingSettings {
-  id                String   @id @default(uuid())
-  productName       String
+  id                 String   @id @default(uuid())
+  productName        String
   productDescription String
-  targetAudience    String
-  brandVoice        String
-  primaryWebsiteUrl String
-  enabledPlatforms  String   @default("[\"linkedin\", \"twitter\"]") // Stored as JSON string
-  postsPerDay       Int      @default(3)
-  automationConfig  String?  // JSON: { webhookUrl, secret }
-  timeZone          String   @default("UTC")
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  targetAudience     String
+  brandVoice         String
+  primaryWebsiteUrl  String
+  enabledPlatforms   String   @default("[\"linkedin\", \"twitter\"]")
+  postsPerDay        Int      @default(3)
+  automationConfig   String?
+  timeZone           String   @default("UTC")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
 
 model MarketingPost {
-  id             String    @id @default(uuid())
-  platform       String
-  content        String
-  status         String    @default("draft") // draft, scheduled, published, failed
-  remoteStatus   String?   // sent_to_make, etc.
-  scheduledAt    DateTime?
-  publishedAt    DateTime?
-  errorMessage   String?
-  utmCampaign    String?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  clicks         MarketingClick[]
+  id           String           @id @default(uuid())
+  platform     String
+  content      String
+  status       String           @default("draft")
+  remoteStatus String?
+  scheduledAt  DateTime?
+  publishedAt  DateTime?
+  errorMessage String?
+  utmCampaign  String?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  clicks       MarketingClick[]
 }
 
 model MarketingClick {
   id        String        @id @default(uuid())
   postId    String
-  post      MarketingPost @relation(fields: [postId], references: [id])
   clickedAt DateTime      @default(now())
   sourceIp  String?
+  post      MarketingPost @relation(fields: [postId], references: [id])
 }
 
 model MarketingArticle {
@@ -93,13 +90,12 @@ model MarketingArticle {
   slug      String    @unique
   platform  String
   content   String
-  status    String    @default("draft") // draft, ready_to_post, posted
+  status    String    @default("draft")
   targetUrl String?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   postedAt  DateTime?
 }
-
 
 model AdminUser {
   id           String         @id @default(uuid())
@@ -110,48 +106,42 @@ model AdminUser {
   sessions     AdminSession[]
 }
 
-
 model AdminSession {
   id           String    @id @default(uuid())
   sessionToken String    @unique
   expiresAt    DateTime
   adminUserId  String
-  adminUser    AdminUser @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
   createdAt    DateTime  @default(now())
+  adminUser    AdminUser @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
 }
 
-// --- OUTREACH ENGINE ---
-
 model Lead {
-  id        String   @id @default(uuid())
-  userId    String?  // Links to User table if they have signed up
-  email     String   @unique
+  id        String          @id @default(uuid())
+  userId    String?
+  email     String          @unique
   name      String?
-  source    String   // signup, contact_form, manual_import
-  status    String   // new, onboarding, active, inactive, unsubscribed
-  tags      String?  // JSON string
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  
+  source    String
+  status    String
+  tags      String?
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
   events    OutreachEvent[]
 }
 
 model OutreachSequence {
-  id          String   @id @default(uuid())
+  id          String          @id @default(uuid())
   name        String
-  triggerType String   // on_signup, inactive_days
-  active      Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  steps       OutreachStep[]
+  triggerType String
+  active      Boolean         @default(true)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
   events      OutreachEvent[]
+  steps       OutreachStep[]
 }
 
 model OutreachStep {
   id               String           @id @default(uuid())
   sequenceId       String
-  sequence         OutreachSequence @relation(fields: [sequenceId], references: [id])
   stepNumber       Int
   delayMinutes     Int
   subjectTemplate  String
@@ -159,61 +149,58 @@ model OutreachStep {
   bodyTemplateText String?
   createdAt        DateTime         @default(now())
   updatedAt        DateTime         @updatedAt
-
   events           OutreachEvent[]
+  sequence         OutreachSequence @relation(fields: [sequenceId], references: [id])
 }
 
 model OutreachEvent {
   id            String           @id @default(uuid())
   leadId        String
-  lead          Lead             @relation(fields: [leadId], references: [id])
   sequenceId    String
-  sequence      OutreachSequence @relation(fields: [sequenceId], references: [id])
   stepId        String
-  step          OutreachStep     @relation(fields: [stepId], references: [id])
-  eventType     String           // queued, sent, failed
+  eventType     String
   plannedSendAt DateTime
   sentAt        DateTime?
   errorMessage  String?
   createdAt     DateTime         @default(now())
+  lead          Lead             @relation(fields: [leadId], references: [id])
+  sequence      OutreachSequence @relation(fields: [sequenceId], references: [id])
+  step          OutreachStep     @relation(fields: [stepId], references: [id])
 }
 
-// --- SUPPORT ENGINE ---
-
 model SupportTicket {
-  id         String   @id @default(uuid())
+  id         String               @id @default(uuid())
   userId     String?
   email      String
   subject    String
   message    String
-  status     String   @default("open") // open, in_progress, resolved, closed
-  priority   String   @default("normal") // low, normal, high
+  status     String               @default("open")
+  priority   String               @default("normal")
   resolvedAt DateTime?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
+  createdAt  DateTime             @default(now())
+  updatedAt  DateTime             @updatedAt
   events     SupportTicketEvent[]
 }
 
 model SupportTicketEvent {
   id        String        @id @default(uuid())
   ticketId  String
-  ticket    SupportTicket @relation(fields: [ticketId], references: [id])
-  eventType String        // created, status_changed, admin_note, admin_replied
-  actor     String        // system, admin:<email>, user
+  eventType String
+  actor     String
   message   String?
   createdAt DateTime      @default(now())
+  ticket    SupportTicket @relation(fields: [ticketId], references: [id])
 }
 
 model SupportFAQ {
-  id              String   @id @default(uuid())
-  question        String
-  answerMarkdown  String
-  category        String
-  tags            String?  // JSON string list
-  isPublished     Boolean  @default(false)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id             String   @id @default(uuid())
+  question       String
+  answerMarkdown String
+  category       String
+  tags           String?
+  isPublished    Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 model SupportArticle {
@@ -222,9 +209,15 @@ model SupportArticle {
   slug            String   @unique
   contentMarkdown String
   category        String
-  tags            String?  // JSON string list
+  tags            String?
   isPublished     Boolean  @default(false)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
 
+model Referral {
+  id         String   @id @default(uuid())
+  referrerId String
+  referredId String   @unique
+  createdAt  DateTime @default(now())
+}

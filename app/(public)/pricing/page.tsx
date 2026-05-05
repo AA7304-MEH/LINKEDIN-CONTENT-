@@ -1,11 +1,5 @@
-import PricingTable from '@/app/landing-components/PricingTable';
+import { redirect } from 'next/navigation'
 
-export default function Pricing() {
-    return (
-        <main>
-            <div style={{ paddingTop: '4rem' }}>
-                <PricingTable />
-            </div>
-        </main>
-    );
+export default function PricingPage() {
+  redirect('/#pricing')
 }

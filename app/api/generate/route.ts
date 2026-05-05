@@ -79,46 +79,56 @@ export async function POST(request: Request) {
         }
 
         // Using gemini-1.5-flash for better stability and production readiness
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-        let prompt = `Generate a LinkedIn post about "${topic}".
-        
-        Parameters:
-        - Tone: ${tone || (userVoiceProfile ? userVoiceProfile.tone : 'Professional')}
-        - Type: ${type || 'Educational'}
-        - Length: ${length || 'Medium'}
-        `;
-
-        if (userPerspective) {
-            prompt += `\n- Incorporate this unique perspective/philosophy: "${userPerspective}"`;
-        }
-
-        if (includeStory && userStories.length > 0) {
-            const randomStory = userStories[Math.floor(Math.random() * userStories.length)];
-            prompt += `\n- Weave in this personal story: "${randomStory.title} - ${randomStory.summary}"`;
-        }
-
-        if (includeHook) {
-            prompt += `\n- Start with a viral-style hook (curiosity gap or strong statement).`;
-        } else {
-            prompt += `\n- Start with a clear professional opening.`;
-        }
-
-        prompt += `\n\nReturn the output in the following JSON format (no markdown):
-        {
-            "content": "The full post content...",
-            "hashtags": {
-                "broad": ["#tag1", "#tag2"],
-                "niche": ["#tag3", "#tag4"],
-                "community": ["#tag5", "#tag6"]
+        const model = genAI.getGenerativeModel({ 
+            model: "gemini-1.5-flash",
+            generationConfig: {
+                temperature: 0.8,
+                topP: 0.95,
+                topK: 40,
+                maxOutputTokens: 1024,
             }
-        }
-        
-        Hashtag Strategy:
-        - Broad: High volume tags (e.g. #marketing)
-        - Niche: Specific to the topic (e.g. #seo)
-        - Community: Specific groups (e.g. #marketers)
-        `;
+        });
+
+        const voiceDnaProfile = userVoiceProfile ? JSON.stringify(userVoiceProfile) : `Tone: ${tone || 'Professional'}, Perspective: ${userPerspective || 'Standard'}`;
+
+        const prompt = `You are an elite LinkedIn content strategist 
+who has studied 50,000+ viral LinkedIn posts. You write in the 
+user's exact voice based on their Voice DNA profile.
+
+STRICT RULES:
+- Never start with "I" 
+- No generic openings like "In today's world" or "As a professional"
+- Use pattern interrupts in the first line
+- Write like a human, not a press release
+- Max 1500 characters for optimal LinkedIn reach
+- Use line breaks every 1-2 sentences for mobile readability
+- End with a question or strong POV that invites comments
+- Never use hashtags in the body — only at the very end (max 3)
+
+TONE PROFILES:
+- Authoritative: Data-backed claims, confident assertions, zero hedging
+- Contrarian: Challenge mainstream advice, use "Unpopular opinion:" opener
+- Storytelling: Scene-setting first line, personal stakes, lesson at end
+- Conversational: Short sentences, relatable struggles, casual language
+
+Voice DNA Context: ${voiceDnaProfile}
+User Goal: ${topic}
+Post Type: ${type || 'Educational'}
+
+Return the output in the following JSON format (no markdown):
+{
+    "content": "The full post content...",
+    "hashtags": {
+        "broad": ["#tag1", "#tag2"],
+        "niche": ["#tag3", "#tag4"],
+        "community": ["#tag5", "#tag6"]
+    }
+}
+
+Hashtag Strategy:
+- Broad: High volume tags (e.g. #marketing)
+- Niche: Specific to the topic (e.g. #seo)
+- Community: Specific groups (e.g. #marketers)`;
 
         const result = await withRetry(async () => {
             return await model.generateContent(prompt);
