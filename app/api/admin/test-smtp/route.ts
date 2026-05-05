@@ -1,13 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendEmail } from "@/lib/email";
-import { getAdminSession, handleAuthError } from "@/lib/security/authz";
+import { requireAdmin, handleAuthError } from "@/lib/security/authz";
 
 export async function POST(req: NextRequest) {
     try {
-        const session = await getAdminSession();
-        if (!session) {
-            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-        }
+        await requireAdmin();
 
         const { to, subject, html } = await req.json();
 

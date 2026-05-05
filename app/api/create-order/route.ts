@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Razorpay from 'razorpay';
+import { getSessionUser } from '@/lib/security/authz';
 
 export async function POST(req: NextRequest) {
     try {
+        const sessionUser = await getSessionUser();
+        if (!sessionUser) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
         const { amount, currency = 'USD' } = await req.json();
-
-        console.log("Checking Razorpay Env Vars:");
-        console.log("Key ID:", process.env.RAZORPAY_KEY_ID ? "Exists" : "Missing");
-        console.log("Key Secret:", process.env.RAZORPAY_KEY_SECRET ? "Exists" : "Missing");
 
         if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
             console.error("Razorpay keys are missing in process.env");

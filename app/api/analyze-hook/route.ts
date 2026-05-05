@@ -19,7 +19,10 @@ export async function POST(request: Request) {
 
         const { hook } = await request.json();
         const sessionUser = await getSessionUser();
-        const userId = sessionUser?.id;
+        if (!sessionUser) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+        const userId = sessionUser.id;
 
         if (!hook) {
             return NextResponse.json({ error: 'Hook text is required' }, { status: 400 });

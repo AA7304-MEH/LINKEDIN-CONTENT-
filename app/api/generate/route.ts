@@ -10,8 +10,11 @@ export async function POST(request: Request) {
     try {
         const { topic, tone, type, length, includeHook, includeStory } = await request.json();
         const sessionUser = await getSessionUser();
-        const userId = sessionUser?.id;
-        const user = sessionUser; // Mock user object for compatibility
+        if (!sessionUser) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+        const userId = sessionUser.id;
+        const user = sessionUser;
 
 
         let userVoiceProfile = null;

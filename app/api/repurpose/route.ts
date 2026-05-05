@@ -10,7 +10,10 @@ export async function POST(request: Request) {
     try {
         const { sourceText, url } = await request.json();
         const sessionUser = await getSessionUser();
-        const userId = sessionUser?.id;
+        if (!sessionUser) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+        const userId = sessionUser.id;
 
         if (userId) {
             const dbUser = await prisma.user.findUnique({ where: { id: userId } });
