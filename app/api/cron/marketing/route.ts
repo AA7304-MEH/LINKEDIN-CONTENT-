@@ -1,4 +1,4 @@
-import { requireCron } from '@/lib/security/authz';
+import { requireCron, handleAuthError } from '@/lib/security/authz';
 
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
@@ -11,16 +11,16 @@ const prisma = new PrismaClient();
 export const maxDuration = 300; // 5 minutes
 
 export async function GET(req: NextRequest) {
-  requireCron(req);
-    // Check CRON_SECRET if desired
-    const authHeader = req.headers.get("authorization");
-    if (process.env.CRON_SECRET && authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
     const logs: string[] = [];
 
     try {
+        requireCron(req);
+        // Check CRON_SECRET if desired
+        const authHeader = req.headers.get("authorization");
+        if (process.env.CRON_SECRET && authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
         const settings = await prisma.marketingSettings.findFirst();
         if (!settings) {
             return NextResponse.json({ error: "No settings found" });
@@ -130,7 +130,7 @@ export async function GET(req: NextRequest) {
 
     } catch (error: any) {
         console.error("Cron job error:", error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return handleAuthError(error, req);
     }
 }
 

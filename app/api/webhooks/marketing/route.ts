@@ -1,4 +1,4 @@
-import { requireWebhook } from '@/lib/security/authz';
+import { requireWebhook, handleAuthError } from '@/lib/security/authz';
 
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
@@ -6,8 +6,8 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
-  await requireWebhook(req);
     try {
+        await requireWebhook(req);
         const body = await req.json();
         const { postId, status, errorMessage, secret } = body;
 
@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
 
     } catch (error: any) {
         console.error("Callback Error:", error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return handleAuthError(error, req);
     }
 }
 
