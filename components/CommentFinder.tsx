@@ -38,11 +38,17 @@ interface GeneratedComments {
 }
 
 export default function CommentFinder() {
-    const [activePostId, setActivePostId] = useState<number | null>(null);
+    const [activePostId, setActivePostId] = useState<number | string | null>(null);
     const [loading, setLoading] = useState(false);
     const [generatedComments, setGeneratedComments] = useState<GeneratedComments | null>(null);
+    const [copied, setCopied] = useState<string | null>(null);
 
-    const handleGenerate = async (postId: number, postContent: string, postAuthor: string) => {
+    // Custom post state
+    const [customMode, setCustomMode] = useState(false);
+    const [customContent, setCustomContent] = useState('');
+    const [customError, setCustomError] = useState<string | null>(null);
+
+    const handleGenerate = async (postId: number | string, postContent: string, postAuthor: string) => {
         setActivePostId(postId);
         setLoading(true);
         setGeneratedComments(null);
@@ -68,72 +74,132 @@ export default function CommentFinder() {
         }
     };
 
-    const copyToClipboard = (text: string) => {
+    const handleCustomGenerate = () => {
+        setCustomError(null);
+        if (!customContent.trim()) {
+            setCustomError('Please paste a LinkedIn post before generating.');
+            return;
+        }
+        handleGenerate('custom', customContent.trim(), 'Custom Post');
+    };
+
+    const copyToClipboard = (text: string, key: string) => {
         navigator.clipboard.writeText(text);
-        alert('Copied to clipboard!');
+        setCopied(key);
+        setTimeout(() => setCopied(null), 2000);
     };
 
     return (
         <div className={styles.container}>
-            <div className={styles.inputSection}>
-                <input type="text" placeholder="Enter topic to find posts (e.g. 'Marketing')..." className={styles.searchInput} />
-                <button className={styles.searchButton}>Search (Simulated)</button>
+            {/* Mode Tabs */}
+            <div className={styles.modeTabs}>
+                <button
+                    className={`${styles.modeTab} ${!customMode ? styles.modeTabActive : ''}`}
+                    onClick={() => { setCustomMode(false); setGeneratedComments(null); setActivePostId(null); }}
+                >
+                    🔥 Trending Posts
+                </button>
+                <button
+                    className={`${styles.modeTab} ${customMode ? styles.modeTabActive : ''}`}
+                    onClick={() => { setCustomMode(true); setGeneratedComments(null); setActivePostId(null); }}
+                >
+                    ✏️ Custom Post
+                </button>
             </div>
 
-            <div className={styles.results}>
-                {MOCK_POSTS.map(post => (
-                    <div key={post.id} className={styles.postCard}>
-                        <div className={styles.postHeader}>
-                            <div className={styles.avatar}>{post.author[0]}</div>
-                            <div>
-                                <h4 className={styles.authorName}>{post.author}</h4>
-                                <p className={styles.authorTitle}>{post.title}</p>
-                            </div>
+            {/* Custom Post Input */}
+            {customMode && (
+                <div className={styles.customSection}>
+                    <label className={styles.customLabel}>
+                        Paste any LinkedIn post below to generate smart comments:
+                    </label>
+                    <textarea
+                        className={styles.customTextarea}
+                        rows={6}
+                        placeholder="Paste a LinkedIn post here..."
+                        value={customContent}
+                        onChange={(e) => setCustomContent(e.target.value)}
+                    />
+                    {customError && <p className={styles.customError}>{customError}</p>}
+                    <button
+                        className={styles.generateButton}
+                        onClick={handleCustomGenerate}
+                        disabled={loading && activePostId === 'custom'}
+                    >
+                        {loading && activePostId === 'custom' ? 'Thinking…' : '⚡ Generate Smart Comments'}
+                    </button>
+
+                    {activePostId === 'custom' && generatedComments && (
+                        <div className={styles.commentsSection}>
+                            {[
+                                { key: 'valueAdd', badge: styles.webadge, label: 'Value Add', text: generatedComments.valueAdd },
+                                { key: 'question', badge: styles.qbadge, label: 'Question', text: generatedComments.question },
+                                { key: 'story', badge: styles.sbadge, label: 'Story', text: generatedComments.story },
+                            ].map(({ key, badge, label, text }) => (
+                                <div key={key} className={styles.commentOption}>
+                                    <div className={styles.optionHeader}>
+                                        <span className={badge}>{label}</span>
+                                        <button onClick={() => copyToClipboard(text, key)}>
+                                            {copied === key ? '✅ Copied' : 'Copy'}
+                                        </button>
+                                    </div>
+                                    <p>{text}</p>
+                                </div>
+                            ))}
                         </div>
-                        <p className={styles.postContent}>"{post.content}"</p>
-                        <div className={styles.metrics}>
-                            <span>👍 {post.likes}</span>
-                            <span>💬 {post.comments} comments</span>
-                        </div>
+                    )}
+                </div>
+            )}
 
-                        <button
-                            className={styles.generateButton}
-                            onClick={() => handleGenerate(post.id, post.content, post.author)}
-                            disabled={loading && activePostId === post.id}
-                        >
-                            {loading && activePostId === post.id ? 'Thinking...' : '⚡ Generate Smart Comments'}
-                        </button>
-
-                        {activePostId === post.id && generatedComments && (
-                            <div className={styles.commentsSection}>
-                                <div className={styles.commentOption}>
-                                    <div className={styles.optionHeader}>
-                                        <span className={styles.webadge}>Value Add</span>
-                                        <button onClick={() => copyToClipboard(generatedComments.valueAdd)}>Copy</button>
-                                    </div>
-                                    <p>{generatedComments.valueAdd}</p>
-                                </div>
-
-                                <div className={styles.commentOption}>
-                                    <div className={styles.optionHeader}>
-                                        <span className={styles.qbadge}>Question</span>
-                                        <button onClick={() => copyToClipboard(generatedComments.question)}>Copy</button>
-                                    </div>
-                                    <p>{generatedComments.question}</p>
-                                </div>
-
-                                <div className={styles.commentOption}>
-                                    <div className={styles.optionHeader}>
-                                        <span className={styles.sbadge}>Story</span>
-                                        <button onClick={() => copyToClipboard(generatedComments.story)}>Copy</button>
-                                    </div>
-                                    <p>{generatedComments.story}</p>
+            {/* Trending Posts List */}
+            {!customMode && (
+                <div className={styles.results}>
+                    {MOCK_POSTS.map(post => (
+                        <div key={post.id} className={styles.postCard}>
+                            <div className={styles.postHeader}>
+                                <div className={styles.avatar}>{post.author[0]}</div>
+                                <div>
+                                    <h4 className={styles.authorName}>{post.author}</h4>
+                                    <p className={styles.authorTitle}>{post.title}</p>
                                 </div>
                             </div>
-                        )}
-                    </div>
-                ))}
-            </div>
+                            <p className={styles.postContent}>"{post.content}"</p>
+                            <div className={styles.metrics}>
+                                <span>👍 {post.likes}</span>
+                                <span>💬 {post.comments} comments</span>
+                            </div>
+
+                            <button
+                                className={styles.generateButton}
+                                onClick={() => handleGenerate(post.id, post.content, post.author)}
+                                disabled={loading && activePostId === post.id}
+                            >
+                                {loading && activePostId === post.id ? 'Thinking…' : '⚡ Generate Smart Comments'}
+                            </button>
+
+                            {activePostId === post.id && generatedComments && (
+                                <div className={styles.commentsSection}>
+                                    {[
+                                        { key: `va-${post.id}`, badge: styles.webadge, label: 'Value Add', text: generatedComments.valueAdd },
+                                        { key: `q-${post.id}`, badge: styles.qbadge, label: 'Question', text: generatedComments.question },
+                                        { key: `s-${post.id}`, badge: styles.sbadge, label: 'Story', text: generatedComments.story },
+                                    ].map(({ key, badge, label, text }) => (
+                                        <div key={key} className={styles.commentOption}>
+                                            <div className={styles.optionHeader}>
+                                                <span className={badge}>{label}</span>
+                                                <button onClick={() => copyToClipboard(text, key)}>
+                                                    {copied === key ? '✅ Copied' : 'Copy'}
+                                                </button>
+                                            </div>
+                                            <p>{text}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 }

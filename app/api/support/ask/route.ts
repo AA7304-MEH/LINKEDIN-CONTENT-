@@ -58,7 +58,7 @@ export async function POST(request: Request) {
         `).join('\n\n');
 
         // 2. Ask Gemini
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
         const systemPrompt = `You are the Resodin Support Assistant.
         Answer the user's question ONLY using the provided Knowledge Base context below.

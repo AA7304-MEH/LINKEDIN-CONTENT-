@@ -3,6 +3,7 @@ import OnboardingModal from "@/components/OnboardingModal";
 import { getSessionUser } from "@/lib/security/authz";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 async function ensureUserSynced(sessionUser: any) {
     if (!sessionUser) return;
@@ -13,6 +14,27 @@ async function ensureUserSynced(sessionUser: any) {
     });
 
     if (!user) {
+        let refCode: string | undefined = undefined;
+        let referrerId: string | undefined = undefined;
+
+        try {
+            const cookieStore = await cookies();
+            refCode = cookieStore.get("ref_code")?.value;
+
+            if (refCode) {
+                // Find who matches the referralCode
+                const referrer = await prisma.user.findUnique({
+                    where: { referralCode: refCode }
+                });
+
+                if (referrer) {
+                    referrerId = referrer.id;
+                }
+            }
+        } catch (cookieErr) {
+            console.error("Error reading referral cookies:", cookieErr);
+        }
+
         // First time login - sync user to DB
         await prisma.user.create({
             data: {
@@ -20,9 +42,49 @@ async function ensureUserSynced(sessionUser: any) {
                 email: sessionUser.email,
                 plan: "FREE",
                 createdAt: new Date(),
-                onboardingComplete: false
+                onboardingComplete: false,
+                referredBy: refCode || null,
             }
         });
+
+        // Register the referral and reward if referrer exists
+        if (referrerId && refCode) {
+            try {
+                await prisma.referral.create({
+                    data: {
+                        referrerId: referrerId,
+                        referredId: sessionUser.id
+                    }
+                });
+
+                const referrer = await prisma.user.findUnique({
+                    where: { id: referrerId },
+                    select: { referralCount: true }
+                });
+
+                if (referrer) {
+                    const newCount = referrer.referralCount + 1;
+                    const milestoneReached = newCount % 2 === 0;
+
+                    await prisma.user.update({
+                        where: { id: referrerId },
+                        data: {
+                            referralCount: { increment: 1 },
+                            ...(milestoneReached ? {
+                                bonusPosts: { increment: 10 },
+                                creditsLimit: { increment: 10 }
+                            } : {})
+                        }
+                    });
+                }
+
+                // Clean up the cookie
+                const cookieStore = await cookies();
+                cookieStore.set("ref_code", "", { maxAge: 0 });
+            } catch (refErr) {
+                console.error("Error updating referral stats:", refErr);
+            }
+        }
     }
 }
 

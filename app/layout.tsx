@@ -6,6 +6,7 @@ import { dark } from "@clerk/themes";
 import { Analytics } from "@vercel/analytics/next";
 import SupportWidget from "@/components/SupportWidget";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import ReferralTracker from "@/components/ReferralTracker";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -44,6 +45,7 @@ export default function RootLayout({
         </head>
         <body className="font-sans antialiased text-[#F9FAFB] bg-[#0A0F1E] selection:bg-[#06B6D4]/30 selection:text-white" style={{ backgroundColor: '#0A0F1E', color: '#F9FAFB', fontFamily: "'Inter', sans-serif", margin: 0 }} suppressHydrationWarning>
           {children}
+          <ReferralTracker />
           <SupportWidget />
           <Analytics />
         </body>

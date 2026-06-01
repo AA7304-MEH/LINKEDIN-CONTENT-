@@ -17,7 +17,7 @@ export async function generateMarketingArticle(options: ArticleOptions) {
         throw new Error("Settings not found");
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const prompt = `
     You are an expert technical writer for the product "${settings.productName}".

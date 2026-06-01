@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import styles from '../dashboard/page.module.css';
 import Link from 'next/link';
+import CopyButton from '@/components/CopyButton';
 
 export default async function ReferralPage() {
     const sessionUser = await getSessionUser();
@@ -42,16 +43,7 @@ export default async function ReferralPage() {
                             value={referralLink}
                             className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-4 font-mono text-sm text-gray-600 focus:outline-none"
                         />
-                        <button 
-                            className="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-500 transition-all shadow-lg active:scale-95"
-                            onClick={() => {
-                                // navigator.clipboard.writeText(referralLink);
-                                // This is a server component, so copying needs to be handled in a client component if interactive.
-                                // For now, I'll keep it simple or make it a client component.
-                            }}
-                        >
-                            Copy Link
-                        </button>
+                        <CopyButton link={referralLink} />
                     </div>
 
                     <div className="mt-12 p-6 bg-blue-50 rounded-2xl border border-blue-100">

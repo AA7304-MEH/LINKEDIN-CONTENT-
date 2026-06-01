@@ -33,7 +33,7 @@ async function verifyMarketing() {
         console.log("Using API Key:", apiKey.substring(0, 10) + "...");
 
         const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
         const prompt = `Generate 1 marketing tweet for ${settings.productName}. Return strictly valid JSON: ["tweet content"]`;
 

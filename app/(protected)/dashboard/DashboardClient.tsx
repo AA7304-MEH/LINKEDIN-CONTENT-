@@ -13,34 +13,59 @@ interface DashboardClientProps {
 export default function DashboardClient({ initialPosts, userPlan }: DashboardClientProps) {
     const [posts, setPosts] = useState(initialPosts);
     const [generatedPost, setGeneratedPost] = useState<any>(null);
-
     const [hookScore, setHookScore] = useState<number | null>(null);
+    const [hookFeedback, setHookFeedback] = useState<string>('');
+    const [isGenerating, setIsGenerating] = useState(false);
+    const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
     const handleGenerate = async (formData: any) => {
-        // DEMO MOCK GENERATION
+        setIsGenerating(true);
+        setErrorMsg(null);
+        setGeneratedPost(null);
+        setHookScore(null);
+        setHookFeedback('');
+
         try {
-            // Simulate API delay
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            const res = await fetch('/api/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
 
-            const mockContent = `🚀 The Future of ${formData.topic} is Here\n\nWe often think about AI as a replacement tool. But the real magic happens when we treat it as a collaborator.\n\nI've been experimenting with ${formData.topic} workflows lately, and the results are mind-blowing.\n\nIt allows us to focus on STRATEGY while automation handles the EXECUTION.\n\nWhat are your thoughts on this shift?\n\n👇 Let me know in the comments.`;
+            const data = await res.json();
 
-            const data = {
-                content: mockContent,
-                hashtags: {
-                    broad: ["#Innovation", "#FutureOfWork"],
-                    niche: ["#AI", "#Productivity"],
-                    community: ["#TechLeaders"]
-                }
-            };
+            if (!res.ok) {
+                throw new Error(data.error || 'Failed to generate post.');
+            }
 
             setGeneratedPost(data);
-            setHookScore(9.2);
+            setHookScore(data.hookScore ?? null);
+            setHookFeedback(data.hookFeedback ?? '');
 
-        } catch (error) {
-            console.error(error);
-            alert("An error occurred generating content.");
+            // Prepend new post to recent history list
+            if (data.id) {
+                const newPost = {
+                    id: data.id,
+                    content: data.content,
+                    type: formData.type || 'Educational',
+                    createdAt: new Date().toISOString(),
+                };
+                setPosts((prev: any[]) => [newPost, ...prev]);
+            }
+        } catch (error: any) {
+            setErrorMsg(error.message || 'An unexpected error occurred.');
+        } finally {
+            setIsGenerating(false);
         }
     };
+
+    const scoreColor = hookScore
+        ? hookScore >= 8
+            ? '#22c55e'
+            : hookScore >= 6
+            ? '#f59e0b'
+            : '#ef4444'
+        : '#888';
 
     return (
         <div className={styles.dashboardGrid}>
@@ -50,26 +75,40 @@ export default function DashboardClient({ initialPosts, userPlan }: DashboardCli
                     <ContentForm onGenerate={handleGenerate} />
                 </div>
 
-                {generatedPost && (
+                {errorMsg && (
+                    <div className={styles.errorBanner}>
+                        ⚠️ {errorMsg}
+                    </div>
+                )}
+
+                {isGenerating && (
+                    <div className={styles.loadingState}>
+                        <div className={styles.spinner} />
+                        <p>Crafting your post with AI…</p>
+                    </div>
+                )}
+
+                {generatedPost && !isGenerating && (
                     <div className={styles.resultsArea}>
-                        {hookScore && (
+                        {hookScore !== null && (
                             <div className={styles.hookScoreCard}>
-                                <div className={styles.scoreCircle}>
-                                    <span className={styles.scoreNumber}>{hookScore}</span>
+                                <div className={styles.scoreCircle} style={{ borderColor: scoreColor }}>
+                                    <span className={styles.scoreNumber} style={{ color: scoreColor }}>
+                                        {hookScore}
+                                    </span>
                                     <span className={styles.scoreLabel}>Hook Score</span>
                                 </div>
                                 <div className={styles.scoreFeedback}>
                                     <h4>Viral Potential</h4>
-                                    <p>Good curiosity gap. Consider making the first line shorter.</p>
+                                    <p>{hookFeedback || 'Strong opening. Engage your audience!'}</p>
                                 </div>
                             </div>
                         )}
-                        <PostDisplay 
-                            content={generatedPost.content} 
-                            hashtags={generatedPost.hashtags} 
+                        <PostDisplay
+                            content={generatedPost.content}
+                            hashtags={generatedPost.hashtags}
                             isFree={userPlan === 'FREE'}
                         />
-
                     </div>
                 )}
             </div>

@@ -41,7 +41,7 @@ export async function generateMarketingPosts(options: GenerateOptions) {
 
     // 2. Iterate per platform and generate
     for (const platform of platformsToGenerate) {
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
         const prompt = `
       You are an expert social media manager for the product "${settings.productName}".

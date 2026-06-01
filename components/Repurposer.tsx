@@ -12,80 +12,142 @@ interface RepurposeResult {
 
 function RepurposerContent() {
     const searchParams = useSearchParams();
-    const [input, setInput] = useState('');
+    const [inputMode, setInputMode] = useState<'text' | 'url'>('text');
+    const [textInput, setTextInput] = useState('');
+    const [urlInput, setUrlInput] = useState('');
     const [result, setResult] = useState<RepurposeResult | null>(null);
     const [loading, setLoading] = useState(false);
+    const [errorMsg, setErrorMsg] = useState<string | null>(null);
     const [activeTab, setActiveTab] = useState<'thread' | 'carousel' | 'question'>('thread');
 
     useEffect(() => {
         const textParam = searchParams.get('text');
         if (textParam) {
-            setInput(textParam);
+            setTextInput(textParam);
+            setInputMode('text');
+        }
+        const urlParam = searchParams.get('url');
+        if (urlParam) {
+            setUrlInput(urlParam);
+            setInputMode('url');
         }
     }, [searchParams]);
 
+    const isValid = inputMode === 'text' ? textInput.trim().length > 0 : urlInput.trim().length > 0;
+
     const handleGenerate = async () => {
-        if (!input.trim()) return;
+        if (!isValid) return;
         setLoading(true);
+        setErrorMsg(null);
+        setResult(null);
+
         try {
-            // DEMO INTERCEPT
-            if (input.includes("This is a demo article")) {
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                setResult({
-                    thread: [
-                        "1/5 🧵 AI is changing how we create content, but not how you think.\n\nIt's not a replacement.\nIt's a multiplier.",
-                        "2/5 Most people use it to write generic fluff.\n\nThe real power comes when you use it to restructure your EXISTING ideas.",
-                        "3/5 Take this article for example.\n\nI fed it into the system, and it broke it down into this thread instantly.",
-                        "4/5 Efficiency isn't just about speed.\nIt's about leverage.\n\nMore output, same input.",
-                        "5/5 Try repurposing your old content today.\n\nYou might be surprised by what you find."
-                    ],
-                    carousel: [
-                        { title: "The AI Shift", content: "AI is a multiplier, not a replacement." },
-                        { title: "Stop Generating Fluff", content: "Use AI to restructure existing ideas instead." },
-                        { title: "Leverage", content: "Get more output from the same input." }
-                    ],
-                    question: "How are you using AI in your workflow today? Multiplier or Writer?"
-                });
-                setLoading(false);
-                return;
-            }
+            const body =
+                inputMode === 'url'
+                    ? { url: urlInput.trim() }
+                    : { sourceText: textInput.trim() };
 
             const res = await fetch('/api/repurpose', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ sourceText: input }),
+                body: JSON.stringify(body),
             });
-            if (!res.ok) throw new Error('Failed');
+
             const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.error || 'Failed to repurpose content.');
+            }
+
             setResult(data);
-        } catch (e) {
-            alert('Error generating');
+            setActiveTab('thread');
+        } catch (e: any) {
+            setErrorMsg(e.message || 'An unexpected error occurred.');
         } finally {
             setLoading(false);
         }
     };
 
+    const copyText = (text: string) => {
+        navigator.clipboard.writeText(text);
+    };
+
     return (
         <div className={styles.container}>
+            {/* Mode Toggle */}
+            <div className={styles.modeToggle}>
+                <button
+                    className={`${styles.modeBtn} ${inputMode === 'text' ? styles.modeBtnActive : ''}`}
+                    onClick={() => { setInputMode('text'); setErrorMsg(null); }}
+                >
+                    📝 Paste Text
+                </button>
+                <button
+                    className={`${styles.modeBtn} ${inputMode === 'url' ? styles.modeBtnActive : ''}`}
+                    onClick={() => { setInputMode('url'); setErrorMsg(null); }}
+                >
+                    🔗 From URL
+                </button>
+            </div>
+
             <div className={styles.inputSection}>
-                <textarea
-                    className={styles.textarea}
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    placeholder="Paste article text, blog content, or notes here..."
-                    rows={6}
-                />
-                <button className={styles.button} onClick={handleGenerate} disabled={loading || !input.trim()}>
-                    {loading ? 'Repurposing...' : 'Generate All Formats'}
+                {inputMode === 'text' ? (
+                    <textarea
+                        className={styles.textarea}
+                        value={textInput}
+                        onChange={(e) => setTextInput(e.target.value)}
+                        placeholder="Paste article text, blog content, or notes here..."
+                        rows={6}
+                    />
+                ) : (
+                    <div className={styles.urlInputWrapper}>
+                        <input
+                            type="url"
+                            className={styles.urlInput}
+                            value={urlInput}
+                            onChange={(e) => setUrlInput(e.target.value)}
+                            placeholder="https://example.com/article-to-repurpose"
+                        />
+                        <p className={styles.urlHint}>
+                            We'll scrape the article content and repurpose it for LinkedIn.
+                        </p>
+                    </div>
+                )}
+
+                {errorMsg && (
+                    <div className={styles.errorBanner}>⚠️ {errorMsg}</div>
+                )}
+
+                <button
+                    className={styles.button}
+                    onClick={handleGenerate}
+                    disabled={loading || !isValid}
+                >
+                    {loading ? 'Repurposing…' : 'Generate All Formats'}
                 </button>
             </div>
 
             {result && (
                 <div className={styles.resultSection}>
                     <div className={styles.tabs}>
-                        <button className={`${styles.tab} ${activeTab === 'thread' ? styles.active : ''}`} onClick={() => setActiveTab('thread')}>Thread</button>
-                        <button className={`${styles.tab} ${activeTab === 'carousel' ? styles.active : ''}`} onClick={() => setActiveTab('carousel')}>Carousel</button>
-                        <button className={`${styles.tab} ${activeTab === 'question' ? styles.active : ''}`} onClick={() => setActiveTab('question')}>Question</button>
+                        <button
+                            className={`${styles.tab} ${activeTab === 'thread' ? styles.active : ''}`}
+                            onClick={() => setActiveTab('thread')}
+                        >
+                            Thread
+                        </button>
+                        <button
+                            className={`${styles.tab} ${activeTab === 'carousel' ? styles.active : ''}`}
+                            onClick={() => setActiveTab('carousel')}
+                        >
+                            Carousel
+                        </button>
+                        <button
+                            className={`${styles.tab} ${activeTab === 'question' ? styles.active : ''}`}
+                            onClick={() => setActiveTab('question')}
+                        >
+                            Question
+                        </button>
                     </div>
 
                     <div className={styles.tabContent}>
@@ -93,7 +155,10 @@ function RepurposerContent() {
                             <div className={styles.thread}>
                                 {result.thread?.map((tweet, i) => (
                                     <div key={i} className={styles.tweet}>
-                                        <span className={styles.counter}>{i + 1}/{result.thread.length}</span>
+                                        <div className={styles.tweetHeader}>
+                                            <span className={styles.counter}>{i + 1}/{result.thread.length}</span>
+                                            <button className={styles.copyBtn} onClick={() => copyText(tweet)} title="Copy">📋</button>
+                                        </div>
                                         <p>{tweet}</p>
                                     </div>
                                 ))}
@@ -104,7 +169,10 @@ function RepurposerContent() {
                             <div className={styles.carousel}>
                                 {result.carousel?.map((slide, i) => (
                                     <div key={i} className={styles.slide}>
-                                        <h4>Slide {i + 1}: {slide.title}</h4>
+                                        <div className={styles.slideHeader}>
+                                            <h4>Slide {i + 1}: {slide.title}</h4>
+                                            <button className={styles.copyBtn} onClick={() => copyText(`${slide.title}\n\n${slide.content}`)} title="Copy">📋</button>
+                                        </div>
                                         <p>{slide.content}</p>
                                     </div>
                                 ))}
@@ -115,6 +183,7 @@ function RepurposerContent() {
                             <div className={styles.question}>
                                 <h3>Engagement Starter</h3>
                                 <p>{result.question}</p>
+                                <button className={styles.copyBtn} onClick={() => copyText(result.question)}>📋 Copy Question</button>
                             </div>
                         )}
                     </div>

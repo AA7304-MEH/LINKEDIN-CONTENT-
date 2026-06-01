@@ -81,9 +81,9 @@ export async function POST(request: Request) {
             }
         }
 
-        // Using gemini-1.5-flash for better stability and production readiness
+        // Using gemini-2.5-flash for better stability and production readiness
         const model = genAI.getGenerativeModel({ 
-            model: "gemini-1.5-flash",
+            model: "gemini-2.5-flash",
             generationConfig: {
                 temperature: 0.8,
                 topP: 0.95,
@@ -121,6 +121,8 @@ Post Type: ${type || 'Educational'}
 Return the output in the following JSON format (no markdown):
 {
     "content": "The full post content...",
+    "hookScore": 9.2,
+    "hookFeedback": "Brief feedback about the opening hook potential...",
     "hashtags": {
         "broad": ["#tag1", "#tag2"],
         "niche": ["#tag3", "#tag4"],
@@ -147,22 +149,33 @@ Hashtag Strategy:
             data = JSON.parse(text);
         } catch (e) {
             // Fallback if JSON parsing fails
-            data = { content: text, hashtags: { broad: [], niche: [], community: [] } };
+            data = { content: text, hookScore: 7.0, hookFeedback: "Good post.", hashtags: { broad: [], niche: [], community: [] } };
         }
 
         // Save to DB if user is logged in
+        let dbPost = null;
         if (userId) {
-            await prisma.post.create({
+            dbPost = await prisma.post.create({
                 data: {
                     content: data.content,
                     tone: tone || (userVoiceProfile ? userVoiceProfile.tone : 'Professional'),
                     type: type || 'Educational',
                     userId: userId,
+                    hookScore: data.hookScore ? Math.round(data.hookScore) : null,
                 },
+            });
+
+            // Increment credits used
+            await prisma.user.update({
+                where: { id: userId },
+                data: { creditsUsed: { increment: 1 } }
             });
         }
 
-        return NextResponse.json(data);
+        return NextResponse.json({
+            ...data,
+            id: dbPost?.id
+        });
     } catch (error: any) {
         console.error("Generation error:", error);
         
