@@ -1,22 +1,22 @@
 .container {
-    color: #1e293b;
+    color: #0f172a;
 }
 
 .header {
     margin-bottom: 2.5rem;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid #cbd5e1;
     padding-bottom: 1.5rem;
 }
 
 .title {
     font-size: 2.25rem;
     font-weight: 800;
-    color: #0f172a;
+    color: #000000;
     letter-spacing: -0.025em;
 }
 
 .subtitle {
-    color: #64748b;
+    color: #475569;
     font-size: 1.1rem;
     margin-top: 0.25rem;
 }
@@ -32,8 +32,8 @@
     background-color: white;
     padding: 1.5rem;
     border-radius: var(--radius-lg);
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -41,7 +41,7 @@
 }
 
 .statCard:hover {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.08);
     transform: translateY(-2px);
 }
 
@@ -53,14 +53,14 @@
 
 .statLabel {
     font-size: 0.875rem;
-    font-weight: 500;
-    color: #64748b;
+    font-weight: 600;
+    color: #475569;
 }
 
 .statValue {
     font-size: 1.5rem;
-    font-weight: 700;
-    color: #0f172a;
+    font-weight: 800;
+    color: #000000;
 }
 
 .statIcon {
@@ -74,7 +74,7 @@
 
 .tabsContainer {
     margin-bottom: 2rem;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid #cbd5e1;
 }
 
 .tabList {
@@ -85,8 +85,8 @@
 .tab {
     padding: 1rem 0;
     font-size: 0.9375rem;
-    font-weight: 500;
-    color: #64748b;
+    font-weight: 600;
+    color: #475569;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -95,12 +95,12 @@
 }
 
 .tab:hover {
-    color: #0f172a;
+    color: #000000;
 }
 
 .activeTab {
-    color: #2563eb;
-    font-weight: 600;
+    color: #1d4ed8;
+    font-weight: 700;
 }
 
 .activeTab::after {
@@ -110,22 +110,22 @@
     left: 0;
     right: 0;
     height: 2px;
-    background-color: #2563eb;
+    background-color: #1d4ed8;
 }
 
 .card {
     background-color: white;
     padding: 2rem;
     border-radius: var(--radius-lg);
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     margin-bottom: 2rem;
 }
 
 .sectionTitle {
     font-size: 1.125rem;
-    font-weight: 600;
-    color: #0f172a;
+    font-weight: 700;
+    color: #000000;
     margin-bottom: 1.5rem;
 }
 
@@ -142,8 +142,8 @@
 .label {
     display: block;
     font-size: 0.875rem;
-    font-weight: 500;
-    color: #334155;
+    font-weight: 600;
+    color: #0f172a;
     margin-bottom: 0.5rem;
 }
 
@@ -153,10 +153,10 @@
     width: 100%;
     padding: 0.625rem 0.875rem;
     font-size: 0.9375rem;
-    border: 1px solid #cbd5e1;
+    border: 1px solid #94a3b8;
     border-radius: var(--radius-md);
     background-color: white;
-    color: #334155;
+    color: #000000;
     outline: none;
     transition: all 0.2s;
 }
@@ -164,8 +164,8 @@
 .input:focus,
 .textarea:focus,
 .select:focus {
-    border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    border-color: #1d4ed8;
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.2);
 }
 
 .platformsGrid {
@@ -179,16 +179,18 @@
     align-items: center;
     gap: 0.75rem;
     padding: 0.75rem;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #cbd5e1;
     border-radius: var(--radius-md);
     cursor: pointer;
     transition: all 0.2s;
     background-color: white;
+    color: #0f172a;
+    font-weight: 500;
 }
 
 .platformCheckbox:hover {
     background-color: #f8fafc;
-    border-color: #2563eb;
+    border-color: #1d4ed8;
 }
 
 .btn {
@@ -197,7 +199,7 @@
     gap: 0.5rem;
     padding: 0.625rem 1.25rem;
     font-size: 0.9375rem;
-    font-weight: 500;
+    font-weight: 600;
     border-radius: var(--radius-md);
     cursor: pointer;
     transition: all 0.2s;
@@ -205,24 +207,24 @@
 }
 
 .btnPrimary {
-    background-color: #2563eb;
+    background-color: #1d4ed8;
     color: white;
 }
 
 .btnPrimary:hover:not(:disabled) {
-    background-color: #1d4ed8;
+    background-color: #1e40af;
     transform: translateY(-1px);
 }
 
 .btnSecondary {
     background-color: white;
-    border-color: #e2e8f0;
-    color: #334155;
+    border-color: #cbd5e1;
+    color: #0f172a;
 }
 
 .btnSecondary:hover:not(:disabled) {
     background-color: #f8fafc;
-    border-color: #cbd5e1;
+    border-color: #94a3b8;
 }
 
 .generateCard {
@@ -232,14 +234,14 @@
     background-color: #f8fafc;
     padding: 1.5rem;
     border-radius: var(--radius-lg);
-    border: 1px solid #e2e8f0;
+    border: 1px solid #cbd5e1;
     margin-bottom: 1.5rem;
 }
 
 .tableWrapper {
     background-color: white;
     border-radius: var(--radius-lg);
-    border: 1px solid #e2e8f0;
+    border: 1px solid #cbd5e1;
     overflow: hidden;
 }
 
@@ -253,18 +255,18 @@
     background-color: #f8fafc;
     padding: 0.75rem 1.5rem;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #64748b;
-    border-bottom: 1px solid #e2e8f0;
+    color: #475569;
+    border-bottom: 1px solid #cbd5e1;
 }
 
 .table td {
     padding: 1rem 1.5rem;
     font-size: 0.875rem;
-    color: #334155;
-    border-bottom: 1px solid #e2e8f0;
+    color: #0f172a;
+    border-bottom: 1px solid #cbd5e1;
 }
 
 .badge {
@@ -273,29 +275,29 @@
     padding: 0.25rem 0.625rem;
     border-radius: 9999px;
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: 600;
     text-transform: capitalize;
 }
 
 .status-draft {
     background-color: #f1f5f9;
-    color: #475569;
+    color: #334155;
 }
 
 .status-published,
 .status-posted {
-    background-color: #ecfdf5;
-    color: #059669;
+    background-color: #d1fae5;
+    color: #065f46;
 }
 
 .status-failed {
-    background-color: #fef2f2;
-    color: #dc2626;
+    background-color: #fee2e2;
+    color: #991b1b;
 }
 
 .status-scheduled {
-    background-color: #eff6ff;
-    color: #2563eb;
+    background-color: #dbeafe;
+    color: #1e40af;
 }
 
 @media (max-width: 1024px) {
