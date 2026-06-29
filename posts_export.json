@@ -1,0 +1,12 @@
+[
+  {
+    "id": "d7689f74-6c9a-4a79-8034-2047a5f02e7f",
+    "userId": "user_36T50B1NeuMT9hMy4TrxtVXcVFt",
+    "tone": "authoritative",
+    "type": "thought-leadership",
+    "hookScore": 10,
+    "provider": "groq-llama3-70b",
+    "createdAt": "2026-06-10T08:10:29.291Z",
+    "content": "Software development just got a turbo boost. \nAI is redefining the coding landscape, automating routine tasks, and empowering developers to focus on high-leverage work. \nBut what does this mean for the future of software development? \nWill AI augment human capabilities or replace them? \nThe next decade will be shaped by those who can harness AI's power in software development - what's your strategy?"
+  }
+]

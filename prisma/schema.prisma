@@ -33,6 +33,7 @@ model Post {
   userId    String
   createdAt DateTime @default(now())
   hookScore Int?
+  provider  String?  @default("groq-llama3-70b")
   user      User     @relation(fields: [userId], references: [id])
 }
 

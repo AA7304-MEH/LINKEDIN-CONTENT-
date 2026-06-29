@@ -49,6 +49,7 @@ export default function DashboardClient({ initialPosts, userPlan }: DashboardCli
                     content: data.content,
                     type: formData.type || 'Educational',
                     createdAt: new Date().toISOString(),
+                    provider: data.provider,
                 };
                 setPosts((prev: any[]) => [newPost, ...prev]);
             }
@@ -104,6 +105,11 @@ export default function DashboardClient({ initialPosts, userPlan }: DashboardCli
                                 </div>
                             </div>
                         )}
+                        {generatedPost.provider && (
+                            <div className={styles.providerBadge}>
+                                🤖 Powered by <strong>{generatedPost.provider === 'groq-llama3-70b' ? 'Llama 3.3 70B (Groq)' : 'Gemini 2.5 Flash'}</strong>
+                            </div>
+                        )}
                         <PostDisplay
                             content={generatedPost.content}
                             hashtags={generatedPost.hashtags}
@@ -124,6 +130,11 @@ export default function DashboardClient({ initialPosts, userPlan }: DashboardCli
                                 <li key={post.id} className={styles.historyItem}>
                                     <div className={styles.historyMeta}>
                                         <span className={styles.historyType}>{post.type || 'Post'}</span>
+                                        {post.provider && (
+                                            <span className={post.provider === 'groq-llama3-70b' ? styles.historyProviderBadgeLlama : styles.historyProviderBadge}>
+                                                {post.provider === 'groq-llama3-70b' ? 'Llama 3' : 'Gemini'}
+                                            </span>
+                                        )}
                                         <span className={styles.historyDate} suppressHydrationWarning>
                                             {new Date(post.createdAt).toLocaleDateString()}
                                         </span>

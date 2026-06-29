@@ -169,9 +169,9 @@ export default function MarketingDashboard() {
 
     return (
         <div>
-            <div className="mb-8 p-6 bg-zinc-900/50 rounded-2xl border border-white/[0.06] backdrop-blur-sm shadow-2xl">
-                <h1 className="text-3xl font-bold text-white tracking-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Traffic & Marketing Engine</h1>
-                <p className="text-zinc-400 mt-1">Manage your automated content strategy for <span className="text-[#00E5FF]">Resodin</span>.</p>
+            <div className="mb-8 p-6 bg-white rounded-2xl border border-slate-200 shadow-sm">
+                <h1 className="text-3xl font-bold text-slate-900 tracking-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Traffic & Marketing Engine</h1>
+                <p className="text-slate-500 mt-1">Manage your automated content strategy for <span className="text-blue-600 font-semibold">Resodin</span>.</p>
             </div>
 
             {/* Stats Overview */}
@@ -282,11 +282,11 @@ export default function MarketingDashboard() {
                             <hr className="my-6 border-gray-200" />
 
                             <h3 className={styles.sectionTitle}>Automation Settings (Make.com)</h3>
-                            <div className="bg-blue-50 p-4 rounded-lg border border-blue-100 mb-4">
-                                <p className="text-sm text-blue-800 mb-2">
+                            <div className="bg-blue-50 p-4 rounded-lg border border-blue-200 mb-4">
+                                <p className="text-sm text-blue-900 mb-2 font-medium">
                                     <strong>How to Automate:</strong> Create a scenario in Make.com with a Custom Webhook. Paste the URL below.
                                 </p>
-                                <p className="text-xs text-blue-600">
+                                <p className="text-xs text-blue-700">
                                     Resodin will POST the content here when scheduled.
                                 </p>
                             </div>
@@ -338,7 +338,7 @@ export default function MarketingDashboard() {
                     <div className={styles.generateCard}>
                         <div className={styles.generateInput}>
                             <label className={styles.label}>Generate New Content</label>
-                            <p className="text-sm text-zinc-500 mb-4">Create new high-authority drafts based on your current Voice DNA settings.</p>
+                            <p className="text-sm text-slate-500 mb-4">Create new high-authority drafts based on your current Voice DNA settings.</p>
                             <div className="flex gap-4 items-center">
                                 <div className="w-24">
                                     <input type="number" className={styles.input} value={generateCount} onChange={(e) => setGenerateCount(parseInt(e.target.value))} min={1} max={10} />
@@ -394,7 +394,7 @@ export default function MarketingDashboard() {
                                                 {post.platform.replace("_", " ")}
                                             </td>
                                             <td style={{ maxWidth: '400px' }}>
-                                                <div className="line-clamp-2 text-gray-600">{post.content}</div>
+                                                <div className="line-clamp-2 text-slate-700 font-medium">{post.content}</div>
                                             </td>
                                             <td>
                                                 {post.status !== 'published' && !isManual && (
@@ -403,7 +403,7 @@ export default function MarketingDashboard() {
                                                     </button>
                                                 )}
                                                 {isManual && (
-                                                    <span className="text-xs text-gray-400 italic">Manual Copy Required</span>
+                                                    <span className="text-xs text-slate-500 italic">Manual Copy Required</span>
                                                 )}
                                             </td>
                                         </tr>
@@ -411,7 +411,7 @@ export default function MarketingDashboard() {
                                 })}
                                 {posts.length === 0 && (
                                     <tr>
-                                        <td colSpan={4} className="text-center py-8 text-gray-400">No posts yet. Generate some above!</td>
+                                        <td colSpan={4} className="text-center py-8 text-slate-500 font-medium">No posts yet. Generate some above!</td>
                                     </tr>
                                 )}
                             </tbody>
@@ -431,7 +431,7 @@ export default function MarketingDashboard() {
                                     <span className={styles.statValue}>{count}</span>
                                 </div>
                             </div>
-                        )) : <div className="col-span-3 text-center py-8"><Loader2 className="animate-spin inline" /> Loading Analytics...</div>}
+                        )) : <div className="col-span-3 text-center py-8 text-slate-600"><Loader2 className="animate-spin inline mr-2" /> Loading Analytics...</div>}
                     </div>
 
                     {analytics?.topPosts && (
@@ -498,12 +498,12 @@ export default function MarketingDashboard() {
                                         {article.status}
                                     </span>
                                 </div>
-                                <div className="text-sm text-gray-500 mb-3 flex items-center gap-2">
+                                <div className="text-sm text-slate-500 mb-3 flex items-center gap-2">
                                     <Globe size={14} /> {article.platform}
                                     <span>•</span>
                                     {new Date(article.createdAt).toLocaleDateString()}
                                 </div>
-                                <div className="prose prose-sm max-w-none bg-gray-50 p-3 rounded text-gray-600 mb-4 line-clamp-3">
+                                <div className="prose prose-sm max-w-none bg-slate-50 p-3 rounded text-slate-700 mb-4 line-clamp-3 border border-slate-100">
                                     {article.content}
                                 </div>
                                 <div className="flex justify-end gap-2">

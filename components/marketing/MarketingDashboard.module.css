@@ -1,3 +1,26 @@
+.container {
+    color: #1e293b;
+}
+
+.header {
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 1.5rem;
+}
+
+.title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.025em;
+}
+
+.subtitle {
+    color: #64748b;
+    font-size: 1.1rem;
+    margin-top: 0.25rem;
+}
+
 .statsContainer {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -6,11 +29,11 @@
 }
 
 .statCard {
-    background-color: var(--card-bg);
+    background-color: white;
     padding: 1.5rem;
     border-radius: var(--radius-lg);
-    border: 1px solid var(--card-border);
-    box-shadow: var(--card-shadow);
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -18,7 +41,7 @@
 }
 
 .statCard:hover {
-    box-shadow: var(--card-shadow-hover);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
     transform: translateY(-2px);
 }
 
@@ -31,13 +54,13 @@
 .statLabel {
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--sidebar-text);
+    color: #64748b;
 }
 
 .statValue {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--foreground);
+    color: #0f172a;
 }
 
 .statIcon {
@@ -51,7 +74,7 @@
 
 .tabsContainer {
     margin-bottom: 2rem;
-    border-bottom: 1px solid var(--sidebar-border);
+    border-bottom: 1px solid #e2e8f0;
 }
 
 .tabList {
@@ -63,7 +86,7 @@
     padding: 1rem 0;
     font-size: 0.9375rem;
     font-weight: 500;
-    color: var(--sidebar-text);
+    color: #64748b;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -72,11 +95,11 @@
 }
 
 .tab:hover {
-    color: var(--foreground);
+    color: #0f172a;
 }
 
 .activeTab {
-    color: var(--primary);
+    color: #2563eb;
     font-weight: 600;
 }
 
@@ -87,22 +110,22 @@
     left: 0;
     right: 0;
     height: 2px;
-    background-color: var(--primary);
+    background-color: #2563eb;
 }
 
 .card {
-    background-color: var(--card-bg);
+    background-color: white;
     padding: 2rem;
     border-radius: var(--radius-lg);
-    border: 1px solid var(--card-border);
-    box-shadow: var(--card-shadow);
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     margin-bottom: 2rem;
 }
 
 .sectionTitle {
     font-size: 1.125rem;
     font-weight: 600;
-    color: var(--foreground);
+    color: #0f172a;
     margin-bottom: 1.5rem;
 }
 
@@ -120,7 +143,7 @@
     display: block;
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--foreground);
+    color: #334155;
     margin-bottom: 0.5rem;
 }
 
@@ -130,10 +153,10 @@
     width: 100%;
     padding: 0.625rem 0.875rem;
     font-size: 0.9375rem;
-    border: 1px solid var(--card-border);
+    border: 1px solid #cbd5e1;
     border-radius: var(--radius-md);
     background-color: white;
-    color: var(--foreground);
+    color: #334155;
     outline: none;
     transition: all 0.2s;
 }
@@ -141,8 +164,8 @@
 .input:focus,
 .textarea:focus,
 .select:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 .platformsGrid {
@@ -156,15 +179,16 @@
     align-items: center;
     gap: 0.75rem;
     padding: 0.75rem;
-    border: 1px solid var(--card-border);
+    border: 1px solid #e2e8f0;
     border-radius: var(--radius-md);
     cursor: pointer;
     transition: all 0.2s;
+    background-color: white;
 }
 
 .platformCheckbox:hover {
     background-color: #f8fafc;
-    border-color: var(--primary);
+    border-color: #2563eb;
 }
 
 .btn {
@@ -181,24 +205,24 @@
 }
 
 .btnPrimary {
-    background-color: var(--primary);
+    background-color: #2563eb;
     color: white;
 }
 
 .btnPrimary:hover:not(:disabled) {
-    background-color: var(--primary-hover);
+    background-color: #1d4ed8;
     transform: translateY(-1px);
 }
 
 .btnSecondary {
     background-color: white;
-    border-color: var(--card-border);
-    color: var(--foreground);
+    border-color: #e2e8f0;
+    color: #334155;
 }
 
 .btnSecondary:hover:not(:disabled) {
     background-color: #f8fafc;
-    border-color: var(--sidebar-text);
+    border-color: #cbd5e1;
 }
 
 .generateCard {
@@ -208,14 +232,14 @@
     background-color: #f8fafc;
     padding: 1.5rem;
     border-radius: var(--radius-lg);
-    border: 1px solid var(--card-border);
+    border: 1px solid #e2e8f0;
     margin-bottom: 1.5rem;
 }
 
 .tableWrapper {
-    background-color: var(--card-bg);
+    background-color: white;
     border-radius: var(--radius-lg);
-    border: 1px solid var(--card-border);
+    border: 1px solid #e2e8f0;
     overflow: hidden;
 }
 
@@ -232,15 +256,15 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--sidebar-text);
-    border-bottom: 1px solid var(--card-border);
+    color: #64748b;
+    border-bottom: 1px solid #e2e8f0;
 }
 
 .table td {
     padding: 1rem 1.5rem;
     font-size: 0.875rem;
-    color: var(--foreground);
-    border-bottom: 1px solid var(--card-border);
+    color: #334155;
+    border-bottom: 1px solid #e2e8f0;
 }
 
 .badge {

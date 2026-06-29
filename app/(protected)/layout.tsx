@@ -115,7 +115,7 @@ export default async function ProtectedLayout({
     const onboardingComplete = dbUser?.onboardingComplete || false;
 
     return (
-        <div style={{ display: 'flex', minHeight: '100vh', background: '#f8fafc' }}>
+        <div style={{ display: 'flex', minHeight: '100vh', background: '#f8fafc', color: '#0f172a' }}>
             {!onboardingComplete && <OnboardingModal />}
             <DashboardSidebar
                 creditsUsed={creditsUsed}
