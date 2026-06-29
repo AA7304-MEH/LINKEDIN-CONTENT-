@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import styles from '../dashboard/page.module.css';
 import Link from 'next/link';
 import CopyButton from '@/components/CopyButton';
+import { headers } from 'next/headers';
 
 export default async function ReferralPage() {
     const sessionUser = await getSessionUser();
@@ -21,7 +22,10 @@ export default async function ReferralPage() {
         redirect("/dashboard");
     }
 
-    const referralLink = `https://resodin.ai/sign-up?ref=${dbUser.referralCode}`;
+    const headersList = headers();
+    const host = headersList.get('host') || 'resodin.vercel.app';
+    const protocol = host.includes('localhost') ? 'http' : 'https';
+    const referralLink = `${protocol}://${host}/sign-up?ref=${dbUser.referralCode}`;
 
     return (
         <div className={styles.container}>
