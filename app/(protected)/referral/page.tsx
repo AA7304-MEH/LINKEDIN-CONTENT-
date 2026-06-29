@@ -22,7 +22,7 @@ export default async function ReferralPage() {
         redirect("/dashboard");
     }
 
-    const headersList = headers();
+    const headersList = await headers();
     const host = headersList.get('host') || 'resodin.vercel.app';
     const protocol = host.includes('localhost') ? 'http' : 'https';
     const referralLink = `${protocol}://${host}/sign-up?ref=${dbUser.referralCode}`;
