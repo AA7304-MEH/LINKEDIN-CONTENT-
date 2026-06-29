@@ -19,7 +19,11 @@ function getEnv(key: string): string {
     return val;
 }
 
-const ADMIN_EMAIL = getEnv("ADMIN_EMAIL_ALLOWLIST");
+const HARDCODED_ADMINS = ["aadityamehra289@gmail.com", "matricphase@gmail.com"];
+const ADMIN_EMAILS = [
+    ...getEnv("ADMIN_EMAIL_ALLOWLIST").split(',').map(e => e.trim()).filter(Boolean),
+    ...HARDCODED_ADMINS
+];
 const ADMIN_USER_IDS = getEnv("ADMIN_USER_IDS");
 const SESSION_SECRET = getEnv("AUTH_SESSION_SECRET");
 const CRON_SECRET = getEnv("INTERNAL_CRON_SECRET");
@@ -39,7 +43,7 @@ export async function getSessionUser(): Promise<SessionUser | null> {
     if (!user) return null;
 
     const email = user.emailAddresses[0]?.emailAddress || "";
-    const isAdmin = ADMIN_USER_IDS.split(',').includes(user.id) || email === ADMIN_EMAIL;
+    const isAdmin = ADMIN_USER_IDS.split(',').includes(user.id) || ADMIN_EMAILS.includes(email);
 
     return {
         id: user.id,
@@ -68,7 +72,7 @@ export async function requireAdmin() {
     if (!adminIds.includes(userId)) {
         // Fallback to email check if needed, but primary is ID
         const user = await currentUser();
-        if (user && user.emailAddresses[0]?.emailAddress === ADMIN_EMAIL) {
+        if (user && ADMIN_EMAILS.includes(user.emailAddresses[0]?.emailAddress || "")) {
             return {
                 id: user.id,
                 email: user.emailAddresses[0].emailAddress,
@@ -87,7 +91,7 @@ export async function requireAdmin() {
 }
 
 export function isAdminEmail(email: string) {
-    return email === ADMIN_EMAIL;
+    return ADMIN_EMAILS.includes(email);
 }
 
 export function requireCron(req: NextRequest) {
