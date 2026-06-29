@@ -9,13 +9,16 @@
     margin-bottom: 2rem;
 }
 
-.searchInput {
-    flex: 1;
+.searchInput,
+.customTextarea {
+    width: 100%;
     padding: 1rem;
     background: #111;
     border: 1px solid #333;
     color: #fff;
     border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
 }
 
 .searchButton {

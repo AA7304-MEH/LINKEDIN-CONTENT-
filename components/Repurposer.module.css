@@ -3,7 +3,8 @@
     margin: 0 auto;
 }
 
-.textarea {
+.textarea,
+.urlInput {
     width: 100%;
     padding: 1rem;
     background: #111;
@@ -11,6 +12,8 @@
     color: #fff;
     border-radius: 8px;
     margin-bottom: 1rem;
+    font-family: inherit;
+    font-size: 1rem;
 }
 
 .button {
