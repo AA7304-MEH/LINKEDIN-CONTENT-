@@ -2,13 +2,20 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import toast from 'react-hot-toast';
 import styles from './Repurposer.module.css';
 
 interface RepurposeResult {
     thread: string[];
     carousel: { title: string; content: string }[];
     question: string;
+    newsletter?: string;
 }
+
+const getWordCount = (text: string) => {
+    if (!text) return 0;
+    return text.trim().split(/\s+/).filter(Boolean).length;
+};
 
 function RepurposerContent() {
     const searchParams = useSearchParams();
@@ -18,7 +25,8 @@ function RepurposerContent() {
     const [result, setResult] = useState<RepurposeResult | null>(null);
     const [loading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
-    const [activeTab, setActiveTab] = useState<'thread' | 'carousel' | 'question'>('thread');
+    const [activeTab, setActiveTab] = useState<'thread' | 'carousel' | 'question' | 'newsletter'>('thread');
+    const [regeneratingTab, setRegeneratingTab] = useState<string | null>(null);
 
     useEffect(() => {
         const textParam = searchParams.get('text');
@@ -35,11 +43,16 @@ function RepurposerContent() {
 
     const isValid = inputMode === 'text' ? textInput.trim().length > 0 : urlInput.trim().length > 0;
 
-    const handleGenerate = async () => {
+    const handleGenerate = async (singleTabToRegen?: 'thread' | 'carousel' | 'question' | 'newsletter') => {
         if (!isValid) return;
-        setLoading(true);
+        
+        if (singleTabToRegen) {
+            setRegeneratingTab(singleTabToRegen);
+        } else {
+            setLoading(true);
+            setResult(null);
+        }
         setErrorMsg(null);
-        setResult(null);
 
         try {
             const body =
@@ -59,18 +72,39 @@ function RepurposerContent() {
                 throw new Error(data.error || 'Failed to repurpose content.');
             }
 
-            setResult(data);
-            setActiveTab('thread');
+            if (singleTabToRegen) {
+                setResult(prev => {
+                    if (!prev) return data;
+                    return {
+                        ...prev,
+                        [singleTabToRegen]: data[singleTabToRegen]
+                    };
+                });
+                toast.success(`Regenerated ${singleTabToRegen} successfully!`);
+            } else {
+                setResult(data);
+                setActiveTab('thread');
+                toast.success("Repurposed content in all formats!");
+            }
         } catch (e: any) {
             setErrorMsg(e.message || 'An unexpected error occurred.');
+            toast.error(e.message || 'Error occurred while repurposing.');
         } finally {
             setLoading(false);
+            setRegeneratingTab(null);
         }
     };
 
     const copyText = (text: string) => {
         navigator.clipboard.writeText(text);
+        toast.success("Copied to clipboard!");
     };
+
+    // Calculate word counts for display
+    const threadWordCount = result?.thread ? getWordCount(result.thread.join(' ')) : 0;
+    const carouselWordCount = result?.carousel ? getWordCount(result.carousel.map(s => `${s.title} ${s.content}`).join(' ')) : 0;
+    const questionWordCount = result?.question ? getWordCount(result.question) : 0;
+    const newsletterWordCount = result?.newsletter ? getWordCount(result.newsletter) : 0;
 
     return (
         <div className={styles.container}>
@@ -115,12 +149,12 @@ function RepurposerContent() {
                 )}
 
                 {errorMsg && (
-                    <div className={styles.errorBanner}>⚠️ {errorMsg}</div>
+                    <div className={styles.errorBanner} style={{ marginBottom: '1rem', color: '#ef4444' }}>⚠️ {errorMsg}</div>
                 )}
 
                 <button
                     className={styles.button}
-                    onClick={handleGenerate}
+                    onClick={() => handleGenerate()}
                     disabled={loading || !isValid}
                 >
                     {loading ? 'Repurposing…' : 'Generate All Formats'}
@@ -134,32 +168,48 @@ function RepurposerContent() {
                             className={`${styles.tab} ${activeTab === 'thread' ? styles.active : ''}`}
                             onClick={() => setActiveTab('thread')}
                         >
-                            Thread
+                            Thread ({threadWordCount} words)
                         </button>
                         <button
                             className={`${styles.tab} ${activeTab === 'carousel' ? styles.active : ''}`}
                             onClick={() => setActiveTab('carousel')}
                         >
-                            Carousel
+                            Carousel ({carouselWordCount} words)
                         </button>
                         <button
                             className={`${styles.tab} ${activeTab === 'question' ? styles.active : ''}`}
                             onClick={() => setActiveTab('question')}
                         >
-                            Question
+                            Question ({questionWordCount} words)
+                        </button>
+                        <button
+                            className={`${styles.tab} ${activeTab === 'newsletter' ? styles.active : ''}`}
+                            onClick={() => setActiveTab('newsletter')}
+                        >
+                            Newsletter ({newsletterWordCount} words)
                         </button>
                     </div>
 
                     <div className={styles.tabContent}>
                         {activeTab === 'thread' && (
                             <div className={styles.thread}>
+                                <div className={styles.tabHeader}>
+                                    <span className={styles.wordCountBadge}>{threadWordCount} words total</span>
+                                    <button 
+                                        className={styles.regenerateBtn} 
+                                        onClick={() => handleGenerate('thread')}
+                                        disabled={regeneratingTab !== null}
+                                    >
+                                        {regeneratingTab === 'thread' ? 'Regenerating...' : '🔄 Generate Again'}
+                                    </button>
+                                </div>
                                 {result.thread?.map((tweet, i) => (
                                     <div key={i} className={styles.tweet}>
-                                        <div className={styles.tweetHeader}>
+                                        <div className={styles.tweetHeader} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
                                             <span className={styles.counter}>{i + 1}/{result.thread.length}</span>
-                                            <button className={styles.copyBtn} onClick={() => copyText(tweet)} title="Copy">📋</button>
+                                            <button className={styles.copyBtn} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1rem' }} onClick={() => copyText(tweet)} title="Copy">📋</button>
                                         </div>
-                                        <p>{tweet}</p>
+                                        <p style={{ color: '#e2e8f0', lineHeight: '1.6' }}>{tweet}</p>
                                     </div>
                                 ))}
                             </div>
@@ -167,13 +217,23 @@ function RepurposerContent() {
 
                         {activeTab === 'carousel' && (
                             <div className={styles.carousel}>
+                                <div className={styles.tabHeader}>
+                                    <span className={styles.wordCountBadge}>{carouselWordCount} words total</span>
+                                    <button 
+                                        className={styles.regenerateBtn} 
+                                        onClick={() => handleGenerate('carousel')}
+                                        disabled={regeneratingTab !== null}
+                                    >
+                                        {regeneratingTab === 'carousel' ? 'Regenerating...' : '🔄 Generate Again'}
+                                    </button>
+                                </div>
                                 {result.carousel?.map((slide, i) => (
                                     <div key={i} className={styles.slide}>
-                                        <div className={styles.slideHeader}>
-                                            <h4>Slide {i + 1}: {slide.title}</h4>
-                                            <button className={styles.copyBtn} onClick={() => copyText(`${slide.title}\n\n${slide.content}`)} title="Copy">📋</button>
+                                        <div className={styles.slideHeader} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <h4 style={{ margin: 0 }}>Slide {i + 1}: {slide.title}</h4>
+                                            <button className={styles.copyBtn} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1rem' }} onClick={() => copyText(`${slide.title}\n\n${slide.content}`)} title="Copy">📋</button>
                                         </div>
-                                        <p>{slide.content}</p>
+                                        <p style={{ marginTop: '0.5rem', lineHeight: '1.5' }}>{slide.content}</p>
                                     </div>
                                 ))}
                             </div>
@@ -181,9 +241,39 @@ function RepurposerContent() {
 
                         {activeTab === 'question' && (
                             <div className={styles.question}>
+                                <div className={styles.tabHeader}>
+                                    <span className={styles.wordCountBadge}>{questionWordCount} words total</span>
+                                    <button 
+                                        className={styles.regenerateBtn} 
+                                        onClick={() => handleGenerate('question')}
+                                        disabled={regeneratingTab !== null}
+                                    >
+                                        {regeneratingTab === 'question' ? 'Regenerating...' : '🔄 Generate Again'}
+                                    </button>
+                                </div>
                                 <h3>Engagement Starter</h3>
-                                <p>{result.question}</p>
-                                <button className={styles.copyBtn} onClick={() => copyText(result.question)}>📋 Copy Question</button>
+                                <p style={{ fontSize: '1.25rem', marginBottom: '1.5rem', color: '#e2e8f0' }}>{result.question}</p>
+                                <button className={styles.button} style={{ maxWidth: '200px', margin: '0 auto' }} onClick={() => copyText(result.question)}>📋 Copy Question</button>
+                            </div>
+                        )}
+
+                        {activeTab === 'newsletter' && (
+                            <div className={styles.question} style={{ textAlign: 'left', borderStyle: 'solid', padding: '1.5rem' }}>
+                                <div className={styles.tabHeader}>
+                                    <span className={styles.wordCountBadge}>{newsletterWordCount} words total</span>
+                                    <button 
+                                        className={styles.regenerateBtn} 
+                                        onClick={() => handleGenerate('newsletter')}
+                                        disabled={regeneratingTab !== null}
+                                    >
+                                        {regeneratingTab === 'newsletter' ? 'Regenerating...' : '🔄 Generate Again'}
+                                    </button>
+                                </div>
+                                <h3 style={{ marginBottom: '0.5rem' }}>Newsletter Draft</h3>
+                                <div style={{ background: '#0a0a0a', padding: '1.5rem', borderRadius: '8px', border: '1px solid #222', whiteSpace: 'pre-wrap', color: '#cbd5e1', lineHeight: '1.6' }}>
+                                    {result.newsletter || "No newsletter generated yet. Try generating again."}
+                                </div>
+                                <button className={styles.button} style={{ maxWidth: '200px', marginTop: '1.5rem' }} onClick={() => copyText(result.newsletter || "")}>📋 Copy Newsletter</button>
                             </div>
                         )}
                     </div>

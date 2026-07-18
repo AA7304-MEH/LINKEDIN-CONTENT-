@@ -82,7 +82,7 @@ export default function BlogPage() {
               className="flex-1 bg-black/40 border border-white/[0.08] rounded-xl px-5 py-3 text-white focus:outline-none focus:border-[#00E5FF] transition-all"
             />
             <button className="bg-[#00E5FF] text-[#0A0F1E] font-bold px-8 py-3 rounded-xl hover:scale-105 active:scale-95 transition-all">
-              Join 12,000+
+              Subscribe
             </button>
           </div>
         </div>

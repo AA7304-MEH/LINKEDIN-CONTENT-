@@ -15,6 +15,34 @@ export default function SettingsPage() {
     const [saving, setSaving] = useState(false);
     const [saveStatus, setSaveStatus] = useState<'idle' | 'success' | 'error'>('idle');
     const [loadError, setLoadError] = useState<string | null>(null);
+    const [linkedinConnected, setLinkedinConnected] = useState(false);
+    const [linkedinStatus, setLinkedinStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+    // Check for LinkedIn status on mount
+    useEffect(() => {
+        const checkLinkedIn = async () => {
+            try {
+                const res = await fetch('/api/linkedin/status');
+                if (res.ok) {
+                    const data = await res.json();
+                    setLinkedinConnected(data.connected);
+                }
+            } catch (err) {
+                console.error("Error fetching linkedin status:", err);
+            }
+        };
+
+        checkLinkedIn();
+
+        const params = new URLSearchParams(window.location.search);
+        const linkedin = params.get('linkedin');
+        if (linkedin === 'connected' || linkedin === 'success') {
+            setLinkedinConnected(true);
+            setLinkedinStatus('success');
+        } else if (linkedin === 'error') {
+            setLinkedinStatus('error');
+        }
+    }, []);
 
     // Load preferences on mount
     useEffect(() => {
@@ -135,6 +163,63 @@ export default function SettingsPage() {
                                     ❌ Failed to save. Please try again.
                                 </span>
                             )}
+                        </div>
+                    </div>
+                </section>
+                {/* Integrations Section */}
+                <section className={styles.section}>
+                    <div className={styles.card}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+                            <span style={{ fontSize: '1.5rem' }}>🔌</span>
+                            <h2 style={{ margin: 0 }}>Integrations</h2>
+                        </div>
+
+                        {linkedinStatus === 'success' && (
+                            <p style={{ color: '#22c55e', marginBottom: '1rem', fontSize: '0.875rem' }}>✅ LinkedIn connected successfully!</p>
+                        )}
+                        {linkedinStatus === 'error' && (
+                            <p style={{ color: '#ef4444', marginBottom: '1rem', fontSize: '0.875rem' }}>❌ LinkedIn connection failed. Please try again.</p>
+                        )}
+
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            padding: '1.25rem',
+                            background: 'rgba(255, 255, 255, 0.02)',
+                            border: '1px solid rgba(255, 255, 255, 0.08)',
+                            borderRadius: '12px'
+                        }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                <span style={{
+                                    width: '8px',
+                                    height: '8px',
+                                    backgroundColor: linkedinConnected ? '#22c55e' : '#64748b',
+                                    borderRadius: '50%'
+                                }}></span>
+                                <div>
+                                    <strong style={{ display: 'block', color: '#fff', fontSize: '0.95rem' }}>LinkedIn Publishing</strong>
+                                    <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>
+                                        {linkedinConnected ? 'Connected & Active' : 'Not Connected'}
+                                    </span>
+                                </div>
+                            </div>
+                            <Link 
+                                href="/settings/linkedin" 
+                                style={{
+                                    background: 'rgba(255, 255, 255, 0.05)',
+                                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                                    color: '#fff',
+                                    padding: '0.5rem 1rem',
+                                    borderRadius: '8px',
+                                    fontSize: '0.85rem',
+                                    fontWeight: 600,
+                                    textDecoration: 'none',
+                                    transition: 'background 0.2s'
+                                }}
+                            >
+                                Manage
+                            </Link>
                         </div>
                     </div>
                 </section>

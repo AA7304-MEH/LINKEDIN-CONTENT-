@@ -109,3 +109,38 @@
     font-size: 0.9rem;
     text-transform: uppercase;
 }
+
+.wordCountBadge {
+    display: inline-block;
+    font-size: 0.75rem;
+    color: #64748b;
+    background: #1e293b;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border: 1px solid #334155;
+}
+
+.tabHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.regenerateBtn {
+    background: transparent;
+    border: 1px dashed #475569;
+    color: #94a3b8;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.regenerateBtn:hover:not(:disabled) {
+    border-color: #06b6d4;
+    color: #06b6d4;
+    background: rgba(6, 182, 212, 0.05);
+}

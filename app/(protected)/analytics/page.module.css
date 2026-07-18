@@ -1,0 +1,201 @@
+.main {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 1rem;
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.025em;
+}
+
+.subtitle {
+    color: #94a3b8;
+    font-size: 1.1rem;
+}
+
+.connectAlert {
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.alertContent h3 {
+    margin: 0 0 0.5rem 0;
+    color: #f59e0b;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.alertContent p {
+    margin: 0;
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.connectBtn {
+    background: #f59e0b;
+    color: #0f172a;
+    font-weight: 700;
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.connectBtn:hover {
+    background: #d97706;
+}
+
+/* Metrics Cards */
+.metricsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.metricCard {
+    background: #111827;
+    border: 1px solid #1f2937;
+    padding: 1.75rem;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.metricLabel {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.metricValue {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
+.metricTrendUp {
+    font-size: 0.8rem;
+    color: #10b981;
+    font-weight: 600;
+}
+
+.metricSub {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+/* Charts Grid */
+.chartsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+@media (min-width: 900px) {
+    .chartsGrid {
+        grid-template-columns: 1.5fr 1fr;
+    }
+}
+
+.chartCard {
+    background: #111827;
+    border: 1px solid #1f2937;
+    padding: 2rem;
+    border-radius: 24px;
+}
+
+.chartCard h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.legend {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-left: 1.5rem;
+}
+
+.legendItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.legendDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.legendText {
+    font-size: 0.85rem;
+    color: #cbd5e1;
+}
+
+/* Best Post Card */
+.bestPostCard {
+    background: #111827;
+    border: 1px solid #1f2937;
+    padding: 2rem;
+    border-radius: 24px;
+    margin-bottom: 3rem;
+}
+
+.bestPostCard h3 {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.postBody {
+    background: #030712;
+    border: 1px solid #1f2937;
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.postBody p {
+    margin: 0 0 1.5rem 0;
+    color: #e2e8f0;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.postStats {
+    display: flex;
+    gap: 1.5rem;
+    color: #06b6d4;
+    font-size: 0.85rem;
+    font-weight: 700;
+    flex-wrap: wrap;
+}

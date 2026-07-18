@@ -1,0 +1,209 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 900px;
+}
+
+.inputSection {
+    background: #111827;
+    border: 1px solid #1f2937;
+    padding: 2rem;
+    border-radius: 20px;
+}
+
+.label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #f3f4f6;
+    margin-bottom: 1rem;
+}
+
+.textarea {
+    width: 100%;
+    background: #030712;
+    border: 1px solid #374151;
+    color: #e2e8f0;
+    padding: 1.25rem;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    resize: vertical;
+    transition: border-color 0.2s;
+}
+
+.textarea:focus {
+    outline: none;
+    border-color: #06b6d4;
+}
+
+.charCount {
+    text-align: right;
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 0.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.analyzeBtn {
+    width: 100%;
+    padding: 1rem;
+    background: #06b6d4;
+    color: #0f172a;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.analyzeBtn:hover:not(:disabled) {
+    background: #22d3ee;
+    transform: translateY(-1px);
+}
+
+.analyzeBtn:disabled {
+    background: #1f2937;
+    color: #4b5563;
+    cursor: not-allowed;
+}
+
+/* Analysis Card */
+.resultsSection {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.analysisCard {
+    background: #111827;
+    border: 1px solid #1f2937;
+    padding: 2rem;
+    border-radius: 20px;
+}
+
+.analysisTitle {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 1.5rem 0;
+}
+
+.analysisGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.analysisStat {
+    background: #030712;
+    border: 1px solid #1f2937;
+    padding: 1rem;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.statLabel {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.statValue {
+    color: #06b6d4;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.whyItWorks {
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: rgba(6, 182, 212, 0.05);
+    border-left: 3px solid #06b6d4;
+    border-radius: 0 8px 8px 0;
+}
+
+.techniques {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.techniquesList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.techniquePill {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #e2e8f0;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Generated Post */
+.generatedCard {
+    background: #111827;
+    border: 1px solid #334155;
+    padding: 2rem;
+    border-radius: 20px;
+}
+
+.generatedHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.copyBtn {
+    background: #1f2937;
+    border: 1px solid #374151;
+    color: #cbd5e1;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.copyBtn:hover {
+    background: #374151;
+    color: #fff;
+}
+
+.generatedPost {
+    background: #030712;
+    border: 1px solid #1f2937;
+    padding: 1.5rem;
+    border-radius: 12px;
+}
+
+.postParagraph {
+    color: #e2e8f0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 0.5rem;
+}
+
+@media (max-width: 640px) {
+    .analysisGrid {
+        grid-template-columns: 1fr;
+    }
+}

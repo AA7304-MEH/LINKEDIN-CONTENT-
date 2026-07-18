@@ -48,7 +48,7 @@ export default function HeroSection() {
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00e5ff] opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00e5ff]"></span>
                             </span>
-                            <span className="text-white/60 text-[10px] font-black tracking-widest uppercase">The Future of Authority</span>
+                            <span className="text-white/60 text-[10px] font-black tracking-widest uppercase">✦ Join the waitlist — Early access open now</span>
                         </div>
 
                         {/* High-Impact Typography */}

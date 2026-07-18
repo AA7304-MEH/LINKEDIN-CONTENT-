@@ -21,6 +21,11 @@ model User {
   referralCode       String         @unique @default(uuid())
   referralCount      Int            @default(0)
   referredBy         String?
+  linkedinAccessToken String?
+  linkedinProfileId   String?
+  linkedinName        String?
+  linkedinConnectedAt DateTime?
+  linkedinTokenExpiry DateTime?
   hookAnalyses       HookAnalysis[]
   posts              Post[]
 }
@@ -34,6 +39,9 @@ model Post {
   createdAt DateTime @default(now())
   hookScore Int?
   provider  String?  @default("groq-llama3-70b")
+  publishedToLinkedIn   Boolean   @default(false)
+  linkedinPostId        String?
+  publishedAt           DateTime?
   user      User     @relation(fields: [userId], references: [id])
 }
 

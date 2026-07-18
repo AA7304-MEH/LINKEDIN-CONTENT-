@@ -93,7 +93,12 @@ export default async function DashboardPage() {
                 </div>
             </div>
 
-            <DashboardClient initialPosts={posts} userPlan={userPlan} />
+            <DashboardClient 
+                initialPosts={posts} 
+                userPlan={userPlan} 
+                creditsUsed={dbUser?.creditsUsed || 0} 
+                creditsLimit={dbUser?.creditsLimit || 10} 
+            />
         </div>
     );
 }

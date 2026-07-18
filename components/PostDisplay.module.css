@@ -2,10 +2,11 @@
     width: 100%;
     max-width: 700px;
     margin: 2rem auto 0;
-    background: #111;
-    border-radius: 12px;
-    border: 1px solid #333;
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--card-border);
     overflow: hidden;
+    box-shadow: var(--card-shadow);
     animation: fadeIn 0.5s ease-out;
 }
 
@@ -25,15 +26,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid #333;
-    background: #1a1a1a;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--card-border);
+    background: rgba(255, 255, 255, 0.01);
 }
 
 .heading {
     font-size: 1rem;
     font-weight: 600;
-    color: #fff;
+    color: var(--foreground);
 }
 
 .actions {
@@ -43,43 +44,47 @@
 
 .actionButton {
     background: transparent;
-    border: 1px solid #444;
-    color: #ccc;
-    padding: 0.4rem 0.6rem;
-    border-radius: 6px;
+    border: 1px solid var(--card-border);
+    color: var(--text-muted);
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .actionButton:hover {
-    background: #222;
-    border-color: #666;
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(0, 229, 255, 0.3);
     color: #fff;
 }
 
 .copyButton {
-    background: transparent;
-    border: 1px solid #444;
-    color: #ccc;
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
+    background: linear-gradient(135deg, #0077b5 0%, #00e5ff 100%);
+    border: none;
+    color: #fff;
+    padding: 0.4rem 0.9rem;
+    border-radius: var(--radius-sm);
     font-size: 0.85rem;
+    font-weight: 600;
     cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 229, 255, 0.2);
     transition: all 0.2s;
 }
 
 .copyButton:hover {
-    border-color: #666;
-    color: #fff;
+    box-shadow: 0 6px 15px rgba(0, 229, 255, 0.3);
+    transform: translateY(-1px);
 }
 
 .content {
     padding: 1.5rem;
-    color: #ddd;
-    font-size: 1rem;
+    color: #cbd5e1;
+    font-size: 1.05rem;
     line-height: 1.6;
     white-space: pre-wrap;
-    border-bottom: 1px solid #222;
+    border-bottom: 1px solid var(--card-border);
 }
 
 .paragraph {
@@ -87,8 +92,8 @@
 }
 
 .hashtagSection {
-    padding: 1rem 1.5rem;
-    background: #151515;
+    padding: 1.25rem 1.5rem;
+    background: rgba(255, 255, 255, 0.01);
 }
 
 .tagGroup {
@@ -104,17 +109,57 @@
 }
 
 .tagLabel {
-    font-size: 0.85rem;
-    color: #666;
-    width: 80px;
-    font-weight: 600;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    width: 90px;
+    font-weight: 700;
     text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .tag {
-    background: #222;
-    color: #0070f3;
+    background: rgba(0, 229, 255, 0.08);
+    color: var(--primary);
+    border: 1px solid rgba(0, 229, 255, 0.12);
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.tag:hover {
+    background: rgba(0, 229, 255, 0.12);
+    border-color: var(--primary);
+}
+
+.charCounter {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.scoreBadge {
+    font-size: 0.7rem;
+    font-weight: 700;
     padding: 0.2rem 0.5rem;
     border-radius: 4px;
-    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.badgeHigh {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.badgeGood {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.badgeLong {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.3);
 }

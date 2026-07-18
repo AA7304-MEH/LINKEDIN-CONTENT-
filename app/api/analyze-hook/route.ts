@@ -8,21 +8,34 @@ const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY ||
 
 export async function POST(request: Request) {
     try {
-        const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
-        if (!apiKey) {
-            console.error("GOOGLE_GENERATIVE_AI_API_KEY is missing");
-            return NextResponse.json(
-                { error: 'Server configuration error: API key missing' },
-                { status: 500 }
-            );
-        }
-
         const { hook } = await request.json();
         const sessionUser = await getSessionUser();
         if (!sessionUser) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
         const userId = sessionUser.id;
+
+        const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+        if (!apiKey || apiKey.trim() === "" || apiKey === "your_api_key_here") {
+            console.log("Gemini API key missing, generating mock hook analysis.");
+            const score = hook.length > 150 ? 5 : hook.includes('opinion') || hook.includes('truth') || hook.includes('secret') ? 9 : 7;
+            const color = score >= 8 ? 'green' : score >= 6 ? 'yellow' : 'red';
+            const mockAnalysis = {
+                score,
+                color,
+                badges: [
+                    score >= 8 ? "Curiosity gap detected" : "Generic opening detected",
+                    hook.length < 150 ? "Optimal length" : "Too verbose warning"
+                ],
+                feedback: `Simulated hook feedback for: "${hook}". Connect your Gemini API Key in your .env file to enable live AI analysis.`,
+                alternatives: [
+                    `Unpopular opinion: ${hook.replace(/^Unpopular opinion: /i, '')}`,
+                    `Nobody talks about this: ${hook}`,
+                    `Why is everyone wrong about this: ${hook}`
+                ]
+            };
+            return NextResponse.json(mockAnalysis);
+        }
 
         if (!hook) {
             return NextResponse.json({ error: 'Hook text is required' }, { status: 400 });

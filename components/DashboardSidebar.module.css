@@ -1,8 +1,8 @@
 .sidebar {
     width: 280px;
     height: 100vh;
-    background-color: #ffffff;
-    border-right: 1px solid #e2e8f0;
+    background: #030303;
+    border-right: 1px solid var(--sidebar-border);
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -25,28 +25,28 @@
 .logoIcon {
     width: 36px;
     height: 36px;
-    background: linear-gradient(135deg, #2563eb, #1e40af);
+    background: linear-gradient(135deg, #0077b5, #00e5ff);
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 229, 255, 0.25);
 }
 
 .logoText {
     font-size: 1.25rem;
     font-weight: 700;
-    color: #0f172a;
+    color: var(--foreground);
     letter-spacing: -0.025em;
 }
 
 .userSection {
     margin-bottom: 2rem;
     padding: 1rem;
-    background: #f8fafc;
+    background: var(--surface-glass);
     border-radius: 12px;
-    border: 1px solid #f1f5f9;
+    border: 1px solid var(--surface-glass-border);
 }
 
 .userProfile {
@@ -63,7 +63,7 @@
 .userName {
     font-size: 0.925rem;
     font-weight: 600;
-    color: #334155;
+    color: var(--foreground);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -71,7 +71,7 @@
 
 .userPlan {
     font-size: 0.75rem;
-    color: #64748b;
+    color: var(--text-muted);
     font-weight: 500;
 }
 
@@ -86,7 +86,7 @@
 .groupTitle {
     font-size: 0.75rem;
     text-transform: uppercase;
-    color: #94a3b8;
+    color: var(--text-muted);
     font-weight: 600;
     letter-spacing: 0.05em;
     margin-bottom: 0.75rem;
@@ -98,7 +98,7 @@
     align-items: center;
     gap: 0.75rem;
     padding: 0.75rem;
-    color: #64748b;
+    color: var(--text-muted);
     text-decoration: none;
     border-radius: 8px;
     font-weight: 500;
@@ -106,22 +106,23 @@
 }
 
 .link:hover {
-    background-color: #f1f5f9;
-    color: #334155;
+    background-color: var(--surface-glass-hover);
+    color: var(--foreground);
 }
 
 .active {
-    background-color: #eff6ff;
-    color: #2563eb;
+    background-color: rgba(0, 229, 255, 0.08);
+    color: var(--primary);
+    border: 1px solid rgba(0, 229, 255, 0.15);
 }
 
 .active:hover {
-    background-color: #e0e7ff;
+    background-color: rgba(0, 229, 255, 0.12);
 }
 
 .footer {
     padding-top: 1rem;
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid var(--sidebar-border);
 }
 
 .credits {
@@ -130,7 +131,7 @@
 
 .creditsBar {
     height: 6px;
-    background: #e2e8f0;
+    background: var(--surface-glass-border);
     border-radius: 3px;
     margin-bottom: 0.5rem;
     overflow: hidden;
@@ -138,24 +139,23 @@
 
 .creditsFill {
     height: 100%;
-    background: linear-gradient(90deg, #2563eb, #60a5fa);
+    background: linear-gradient(90deg, #0077b5, #00e5ff);
     border-radius: 3px;
 }
 
 /* Mobile Toggle Button */
 .mobileToggle {
     display: none;
-    /* Hidden on desktop */
     position: fixed;
     top: 1rem;
     left: 1rem;
     z-index: 60;
     padding: 0.5rem;
-    background: white;
-    border: 1px solid #e2e8f0;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 8px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    color: #334155;
+    box-shadow: var(--card-shadow);
+    color: var(--foreground);
     cursor: pointer;
     align-items: center;
     justify-content: center;
@@ -163,14 +163,12 @@
 
 .credits p {
     font-size: 0.75rem;
-    color: #64748b;
+    color: var(--text-muted);
     text-align: right;
 }
 
 /* Responsive Styles */
 @media (max-width: 1024px) {
-
-    /* Adjust breakpoint as needed, e.g., 768px or 1024px */
     .mobileToggle {
         display: flex;
     }
@@ -178,7 +176,7 @@
     .sidebar {
         transform: translateX(-100%);
         transition: transform 0.3s ease-in-out;
-        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.1);
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.7);
         border-right: none;
     }
 
@@ -186,11 +184,10 @@
         transform: translateX(0);
     }
 
-    /* Backdrop */
     .backdrop {
         position: fixed;
         inset: 0;
-        background: rgba(0, 0, 0, 0.4);
+        background: rgba(0, 0, 0, 0.7);
         backdrop-filter: blur(2px);
         z-index: 40;
         opacity: 0;
@@ -201,5 +198,16 @@
     .backdrop.visible {
         opacity: 1;
         pointer-events: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        width: 90vw;
+    }
+
+    .mobileToggle {
+        top: 0.75rem;
+        left: 0.75rem;
     }
 }

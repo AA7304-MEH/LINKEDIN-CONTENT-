@@ -4,6 +4,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import SupportWidget from "@/components/SupportWidget";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import ReferralTracker from "@/components/ReferralTracker";
@@ -19,13 +20,24 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Resodin | AI-Powered Professional Posts",
-  description: "Generate engaging, professional LinkedIn posts in seconds with our AI-powered tool. Boost your personal brand today.",
-  keywords: ["LinkedIn", "Content Generator", "AI", "Professional", "Social Media"],
+  title: "Resodin AI — LinkedIn Content Generator That Sounds Like You",
+  description: "AI-powered LinkedIn post generator that learns your unique voice. Generate viral posts, analyze hooks, repurpose content. Join the waitlist for early access.",
+  keywords: ["LinkedIn post generator", "AI LinkedIn content", "LinkedIn creator tool", "personal brand AI", "LinkedIn automation"],
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+  },
   openGraph: {
-    title: "Resodin",
-    description: "Generate engaging, professional LinkedIn posts in seconds.",
+    title: "Resodin AI — LinkedIn Content That Sounds Like You",
+    description: "Stop sounding like AI. Resodin learns your voice and generates LinkedIn posts that sound unmistakably like you.",
+    url: "https://resodin.vercel.app",
+    siteName: "Resodin AI",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Resodin AI — LinkedIn Content Generator",
+    description: "AI that writes LinkedIn posts in YOUR voice. Try free.",
   },
 };
 
@@ -48,6 +60,7 @@ export default function RootLayout({
           <ReferralTracker />
           <SupportWidget />
           <Analytics />
+          <SpeedInsights />
         </body>
       </html>
     </ClerkProvider>

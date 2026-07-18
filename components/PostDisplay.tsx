@@ -52,10 +52,33 @@ export default function PostDisplay({ content, hashtags, isFree = true }: PostDi
 
     if (!content) return null;
 
+    const charCount = content.length;
+    const hasHook = content.trim().length > 0;
+    const endsWithQuestion = content.trim().endsWith('?');
+
+    let scoreBadge = "👍 Good";
+    let badgeClass = styles.badgeGood;
+    
+    if (charCount < 800 && hasHook && endsWithQuestion) {
+        scoreBadge = "🔥 High reach";
+        badgeClass = styles.badgeHigh;
+    } else if (charCount > 1500) {
+        scoreBadge = "⚠️ Too long";
+        badgeClass = styles.badgeLong;
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <h3 className={styles.heading}>Generated Post</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                    <h3 className={styles.heading}>Generated Post</h3>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <span className={styles.charCounter}>{charCount} / 1500 characters</span>
+                        <span className={`${styles.scoreBadge} ${badgeClass}`}>
+                            {scoreBadge}
+                        </span>
+                    </div>
+                </div>
                 <div className={styles.actions}>
                     <button className={styles.actionButton} onClick={handleDownload} title="Download .txt">
                         ⬇️
@@ -64,7 +87,7 @@ export default function PostDisplay({ content, hashtags, isFree = true }: PostDi
                         🔗
                     </button>
                     <button className={styles.copyButton} onClick={handleCopy}>
-                        {copied ? 'Copied!' : 'Copy to Clipboard'}
+                        {copied ? '✓ Copied!' : 'Copy to Clipboard'}
                     </button>
                 </div>
             </div>

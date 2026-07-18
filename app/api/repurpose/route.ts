@@ -90,15 +90,39 @@ export async function POST(request: Request) {
             }
         }
 
+        const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+        if (!apiKey || apiKey.trim() === "" || apiKey === "your_api_key_here") {
+            console.log("Gemini API key missing, generating mock repurposed content.");
+            const topic = (sourceText || url || "business growth").substring(0, 100);
+            const mockRepurpose = {
+                thread: [
+                    `1/ Repurposing content for: ${topic}`,
+                    `2/ Most creators spend 10 hours writing and 1 hour distributing. Flip the ratio: write once, publish 5 times.`,
+                    `3/ Take a single blog post and split it into: a Tweet Thread, a Slide Carousel, and an Email Newsletter.`,
+                    `4/ That is how you stay consistent without burning out. Start repurposing today!`
+                ],
+                carousel: [
+                    { title: "Introduction", content: `How to scale your presence using: ${topic}` },
+                    { title: "Step 1: Paste", content: "Input your raw content or note drafts into the generator." },
+                    { title: "Step 2: Translate", content: "Let AI restructure it into a Thread, Carousel, or Email." },
+                    { title: "Step 3: Distribute", content: "Schedule and queue it up on LinkedIn or Twitter." }
+                ],
+                question: `What is your biggest roadblock when repurposing content for ${topic}?`,
+                newsletter: `Subject: How to scale your distribution model\n\nHey there,\n\nMany creators struggle with content fatigue. They think they need to write a brand new article every day.\n\nBut the secret is simple: Repurpose. \n\nWe took a look at "${topic}" and broke it down into structured formats. By adapting it into threads, slides, and emails, you save hours of work.\n\nBest,\nResodin Team`
+            };
+            return NextResponse.json(mockRepurpose);
+        }
+
         const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
-        const prompt = `Repurpose the following content into LinkedIn formats:
+        const prompt = `Repurpose the following content into LinkedIn and email formats:
 Content: "${textToProcess.substring(0, 5000)}"
 
-Output JSON with 3 keys:
+Output JSON with 4 keys:
 1. "thread": A linkedin thread (array of strings, each ~200 chars, 4-6 items).
 2. "carousel": Outline for a document carousel (array of objects with "title" and "content", 4-6 slides).
 3. "question": An engaging discussion question based on the content (single string).
+4. "newsletter": A short, punchy email newsletter version of the content (string, ~250-400 words, including a subject line at the top).
 
 Return JSON only, no markdown.`;
 
@@ -120,6 +144,7 @@ Return JSON only, no markdown.`;
         if (!data.thread || !Array.isArray(data.thread)) data.thread = [];
         if (!data.carousel || !Array.isArray(data.carousel)) data.carousel = [];
         if (!data.question) data.question = 'What are your thoughts on this?';
+        if (!data.newsletter) data.newsletter = '';
 
         return NextResponse.json(data);
     } catch (error: any) {

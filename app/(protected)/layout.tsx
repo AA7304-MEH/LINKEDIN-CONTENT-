@@ -4,6 +4,7 @@ import { getSessionUser } from "@/lib/security/authz";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import { Toaster } from "react-hot-toast";
 
 async function ensureUserSynced(sessionUser: any) {
     if (!sessionUser) return;
@@ -14,6 +15,19 @@ async function ensureUserSynced(sessionUser: any) {
     });
 
     if (!user) {
+        // Clean up any existing user with the same email but a different ID
+        const existingUserByEmail = await prisma.user.findUnique({
+            where: { email: sessionUser.email }
+        });
+
+        if (existingUserByEmail) {
+            await prisma.$transaction([
+                prisma.post.deleteMany({ where: { userId: existingUserByEmail.id } }),
+                prisma.hookAnalysis.deleteMany({ where: { userId: existingUserByEmail.id } }),
+                prisma.user.delete({ where: { id: existingUserByEmail.id } }),
+            ]);
+        }
+
         let refCode: string | undefined = undefined;
         let referrerId: string | undefined = undefined;
 
@@ -116,11 +130,13 @@ export default async function ProtectedLayout({
 
     return (
         <div style={{ display: 'flex', minHeight: '100vh', background: '#f8fafc', color: '#0f172a' }}>
+            <Toaster position="top-right" toastOptions={{ style: { background: '#1f2937', color: '#f3f4f6' } }} />
             {!onboardingComplete && <OnboardingModal />}
             <DashboardSidebar
                 creditsUsed={creditsUsed}
                 creditsLimit={creditsLimit}
                 userPlan={userPlan}
+                onboardingComplete={onboardingComplete}
             />
             <main className="flex-1 w-full p-8 md:pl-[312px] pt-16 md:pt-8 max-w-[1920px]">
                 {children}

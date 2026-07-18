@@ -1,14 +1,23 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './ContentForm.module.css';
 
 interface ContentFormProps {
     onGenerate: (data: any) => void;
+    onSaveDraft?: (data: any) => void;
+    prefillTopic?: string;
 }
 
-export default function ContentForm({ onGenerate }: ContentFormProps) {
-    const [topic, setTopic] = useState('');
+const TOPIC_SUGGESTIONS = [
+    "Why I failed my first startup",
+    "The hiring mistake most founders make",
+    "Unpopular opinion about hustle culture",
+    "What I wish I knew before raising funding"
+];
+
+export default function ContentForm({ onGenerate, onSaveDraft, prefillTopic }: ContentFormProps) {
+    const [topic, setTopic] = useState(prefillTopic || '');
     const [tone, setTone] = useState('');
     const [type, setType] = useState('Educational');
     const [length, setLength] = useState('Medium');
@@ -16,12 +25,23 @@ export default function ContentForm({ onGenerate }: ContentFormProps) {
     const [includeStory, setIncludeStory] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
+    useEffect(() => {
+        if (prefillTopic) setTopic(prefillTopic);
+    }, [prefillTopic]);
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!topic.trim()) return;
 
         setIsLoading(true);
         await onGenerate({ topic, tone, type, length, includeHook, includeStory });
+        setIsLoading(false);
+    };
+
+    const handleSaveDraft = async () => {
+        if (!topic.trim() || !onSaveDraft) return;
+        setIsLoading(true);
+        await onSaveDraft({ content: topic, tone, type });
         setIsLoading(false);
     };
 
@@ -37,6 +57,18 @@ export default function ContentForm({ onGenerate }: ContentFormProps) {
                     onChange={(e) => setTopic(e.target.value)}
                     rows={3}
                 />
+                <div className={styles.suggestions}>
+                    {TOPIC_SUGGESTIONS.map((sug) => (
+                        <button
+                            key={sug}
+                            type="button"
+                            className={styles.suggestionPill}
+                            onClick={() => setTopic(sug)}
+                        >
+                            {sug}
+                        </button>
+                    ))}
+                </div>
             </div>
 
             <div className={styles.optionsGrid}>
@@ -91,9 +123,16 @@ export default function ContentForm({ onGenerate }: ContentFormProps) {
                 </label>
             </div>
 
-            <button type="submit" className={styles.button} disabled={isLoading || !topic.trim()}>
-                {isLoading ? 'Generating...' : 'Generate Post'}
-            </button>
+            <div style={{ display: 'flex', gap: '1rem' }}>
+                <button type="submit" className={styles.button} disabled={isLoading || !topic.trim()} style={{ flex: 2 }}>
+                    {isLoading ? 'Generating...' : 'Generate Post'}
+                </button>
+                {onSaveDraft && (
+                    <button type="button" className={styles.button} onClick={handleSaveDraft} disabled={isLoading || !topic.trim()} style={{ flex: 1, backgroundColor: '#1e293b', border: '1px solid #334155' }}>
+                        Save as Draft
+                    </button>
+                )}
+            </div>
         </form>
     );
 }

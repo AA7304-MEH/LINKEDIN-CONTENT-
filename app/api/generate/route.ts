@@ -4,6 +4,7 @@ import { getSessionUser } from '@/lib/security/authz';
 import { prisma } from '@/lib/prisma';
 import { withRetry } from '@/lib/ai-helper';
 import groq from '@/lib/groq';
+import OpenAI from 'openai';
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY || '');
 
@@ -69,9 +70,141 @@ TONE PROFILES:
     return JSON.parse(responseText.trim());
 }
 
+async function generateWithAnthropic(
+    topic: string,
+    tone: string,
+    voiceDnaProfile: string,
+    type: string
+): Promise<any> {
+    const systemPrompt = `You are an elite LinkedIn content strategist who has studied 50,000+ viral LinkedIn posts. You write in the user's exact voice based on their Voice DNA profile.
+
+STRICT RULES:
+- Never start with "I" 
+- No generic openings like "In today's world" or "As a professional"
+- Use pattern interrupts in the first line
+- Write like a human, not a press release
+- Max 1500 characters for optimal LinkedIn reach
+- Use line breaks every 1-2 sentences for mobile readability
+- End with a question or strong POV that invites comments
+- Never use hashtags in the body — only at the very end (max 3)
+
+TONE PROFILES:
+- Authoritative: Data-backed claims, confident assertions, zero hedging
+- Contrarian: Challenge mainstream advice, use "Unpopular opinion:" opener
+- Storytelling: Scene-setting first line, personal stakes, lesson at end
+- Conversational: Short sentences, relatable struggles, casual language`;
+
+    const userPrompt = `Voice DNA Context: ${voiceDnaProfile}
+User Goal: ${topic}
+Post Type: ${type || 'Educational'}
+
+Return the output strictly in the following JSON format. Do not return any other text, explanations, or markdown code blocks:
+{
+    "content": "The full post content...",
+    "hookScore": 9.2,
+    "hookFeedback": "Brief feedback about the opening hook potential...",
+    "hashtags": {
+        "broad": ["#tag1", "#tag2"],
+        "niche": ["#tag3", "#tag4"],
+        "community": ["#tag5", "#tag6"]
+    }
+}`;
+
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+            'x-api-key': process.env.ANTHROPIC_API_KEY || '',
+            'anthropic-version': '2023-06-01',
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            model: 'claude-3-5-sonnet-20241022',
+            max_tokens: 1500,
+            system: systemPrompt,
+            messages: [
+                { role: 'user', content: userPrompt }
+            ]
+        })
+    });
+
+    if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`Anthropic API error: ${res.status} ${errText}`);
+    }
+
+    const resData = await res.json();
+    let text = resData.content[0]?.text || '';
+    
+    // Clean up markdown code blocks if present
+    text = text.replace(/```json/g, '').replace(/```/g, '').trim();
+    
+    return JSON.parse(text);
+}
+
+async function generateWithOpenAI(
+    topic: string,
+    tone: string,
+    voiceDnaProfile: string,
+    type: string
+): Promise<any> {
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey) throw new Error("OpenAI API key missing");
+
+    const openai = new OpenAI({ apiKey });
+
+    const completion = await openai.chat.completions.create({
+        model: "gpt-4o",
+        messages: [
+            {
+                role: "system",
+                content: `You are an elite LinkedIn content strategist who has studied 50,000+ viral LinkedIn posts. You write in the user's exact voice based on their Voice DNA profile.
+
+STRICT RULES:
+- Never start with "I" 
+- No generic openings like "In today's world" or "As a professional"
+- Use pattern interrupts in the first line
+- Write like a human, not a press release
+- Max 1500 characters for optimal LinkedIn reach
+- Use line breaks every 1-2 sentences for mobile readability
+- End with a question or strong POV that invites comments
+- Never use hashtags in the body — only at the very end (max 3)
+
+TONE PROFILES:
+- Authoritative: Data-backed claims, confident assertions, zero hedging
+- Contrarian: Challenge mainstream advice, use "Unpopular opinion:" opener
+- Storytelling: Scene-setting first line, personal stakes, lesson at end
+- Conversational: Short sentences, relatable struggles, casual language`
+            },
+            {
+                role: "user",
+                content: `Voice DNA Context: ${voiceDnaProfile}
+User Goal: ${topic}
+Post Type: ${type || 'Educational'}
+
+Return the output in the following JSON format:
+{
+    "content": "The full post content...",
+    "hookScore": 9.2,
+    "hookFeedback": "Brief feedback about the opening hook potential...",
+    "hashtags": {
+        "broad": ["#tag1", "#tag2"],
+        "niche": ["#tag3", "#tag4"],
+        "community": ["#tag5", "#tag6"]
+    }
+}`
+            }
+        ],
+        response_format: { type: "json_object" }
+    });
+
+    const responseText = completion.choices[0]?.message?.content || "";
+    return JSON.parse(responseText.trim());
+}
+
 async function generateWithGemini(prompt: string): Promise<any> {
-    const model = genAI.getGenerativeModel({ 
-        model: "gemini-2.5-flash",
+    let modelName = "gemini-2.5-pro";
+    let model = genAI.getGenerativeModel({ 
+        model: modelName,
         generationConfig: {
             temperature: 0.8,
             topP: 0.95,
@@ -80,9 +213,28 @@ async function generateWithGemini(prompt: string): Promise<any> {
         }
     });
 
-    const result = await withRetry(async () => {
-        return await model.generateContent(prompt);
-    });
+    let result;
+    try {
+        result = await withRetry(async () => {
+            return await model.generateContent(prompt);
+        });
+    } catch (proError) {
+        console.warn("Gemini 2.5 Pro failed, falling back to Gemini 2.5 Flash:", proError);
+        modelName = "gemini-2.5-flash";
+        model = genAI.getGenerativeModel({ 
+            model: modelName,
+            generationConfig: {
+                temperature: 0.8,
+                topP: 0.95,
+                topK: 40,
+                maxOutputTokens: 1024,
+            }
+        });
+        result = await withRetry(async () => {
+            return await model.generateContent(prompt);
+        });
+    }
+
     const response = await result.response;
     let text = response.text();
 
@@ -90,15 +242,49 @@ async function generateWithGemini(prompt: string): Promise<any> {
     text = text.replace(/```json/g, '').replace(/```/g, '').trim();
 
     try {
-        return JSON.parse(text);
+        const parsed = JSON.parse(text);
+        return { ...parsed, provider: `gemini-2.5-${modelName === 'gemini-2.5-pro' ? 'pro' : 'flash'}` };
     } catch (e) {
         return { 
             content: text, 
             hookScore: 7.0, 
             hookFeedback: "Good post.", 
-            hashtags: { broad: [], niche: [], community: [] } 
+            hashtags: { broad: [], niche: [], community: [] },
+            provider: `gemini-2.5-${modelName === 'gemini-2.5-pro' ? 'pro' : 'flash'}`
         };
     }
+}
+function generateLocallyMocked(topic: string, tone: string, type: string): any {
+    let opening = `🚀 Thoughts on: ${topic || 'building a startup'}`;
+    if (tone === 'Contrarian') {
+        opening = `💥 Unpopular opinion about ${topic || 'building a startup'}: Most people are doing it completely wrong.`;
+    } else if (tone === 'Storytelling') {
+        opening = `📖 A few years ago, I struggled heavily with ${topic || 'building a startup'}. Here is what I learned:`;
+    }
+
+    const body = `When it comes to ${topic || 'building a startup'}, the common advice is to optimize every single metric.
+But in reality, focusing on the core value proposition and showing up consistently is 90% of the battle.
+
+Here is the 3-step playbook that worked:
+1. Simplify the message so a 10-year-old understands it.
+2. Focus strictly on user feedback instead of vanity metrics.
+3. Test new angles weekly to see what resonates.`;
+
+    const cta = `What is your take on ${topic || 'this approach'}? Share your thoughts below!`;
+
+    const content = `${opening}\n\n${body}\n\n${cta}`;
+
+    return {
+        content,
+        hookScore: 9.0,
+        hookFeedback: "Simulated viral hook score. Connect a free Google Gemini or Groq API key in your .env file to enable live AI generation.",
+        hashtags: {
+            broad: ["#productivity", "#business"],
+            niche: [`#${(topic || 'growth').toLowerCase().replace(/[^a-z0-9]/g, '') || 'marketing'}`],
+            community: ["#creators"]
+        },
+        provider: "local-mock-ai"
+    };
 }
 
 export async function POST(request: Request) {
@@ -139,27 +325,12 @@ export async function POST(request: Request) {
                 const isTrialActive = daysSinceCreation < 14;
                 const isPro = dbUser.plan === 'PRO' || dbUser.plan === 'BUSINESS';
 
-                // LIMIT LOGIC: 5 Posts per month if not in trial AND not Pro
-                if (!isTrialActive && !isPro) {
-                    // Check posts in last 30 days
-                    const thirtyDaysAgo = new Date();
-                    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-
-                    const postCount = await prisma.post.count({
-                        where: {
-                            userId: userId,
-                            createdAt: {
-                                gte: thirtyDaysAgo
-                            }
-                        }
-                    });
-
-                    if (postCount >= 5) {
-                        return NextResponse.json(
-                            { error: 'Free plan limit reached (5 posts/mo). Please upgrade to Pro.' },
-                            { status: 403 }
-                        );
-                    }
+                // LIMIT LOGIC: DB-based creditsLimit check for FREE users
+                if (dbUser.plan === 'FREE' && dbUser.creditsUsed >= dbUser.creditsLimit) {
+                    return NextResponse.json(
+                        { error: "You've used all your posts for today. Upgrade to Pro for unlimited." },
+                        { status: 429 }
+                    );
                 }
 
                 // Voice DNA Gating
@@ -222,30 +393,70 @@ Hashtag Strategy:
         let data = null;
         let provider = "";
 
-        const hasGroqKey = process.env.GROQ_API_KEY && process.env.GROQ_API_KEY !== "your_groq_api_key_here" && process.env.GROQ_API_KEY.trim() !== "";
-        if (hasGroqKey) {
+        // 1. Try Anthropic (Claude 3.5 Sonnet) - Best quality
+        const hasAnthropicKey = process.env.ANTHROPIC_API_KEY && process.env.ANTHROPIC_API_KEY.trim() !== "";
+        if (hasAnthropicKey) {
             try {
-                console.log("Attempting generation with Groq (llama-3.3-70b-versatile)...");
-                data = await generateWithGroq(topic, tone || 'Professional', voiceDnaProfile, type || 'Educational');
-                provider = "groq-llama3-70b";
-                console.log("Successfully generated post with Groq.");
-            } catch (groqError: any) {
-                console.error("Groq generation failed, falling back to Gemini:", groqError.message || groqError);
+                console.log("Attempting generation with Anthropic (Claude 3.5 Sonnet)...");
+                data = await generateWithAnthropic(topic, tone || 'Professional', voiceDnaProfile, type || 'Educational');
+                provider = "anthropic-claude-3-5-sonnet";
+                console.log("Successfully generated post with Anthropic.");
+            } catch (anthropicError: any) {
+                console.error("Anthropic generation failed, falling back:", anthropicError.message || anthropicError);
             }
-        } else {
-            console.log("Groq API key not configured. Falling back to Gemini directly.");
         }
 
+        // 2. Try OpenAI (GPT-4o) - Second best quality
         if (!data) {
-            try {
-                console.log("Attempting generation with Gemini (gemini-2.5-flash)...");
-                data = await generateWithGemini(prompt);
-                provider = "gemini-2.5-flash";
-                console.log("Successfully generated post with Gemini.");
-            } catch (geminiError: any) {
-                console.error("Both providers failed:", geminiError.message || geminiError);
-                throw geminiError;
+            const hasOpenAIKey = process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY.trim() !== "";
+            if (hasOpenAIKey) {
+                try {
+                    console.log("Attempting generation with OpenAI (gpt-4o)...");
+                    data = await generateWithOpenAI(topic, tone || 'Professional', voiceDnaProfile, type || 'Educational');
+                    provider = "openai-gpt-4o";
+                    console.log("Successfully generated post with OpenAI.");
+                } catch (openaiError: any) {
+                    console.error("OpenAI generation failed, falling back:", openaiError.message || openaiError);
+                }
             }
+        }
+
+        // 3. Try Groq (Llama 3.3 70B) - Third best quality (high speed)
+        if (!data) {
+            const hasGroqKey = process.env.GROQ_API_KEY && process.env.GROQ_API_KEY !== "your_groq_api_key_here" && process.env.GROQ_API_KEY.trim() !== "";
+            if (hasGroqKey) {
+                try {
+                    console.log("Attempting generation with Groq (llama-3.3-70b-versatile)...");
+                    data = await generateWithGroq(topic, tone || 'Professional', voiceDnaProfile, type || 'Educational');
+                    provider = "groq-llama3-70b";
+                    console.log("Successfully generated post with Groq.");
+                } catch (groqError: any) {
+                    console.error("Groq generation failed, falling back to Gemini:", groqError.message || groqError);
+                }
+            }
+        }
+
+        // 4. Try Google Gemini (Gemini 2.5 Pro / Flash) - Baseline fallbacks
+        if (!data) {
+            const hasGeminiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY && process.env.GOOGLE_GENERATIVE_AI_API_KEY.trim() !== "";
+            if (hasGeminiKey) {
+                try {
+                    console.log("Attempting generation with Gemini (gemini-2.5-pro)...");
+                    const geminiData = await generateWithGemini(prompt);
+                    data = geminiData;
+                    provider = geminiData.provider || "gemini-2.5-pro";
+                    console.log(`Successfully generated post with ${provider}.`);
+                } catch (geminiError: any) {
+                    console.error("Gemini generation failed, falling back to local mock:", geminiError.message || geminiError);
+                }
+            }
+        }
+
+        // 5. Local Mock Fallback - Free / No Investment required
+        if (!data) {
+            console.log("No API keys found or all failed. Falling back to local mock generation.");
+            data = generateLocallyMocked(topic, tone || 'Professional', type || 'Educational');
+            provider = "local-mock-ai";
         }
 
         // Save to DB if user is logged in

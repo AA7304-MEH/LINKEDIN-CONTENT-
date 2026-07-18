@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import styles from './ViralHookAnalyzer.module.css';
 
 interface AnalysisResult {
@@ -11,11 +12,43 @@ interface AnalysisResult {
     alternatives: string[];
 }
 
+const TEMPLATES = [
+    "I [action] for [time]. Here's what happened:",
+    "Unpopular opinion: [bold claim]",
+    "Nobody talks about [hidden truth]",
+    "[Number] years ago, I [failed/learned/discovered]",
+    "The [industry] industry has a problem.",
+    "Stop [common advice]. Do this instead:"
+];
+
+const classifyHookType = (text: string): string => {
+    const t = text.toLowerCase().trim();
+    if (!t) return "";
+    if (t.includes("nobody talks about") || t.includes("secret") || t.includes("hidden") || t.includes("nobody tells you")) {
+        return "Pattern Interrupt 🎯";
+    }
+    if (t.includes("unpopular opinion") || t.includes("contrarian") || t.includes("disagree") || t.includes("everyone is wrong")) {
+        return "Contrarian 💥";
+    }
+    if (t.includes("what if") || t.includes("why do") || t.includes("how does") || t.endsWith("?")) {
+        return "Question ❓";
+    }
+    if (t.includes("is dead") || t.includes("must stop") || t.includes("the truth about") || t.includes("problem")) {
+        return "Bold Statement 📢";
+    }
+    if (t.includes("years ago") || t.includes("yesterday") || t.includes("i was 20") || t.includes("my first") || t.includes("three years")) {
+        return "Story Opener 📖";
+    }
+    return "General Hook ✨";
+};
+
 export default function ViralHookAnalyzer() {
     const [hook, setHook] = useState('');
     const [result, setResult] = useState<AnalysisResult | null>(null);
     const [loading, setLoading] = useState(false);
     const [showExplanation, setShowExplanation] = useState(false);
+
+    const classifiedType = classifyHookType(hook);
 
     const handleAnalyze = async () => {
         if (!hook.trim()) return;
@@ -37,9 +70,9 @@ export default function ViralHookAnalyzer() {
 
             const data = await res.json();
             setResult(data);
+            toast.success("Hook analyzed successfully!");
         } catch (error: any) {
-            console.error(error);
-            alert(error.message || 'Failed to analyze hook. Please try again.');
+            toast.error(error.message || 'Failed to analyze hook. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -50,7 +83,7 @@ export default function ViralHookAnalyzer() {
             <h2 className={styles.title}>Viral Hook Engine</h2>
             <p className={styles.subtitle}>Test your opening line before you post.</p>
 
-            <div className={styles.inputGroup}>
+            <div className={styles.inputGroup} style={{ marginBottom: '0.5rem' }}>
                 <textarea
                     className={styles.textarea}
                     value={hook}
@@ -67,8 +100,35 @@ export default function ViralHookAnalyzer() {
                 </button>
             </div>
 
+            <div className={styles.charCount}>
+                <span className={hook.length > 150 ? styles.warningLimit : ''}>
+                    {hook.length} / 150 characters {hook.length > 150 && "(LinkedIn optimal hook is under 150 chars)"}
+                </span>
+                {classifiedType && (
+                    <span className={styles.classifiedType}>
+                        Type: {classifiedType}
+                    </span>
+                )}
+            </div>
+
+            <div className={styles.templatesSection}>
+                <h3 className={styles.templatesTitle}>💡 Trending Hook Templates</h3>
+                <div className={styles.templatesGrid}>
+                    {TEMPLATES.map((tpl) => (
+                        <button
+                            key={tpl}
+                            type="button"
+                            className={styles.templateCard}
+                            onClick={() => setHook(tpl)}
+                        >
+                            {tpl}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
             {result && (
-                <div className={styles.resultContainer}>
+                <div className={styles.resultContainer} style={{ marginTop: '2rem' }}>
                     <div className={`${styles.scoreCircle} ${styles[result.color]}`}>
                         <span className={styles.scoreValue}>{result.score}</span>
                         <span className={styles.scoreLabel}>/ 10</span>

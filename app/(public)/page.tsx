@@ -50,7 +50,7 @@ export default function Home() {
         <div className="relative z-10 w-full max-w-[1200px] mx-auto flex flex-col items-center">
           <FadeIn>
             <div className="inline-flex items-center px-4 py-1.5 rounded-full border border-[#06B6D4]/30 bg-[#06B6D4]/[0.08] text-[#06B6D4] text-[13px] font-medium mb-8">
-              <span>✦ Trusted by 12,000+ LinkedIn creators</span>
+              <span>✦ Join the waitlist — Early access open now</span>
             </div>
           </FadeIn>
 
@@ -139,16 +139,18 @@ export default function Home() {
 
       {/* SECTION 3 — SOCIAL PROOF BAR */}
       {/* ... (brands content) */}
-      <section className="py-16 md:py-24 border-y border-white/[0.06]" style={{ backgroundColor: '#0A0F1E', padding: '100px 24px', maxWidth: '1200px', margin: '0 auto' }}>
+      <section className="py-16 md:py-24 border-y border-white/[0.06]" style={{ backgroundColor: '#0A0F1E', padding: '60px 24px', maxWidth: '1200px', margin: '0 auto' }}>
         <div className="max-w-6xl mx-auto px-6">
-          <div className="flex flex-col items-center justify-center gap-10">
-            <p className="text-zinc-500 text-xs font-bold tracking-[0.2em] uppercase">As featured in</p>
-            <div className="flex flex-wrap items-center justify-center gap-12 md:gap-20 grayscale opacity-40 hover:opacity-100 transition-opacity">
-              {['TechCrunch', 'Forbes', 'Entrepreneur', 'Wired', 'Bloomberg'].map((brand) => (
-                <span key={brand} className="font-bold text-xl md:text-2xl tracking-tighter text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                  {brand}
-                </span>
-              ))}
+          <div className="flex flex-col items-center justify-center gap-6">
+            <p className="text-zinc-500 text-xs font-bold tracking-[0.2em] uppercase">Built for</p>
+            <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 text-zinc-400 font-semibold text-lg md:text-xl">
+              <span>Founders</span>
+              <span className="text-zinc-700">•</span>
+              <span>Creators</span>
+              <span className="text-zinc-700">•</span>
+              <span>Coaches</span>
+              <span className="text-zinc-700">•</span>
+              <span>B2B Marketers</span>
             </div>
           </div>
         </div>
@@ -278,29 +280,30 @@ export default function Home() {
       <section style={{ padding: '100px 24px', maxWidth: '1200px', margin: '0 auto' }} className="py-16 md:py-24 px-6 max-w-6xl mx-auto">
         <FadeIn>
           <div className="text-center mb-16">
-            <span className="text-[#00E5FF] text-[11px] font-bold tracking-[0.1em] uppercase mb-4 block">REAL RESULTS</span>
-            <h2 className="text-white" style={{ fontSize: '40px', fontWeight: 700, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>People who sound more like themselves</h2>
+            <span className="text-[#00E5FF] text-[11px] font-bold tracking-[0.1em] uppercase mb-4 block">WHAT WE'RE BUILDING FOR</span>
+            <h2 className="text-white" style={{ fontSize: '40px', fontWeight: 700, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Tailored for your specific goals</h2>
           </div>
         </FadeIn>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-            { quote: "I've tried 6 LinkedIn tools. Resodin is the first one where people actually DM me asking if I write my posts myself. That's the bar.", stat: "↑ 380% impressions", author: "Arjun Mehta", avatar: "AM", avatarBg: 'bg-purple-700' },
-            { quote: "The Voice DNA feature is witchcraft. I uploaded 4 old posts and it immediately nailed my tone. I haven't edited a single post.", stat: "3.2M impressions", author: "Sarah Chen", avatar: "SC", avatarBg: 'bg-cyan-700' },
-            { quote: "We use Resodin for our CEO's personal brand. The voices are completely distinct. Engagement went from 2K to 89K monthly.", stat: "44x engagement", author: "Marcus Williams", avatar: "MW", avatarBg: 'bg-emerald-700' }
+            { title: "For Founders", desc: "Generate thought leadership posts that build authority and attract investors, partners, and talent.", tag: "Build Authority", avatar: "🚀", avatarBg: 'bg-blue-900/40 text-blue-400 border border-blue-500/20' },
+            { title: "For Creators", desc: "Grow your audience with consistent, on-brand content that sounds like you wrote it on your best day.", tag: "Consistently Active", avatar: "✨", avatarBg: 'bg-purple-900/40 text-purple-400 border border-purple-500/20' },
+            { title: "For Agencies", desc: "Manage multiple client voices from one dashboard. Each profile sounds completely distinct.", tag: "Scale Content Operations", avatar: "🏢", avatarBg: 'bg-emerald-900/40 text-emerald-400 border border-emerald-500/20' }
           ].map((t, idx) => (
-            <FadeIn key={t.author} delay={idx * 0.1}>
+            <FadeIn key={t.title} delay={idx * 0.1}>
               <div className="flex flex-col h-full" 
                    style={{ backgroundColor: '#111827', borderLeft: `2px solid #00E5FF66`, borderRadius: '0 16px 16px 0', padding: '32px' }}>
-                <div className="mb-6">
-                  <div className="text-[28px] font-extrabold text-[#00E5FF] mb-1">{t.stat}</div>
-                </div>
-                <p className="flex-1 italic mb-8" style={{ color: '#9CA3AF', fontSize: '16px', lineHeight: 1.7 }}>"{t.quote}"</p>
-                <div className="flex items-center gap-3">
-                  <div className={`w-11 h-11 rounded-full ${t.avatarBg} flex items-center justify-center font-semibold text-white`}>
+                <div className="mb-6 flex items-center gap-3">
+                  <div className={`w-12 h-12 rounded-xl ${t.avatarBg} flex items-center justify-center font-bold text-xl`}>
                     {t.avatar}
                   </div>
-                  <div className="font-semibold text-white">{t.author}</div>
+                  <div className="font-extrabold text-white text-xl">{t.title}</div>
+                </div>
+                <p className="flex-1 mb-8" style={{ color: '#9CA3AF', fontSize: '15px', lineHeight: 1.6 }}>{t.desc}</p>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-[#00E5FF]" />
+                  <span className="text-[10px] font-bold text-[#00E5FF] uppercase tracking-wider">{t.tag}</span>
                 </div>
               </div>
             </FadeIn>
@@ -404,7 +407,7 @@ export default function Home() {
                   {isSignedIn ? "Go to Dashboard" : "Write my first post free →"}
                 </Link>
                 <div className="text-[#0A0F1E]/60 text-sm font-medium">
-                  Join 12,000+ creators · No credit card · Cancel anytime
+                  Join the waitlist · Early access open now · No credit card required
                 </div>
               </div>
             </div>
