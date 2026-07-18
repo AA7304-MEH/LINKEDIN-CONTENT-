@@ -27,7 +27,9 @@ export default clerkMiddleware(async (auth, request) => {
       if (request.nextUrl.pathname.startsWith("/api/")) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
       }
-      await auth.protect();
+      const signInUrl = new URL("/sign-in", request.url);
+      signInUrl.searchParams.set("redirect_url", request.nextUrl.pathname);
+      return NextResponse.redirect(signInUrl);
     }
   }
 });
