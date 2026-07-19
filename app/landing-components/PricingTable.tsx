@@ -30,6 +30,30 @@ export default function PricingTable() {
 
             const order = await response.json();
 
+            // Handle sandbox mock bypass if credentials failed API check
+            if (order.mock) {
+                alert("Sandbox Mode: Simulating payment checkout...");
+                const verifyRes = await fetch('/api/verify-payment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        orderCreationId: order.id,
+                        razorpayPaymentId: `pay_mock_${Math.random().toString(36).substring(2, 11)}`,
+                        razorpaySignature: 'mock_signature',
+                        plan: plan
+                    })
+                });
+
+                const data = await verifyRes.json();
+                if (data.success) {
+                    alert(`Payment Successful! You are now on the ${plan} plan.`);
+                    window.location.href = '/dashboard';
+                } else {
+                    alert('Payment verification failed.');
+                }
+                return;
+            }
+
             // 2. Initialize Razorpay
             const options = {
                 key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard

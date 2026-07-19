@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import styles from './UpgradeModal.module.css';
+import toast from 'react-hot-toast';
 
 interface UpgradeModalProps {
     isOpen: boolean;
@@ -16,7 +17,52 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
     const handleUpgrade = async () => {
         setLoading(true);
         try {
-            // Load script dynamically
+            const response = await fetch('/api/create-order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ plan: 'PRO' })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to create order');
+            }
+
+            const order = await response.json();
+
+            // Handle sandbox mock bypass if credentials failed API check
+            if (order.mock) {
+                toast.success(
+                    order.warning 
+                        ? `Sandbox Mode (${order.warning}). Upgrading automatically...` 
+                        : "Sandbox Mode: Simulating checkout payment...",
+                    { duration: 4000 }
+                );
+
+                await new Promise((resolve) => setTimeout(resolve, 1500));
+
+                const verifyRes = await fetch('/api/verify-payment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        orderCreationId: order.id,
+                        razorpayPaymentId: `pay_mock_${Math.random().toString(36).substring(2, 11)}`,
+                        razorpaySignature: 'mock_signature',
+                        plan: 'PRO'
+                    })
+                });
+
+                const data = await verifyRes.json();
+                if (data.success) {
+                    toast.success('Successfully upgraded to Pro!');
+                    window.location.reload();
+                } else {
+                    throw new Error('Sandbox verification failed.');
+                }
+                return;
+            }
+
+            // Load real Razorpay script dynamically
             const loadScript = () => {
                 return new Promise((resolve) => {
                     const script = document.createElement("script");
@@ -33,19 +79,6 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
                 setLoading(false);
                 return;
             }
-
-            const response = await fetch('/api/create-order', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ plan: 'PRO' })
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'Failed to create order');
-            }
-
-            const order = await response.json();
 
             const options = {
                 key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_test_placeholder',
@@ -69,7 +102,7 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
 
                         const data = await verifyRes.json();
                         if (data.success) {
-                            alert(`Success! Welcome to Resodin Pro.`);
+                            toast.success(`Success! Welcome to Resodin Pro.`);
                             window.location.reload();
                         } else {
                             alert('Verification failed.');
@@ -97,9 +130,9 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
             <div className={styles.modal}>
                 <button className={styles.closeBtn} onClick={onClose}>✕</button>
                 <div className={styles.badge}>PRO FEATURE</div>
-                <h2 className={styles.title}>You&apos;ve used all 5 free posts this month 🎉</h2>
+                <h2 className={styles.title}>Upgrade to unlock premium features 🎉</h2>
                 <p className={styles.desc}>
-                    Your posts are getting better. Unlock unlimited generations, hook analyzer upgrades, content repurposing, and scheduling with Pro.
+                    Get unlimited AI generations, Voice DNA profile card, weekly growth summaries, advanced analytics, and custom post scheduling.
                 </p>
                 <button className={styles.cta} onClick={handleUpgrade} disabled={loading}>
                     {loading ? 'Processing...' : 'Upgrade to Pro — $19/month'}
