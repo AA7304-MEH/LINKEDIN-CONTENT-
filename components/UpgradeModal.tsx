@@ -17,10 +17,12 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
     const handleUpgrade = async () => {
         setLoading(true);
         try {
+            const isSandboxMode = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('sandbox') === 'true';
+
             const response = await fetch('/api/create-order', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ plan: 'PRO' })
+                body: JSON.stringify({ plan: 'PRO', sandbox: isSandboxMode })
             });
 
             if (!response.ok) {

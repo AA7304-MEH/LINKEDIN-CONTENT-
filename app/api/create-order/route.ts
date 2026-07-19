@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
         if (!sessionUser) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
-        const { amount, currency = 'USD', plan } = await req.json();
+        const { amount, currency = 'USD', plan, sandbox } = await req.json();
 
         let finalAmount = amount;
         if (plan === 'PRO') {
@@ -26,6 +26,17 @@ export async function POST(req: NextRequest) {
             currency,
             receipt: `receipt_${Date.now()}`,
         };
+
+        if (sandbox) {
+            console.log("Forced Sandbox Mode requested. Returning Mock order.");
+            return NextResponse.json({
+                id: `order_mock_${Math.random().toString(36).substring(2, 11)}`,
+                amount: options.amount,
+                currency: options.currency,
+                receipt: options.receipt,
+                mock: true
+            });
+        }
 
         // If credentials are not configured or are placeholder, return sandbox mock order directly
         const hasCredentials = process.env.RAZORPAY_KEY_ID && 

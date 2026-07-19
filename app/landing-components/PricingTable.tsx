@@ -15,12 +15,14 @@ export default function PricingTable() {
     const handlePayment = async (plan: string, amount: number) => {
         try {
             // 1. Create Order
+            const isSandboxMode = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('sandbox') === 'true';
+
             const response = await fetch('/api/create-order', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ amount, currency: 'USD' }),
+                body: JSON.stringify({ amount, currency: 'USD', plan: plan, sandbox: isSandboxMode }),
             });
 
             if (!response.ok) {
