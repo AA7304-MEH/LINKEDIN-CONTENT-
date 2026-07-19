@@ -4,7 +4,6 @@ import { getSessionUser } from '@/lib/security/authz';
 import { prisma } from '@/lib/prisma';
 import { withRetry } from '@/lib/ai-helper';
 import groq from '@/lib/groq';
-import OpenAI from 'openai';
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY || '');
 
@@ -141,69 +140,8 @@ Return the output strictly in the following JSON format. Do not return any other
     return JSON.parse(text);
 }
 
-async function generateWithOpenAI(
-    topic: string,
-    tone: string,
-    voiceDnaProfile: string,
-    type: string
-): Promise<any> {
-    const apiKey = process.env.OPENAI_API_KEY;
-    if (!apiKey) throw new Error("OpenAI API key missing");
-
-    const openai = new OpenAI({ apiKey });
-
-    const completion = await openai.chat.completions.create({
-        model: "gpt-4o",
-        messages: [
-            {
-                role: "system",
-                content: `You are an elite LinkedIn content strategist who has studied 50,000+ viral LinkedIn posts. You write in the user's exact voice based on their Voice DNA profile.
-
-STRICT RULES:
-- Never start with "I" 
-- No generic openings like "In today's world" or "As a professional"
-- Use pattern interrupts in the first line
-- Write like a human, not a press release
-- Max 1500 characters for optimal LinkedIn reach
-- Use line breaks every 1-2 sentences for mobile readability
-- End with a question or strong POV that invites comments
-- Never use hashtags in the body — only at the very end (max 3)
-
-TONE PROFILES:
-- Authoritative: Data-backed claims, confident assertions, zero hedging
-- Contrarian: Challenge mainstream advice, use "Unpopular opinion:" opener
-- Storytelling: Scene-setting first line, personal stakes, lesson at end
-- Conversational: Short sentences, relatable struggles, casual language`
-            },
-            {
-                role: "user",
-                content: `Voice DNA Context: ${voiceDnaProfile}
-User Goal: ${topic}
-Post Type: ${type || 'Educational'}
-
-Return the output in the following JSON format:
-{
-    "content": "The full post content...",
-    "hookScore": 9.2,
-    "hookFeedback": "Brief feedback about the opening hook potential...",
-    "hashtags": {
-        "broad": ["#tag1", "#tag2"],
-        "niche": ["#tag3", "#tag4"],
-        "community": ["#tag5", "#tag6"]
-    }
-}`
-            }
-        ],
-        response_format: { type: "json_object" }
-    });
-
-    const responseText = completion.choices[0]?.message?.content || "";
-    return JSON.parse(responseText.trim());
-}
-
-async function generateWithGemini(prompt: string): Promise<any> {
-    let modelName = "gemini-2.5-pro";
-    let model = genAI.getGenerativeModel({ 
+async function generateWithGeminiModel(prompt: string, modelName: string): Promise<any> {
+    const model = genAI.getGenerativeModel({ 
         model: modelName,
         generationConfig: {
             temperature: 0.8,
@@ -213,44 +151,24 @@ async function generateWithGemini(prompt: string): Promise<any> {
         }
     });
 
-    let result;
-    try {
-        result = await withRetry(async () => {
-            return await model.generateContent(prompt);
-        });
-    } catch (proError) {
-        console.warn("Gemini 2.5 Pro failed, falling back to Gemini 2.5 Flash:", proError);
-        modelName = "gemini-2.5-flash";
-        model = genAI.getGenerativeModel({ 
-            model: modelName,
-            generationConfig: {
-                temperature: 0.8,
-                topP: 0.95,
-                topK: 40,
-                maxOutputTokens: 1024,
-            }
-        });
-        result = await withRetry(async () => {
-            return await model.generateContent(prompt);
-        });
-    }
+    const result = await withRetry(async () => {
+        return await model.generateContent(prompt);
+    });
 
     const response = await result.response;
     let text = response.text();
-
-    // Clean markdown if present
     text = text.replace(/```json/g, '').replace(/```/g, '').trim();
 
     try {
         const parsed = JSON.parse(text);
-        return { ...parsed, provider: `gemini-2.5-${modelName === 'gemini-2.5-pro' ? 'pro' : 'flash'}` };
+        return { ...parsed, provider: modelName };
     } catch (e) {
         return { 
             content: text, 
             hookScore: 7.0, 
             hookFeedback: "Good post.", 
             hashtags: { broad: [], niche: [], community: [] },
-            provider: `gemini-2.5-${modelName === 'gemini-2.5-pro' ? 'pro' : 'flash'}`
+            provider: modelName
         };
     }
 }
@@ -319,16 +237,25 @@ export async function POST(request: Request) {
             });
 
             if (dbUser) {
-                // TRIAL LOGIC: 14 Days Free
-                const ONE_DAY = 24 * 60 * 60 * 1000;
-                const daysSinceCreation = Math.floor((Date.now() - new Date(dbUser.createdAt).getTime()) / ONE_DAY);
-                const isTrialActive = daysSinceCreation < 14;
-                const isPro = dbUser.plan === 'PRO' || dbUser.plan === 'BUSINESS';
+                // Monthly credit reset logic
+                const now = new Date()
+                const resetDate = new Date(dbUser.creditsResetAt)
+                const isDifferentMonth = 
+                  now.getMonth() !== resetDate.getMonth() || 
+                  now.getFullYear() !== resetDate.getFullYear()
 
-                // LIMIT LOGIC: DB-based creditsLimit check for FREE users
-                if (dbUser.plan === 'FREE' && dbUser.creditsUsed >= dbUser.creditsLimit) {
+                if (isDifferentMonth) {
+                  await prisma.user.update({
+                    where: { id: dbUser.id },
+                    data: { creditsUsed: 0, creditsResetAt: now }
+                  })
+                  dbUser.creditsUsed = 0
+                }
+
+                // LIMIT LOGIC: limit FREE tier users to 5 posts per month
+                if (dbUser.plan === 'FREE' && dbUser.creditsUsed >= 5) {
                     return NextResponse.json(
-                        { error: "You've used all your posts for today. Upgrade to Pro for unlimited." },
+                        { error: "You've reached your free monthly limit of 5 posts. Upgrade to Pro for unlimited posts." },
                         { status: 429 }
                     );
                 }
@@ -393,66 +320,61 @@ Hashtag Strategy:
         let data = null;
         let provider = "";
 
-        // 1. Try Anthropic (Claude 3.5 Sonnet) - Best quality
-        const hasAnthropicKey = process.env.ANTHROPIC_API_KEY && process.env.ANTHROPIC_API_KEY.trim() !== "";
-        if (hasAnthropicKey) {
+        // 1. Try Groq (Llama 3.3 70B) - Primary (free tier, fastest)
+        const hasGroqKey = process.env.GROQ_API_KEY && process.env.GROQ_API_KEY !== "your_groq_api_key_here" && process.env.GROQ_API_KEY.trim() !== "";
+        if (hasGroqKey) {
             try {
-                console.log("Attempting generation with Anthropic (Claude 3.5 Sonnet)...");
-                data = await generateWithAnthropic(topic, tone || 'Professional', voiceDnaProfile, type || 'Educational');
-                provider = "anthropic-claude-3-5-sonnet";
-                console.log("Successfully generated post with Anthropic.");
-            } catch (anthropicError: any) {
-                console.error("Anthropic generation failed, falling back:", anthropicError.message || anthropicError);
+                console.log("Attempting generation with Groq (llama-3.3-70b-versatile)...");
+                data = await generateWithGroq(topic, tone || 'Professional', voiceDnaProfile, type || 'Educational');
+                provider = "groq-llama3-70b";
+                console.log("Successfully generated post with Groq.");
+            } catch (groqError: any) {
+                console.error("Groq generation failed, falling back:", groqError.message || groqError);
             }
         }
 
-        // 2. Try OpenAI (GPT-4o) - Second best quality
-        if (!data) {
-            const hasOpenAIKey = process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY.trim() !== "";
-            if (hasOpenAIKey) {
-                try {
-                    console.log("Attempting generation with OpenAI (gpt-4o)...");
-                    data = await generateWithOpenAI(topic, tone || 'Professional', voiceDnaProfile, type || 'Educational');
-                    provider = "openai-gpt-4o";
-                    console.log("Successfully generated post with OpenAI.");
-                } catch (openaiError: any) {
-                    console.error("OpenAI generation failed, falling back:", openaiError.message || openaiError);
-                }
-            }
-        }
-
-        // 3. Try Groq (Llama 3.3 70B) - Third best quality (high speed)
-        if (!data) {
-            const hasGroqKey = process.env.GROQ_API_KEY && process.env.GROQ_API_KEY !== "your_groq_api_key_here" && process.env.GROQ_API_KEY.trim() !== "";
-            if (hasGroqKey) {
-                try {
-                    console.log("Attempting generation with Groq (llama-3.3-70b-versatile)...");
-                    data = await generateWithGroq(topic, tone || 'Professional', voiceDnaProfile, type || 'Educational');
-                    provider = "groq-llama3-70b";
-                    console.log("Successfully generated post with Groq.");
-                } catch (groqError: any) {
-                    console.error("Groq generation failed, falling back to Gemini:", groqError.message || groqError);
-                }
-            }
-        }
-
-        // 4. Try Google Gemini (Gemini 2.5 Pro / Flash) - Baseline fallbacks
+        // 2. Try Google Gemini 2.5 Flash
         if (!data) {
             const hasGeminiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY && process.env.GOOGLE_GENERATIVE_AI_API_KEY.trim() !== "";
             if (hasGeminiKey) {
                 try {
-                    console.log("Attempting generation with Gemini (gemini-2.5-pro)...");
-                    const geminiData = await generateWithGemini(prompt);
+                    console.log("Attempting generation with Gemini 2.5 Flash...");
+                    const geminiData = await generateWithGeminiModel(prompt, "gemini-2.5-flash");
                     data = geminiData;
-                    provider = geminiData.provider || "gemini-2.5-pro";
-                    console.log(`Successfully generated post with ${provider}.`);
-                } catch (geminiError: any) {
-                    console.error("Gemini generation failed, falling back to local mock:", geminiError.message || geminiError);
+                    provider = "gemini-2.5-flash";
+                    console.log("Successfully generated post with Gemini 2.5 Flash.");
+                } catch (flashError: any) {
+                    console.error("Gemini 2.5 Flash generation failed, trying Gemini 2.5 Pro:", flashError.message || flashError);
+                    // 3. Try Google Gemini 2.5 Pro (Fallback 2)
+                    try {
+                        console.log("Attempting generation with Gemini 2.5 Pro...");
+                        const geminiData = await generateWithGeminiModel(prompt, "gemini-2.5-pro");
+                        data = geminiData;
+                        provider = "gemini-2.5-pro";
+                        console.log("Successfully generated post with Gemini 2.5 Pro.");
+                    } catch (proError: any) {
+                        console.error("Gemini 2.5 Pro generation failed, falling back:", proError.message || proError);
+                    }
                 }
             }
         }
 
-        // 5. Local Mock Fallback - Free / No Investment required
+        // 4. Try Anthropic (Claude 3.5 Sonnet) - Last resort only
+        if (!data) {
+            const hasAnthropicKey = process.env.ANTHROPIC_API_KEY && process.env.ANTHROPIC_API_KEY.trim() !== "";
+            if (hasAnthropicKey) {
+                try {
+                    console.log("Attempting generation with Anthropic (Claude 3.5 Sonnet) as last resort...");
+                    data = await generateWithAnthropic(topic, tone || 'Professional', voiceDnaProfile, type || 'Educational');
+                    provider = "anthropic-claude-3-5-sonnet";
+                    console.log("Successfully generated post with Anthropic.");
+                } catch (anthropicError: any) {
+                    console.error("Anthropic generation failed, falling back to local mock:", anthropicError.message || anthropicError);
+                }
+            }
+        }
+
+        // 5. Local Mock Fallback
         if (!data) {
             console.log("No API keys found or all failed. Falling back to local mock generation.");
             data = generateLocallyMocked(topic, tone || 'Professional', type || 'Educational');

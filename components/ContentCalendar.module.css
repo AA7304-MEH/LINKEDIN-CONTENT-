@@ -173,6 +173,13 @@
     color: #fff;
 }
 
+.slotDate {
+    font-size: 0.75rem;
+    color: #666;
+    margin-left: 0.25rem;
+    font-weight: normal;
+}
+
 .clearBtn {
     background: none;
     border: none;

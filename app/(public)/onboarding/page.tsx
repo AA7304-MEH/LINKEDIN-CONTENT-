@@ -3,11 +3,13 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
+import VoiceDnaCard from '@/components/VoiceDnaCard';
 
 export default function OnboardingPage() {
     const router = useRouter();
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
+    const [profileResult, setProfileResult] = useState<any>(null);
     const [formData, setFormData] = useState({
         bestPosts: '',
         stories: [{ title: '', summary: '' }, { title: '', summary: '' }],
@@ -31,8 +33,9 @@ export default function OnboardingPage() {
             });
 
             if (!res.ok) throw new Error('Failed to save profile');
-
-            router.push('/dashboard');
+            const result = await res.json();
+            setProfileResult(result.voiceProfile);
+            setStep(5);
         } catch (error) {
             console.error(error);
             alert('Failed to save profile. Please try again.');
@@ -45,7 +48,7 @@ export default function OnboardingPage() {
         <main className={styles.main}>
             <div className={styles.container}>
                 <div className={styles.progress}>
-                    <div className={styles.progressBar} style={{ width: `${(step / 4) * 100}%` }}></div>
+                    <div className={styles.progressBar} style={{ width: `${(step / 5) * 100}%` }}></div>
                 </div>
 
                 {step === 1 && (
@@ -130,6 +133,21 @@ export default function OnboardingPage() {
                                 {loading ? 'Saving...' : 'Complete Profile'}
                             </button>
                         </div>
+                    </div>
+                )}
+
+                {step === 5 && profileResult && (
+                    <div className={styles.step} style={{ textAlign: 'center' }}>
+                        <h1>Profile Analyzed! 🎉</h1>
+                        <p style={{ color: '#94a3b8', marginBottom: '1.5rem' }}>We&apos;ve generated your content voice blueprint.</p>
+                        <VoiceDnaCard analysis={profileResult.analysis} />
+                        <button
+                            className={styles.button}
+                            onClick={() => router.push('/dashboard')}
+                            style={{ marginTop: '2rem', display: 'inline-block', maxWidth: '300px' }}
+                        >
+                            Go to Dashboard →
+                        </button>
                     </div>
                 )}
             </div>

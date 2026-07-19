@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useUser, UserProfile } from "@clerk/nextjs";
 import styles from "./page.module.css";
 import Link from 'next/link';
+import VoiceDnaCard from "@/components/VoiceDnaCard";
 
 const TONE_OPTIONS = ['Professional', 'Casual', 'Data-Driven', 'Authoritative', 'Contrarian', 'Storytelling', 'Conversational'];
 
@@ -17,6 +18,7 @@ export default function SettingsPage() {
     const [loadError, setLoadError] = useState<string | null>(null);
     const [linkedinConnected, setLinkedinConnected] = useState(false);
     const [linkedinStatus, setLinkedinStatus] = useState<'idle' | 'success' | 'error'>('idle');
+    const [voiceProfile, setVoiceProfile] = useState<any>(null);
 
     // Check for LinkedIn status on mount
     useEffect(() => {
@@ -54,6 +56,7 @@ export default function SettingsPage() {
                 if (!res.ok) return;
                 const { voiceProfile } = await res.json();
                 if (voiceProfile) {
+                    setVoiceProfile(voiceProfile);
                     if (voiceProfile.tone) setTone(voiceProfile.tone);
                     if (voiceProfile.contentFocus) setContentFocus(voiceProfile.contentFocus);
                 }
@@ -73,10 +76,16 @@ export default function SettingsPage() {
             const res = await fetch('/api/user/voice-profile', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ tone, contentFocus }),
+                body: JSON.stringify({
+                    ...voiceProfile,
+                    tone,
+                    contentFocus
+                }),
             });
 
             if (!res.ok) throw new Error('Failed to save');
+            const data = await res.json();
+            setVoiceProfile(data.voiceProfile);
             setSaveStatus('success');
         } catch {
             setSaveStatus('error');
@@ -166,6 +175,19 @@ export default function SettingsPage() {
                         </div>
                     </div>
                 </section>
+
+                {/* Voice DNA Profile Card Section */}
+                {voiceProfile?.analysis && (
+                    <section className={styles.section} style={{ gridColumn: 'span 2' }}>
+                        <div className={styles.card}>
+                            <h2>LinkedIn Content Voice DNA</h2>
+                            <div style={{ marginTop: '1rem' }}>
+                                <VoiceDnaCard analysis={voiceProfile.analysis} />
+                            </div>
+                        </div>
+                    </section>
+                )}
+
                 {/* Integrations Section */}
                 <section className={styles.section}>
                     <div className={styles.card}>
