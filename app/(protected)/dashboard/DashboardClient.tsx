@@ -52,6 +52,8 @@ export default function DashboardClient({
         const params = new URLSearchParams(window.location.search);
         if (params.get('upgrade') === 'pro') {
             setIsUpgradeOpen(true);
+            // Clean up the URL parameter immediately to prevent infinite reload loops
+            window.history.replaceState({}, '', window.location.pathname);
         }
     }, []);
 
