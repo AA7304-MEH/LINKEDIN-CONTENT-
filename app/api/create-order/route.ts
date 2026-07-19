@@ -43,10 +43,11 @@ export async function POST(req: NextRequest) {
         const order = await razorpay.orders.create(options);
 
         return NextResponse.json(order);
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error creating Razorpay order:', error);
+        const description = error?.error?.description || error?.message || 'Error creating order';
         return NextResponse.json(
-            { error: 'Error creating order' },
+            { error: description },
             { status: 500 }
         );
     }
