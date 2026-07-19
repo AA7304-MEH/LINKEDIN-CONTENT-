@@ -109,6 +109,9 @@ export default function SettingsPage() {
                     <Link href="/extension" className={styles.quickLinkItem}>
                         <span className={styles.icon}>🧩</span> Download Chrome Extension
                     </Link>
+                    <Link href="/dashboard?upgrade=pro" className={styles.quickLinkItem} style={{ border: '1px solid rgba(6, 182, 212, 0.25)', background: 'rgba(6, 182, 212, 0.04)' }}>
+                        <span className={styles.icon}>⚡</span> Upgrade to Pro
+                    </Link>
                 </div>
             </header>
 

@@ -8,7 +8,18 @@ export async function POST(req: NextRequest) {
         if (!sessionUser) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
-        const { amount, currency = 'USD' } = await req.json();
+        const { amount, currency = 'USD', plan } = await req.json();
+
+        let finalAmount = amount;
+        if (plan === 'PRO') {
+            finalAmount = 19;
+        } else if (plan === 'BUSINESS' || plan === 'Business') {
+            finalAmount = 49;
+        }
+
+        if (!finalAmount) {
+            return NextResponse.json({ error: 'Amount or plan is required' }, { status: 400 });
+        }
 
         if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
             console.error("Razorpay keys are missing in process.env");
@@ -24,7 +35,7 @@ export async function POST(req: NextRequest) {
         });
 
         const options = {
-            amount: amount * 100, // amount in smallest currency unit
+            amount: finalAmount * 100, // amount in smallest currency unit
             currency,
             receipt: `receipt_${Date.now()}`,
         };

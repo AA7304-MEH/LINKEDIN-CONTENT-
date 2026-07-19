@@ -366,7 +366,7 @@ export default function Home() {
                    <li>✓ 3 profiles</li>
                  </ul>
                  <div className="space-y-3">
-                   <Link href={isSignedIn ? "/dashboard" : "/sign-up"} className="w-full py-3 rounded-xl font-bold bg-[#00E5FF] text-[#0A0F1E] block text-center">
+                   <Link href={isSignedIn ? "/dashboard?upgrade=pro" : "/sign-up?plan=pro"} className="w-full py-3 rounded-xl font-bold bg-[#00E5FF] text-[#0A0F1E] block text-center">
                      {isSignedIn ? "Go to Dashboard" : "Start free trial"}
                    </Link>
                    <p className="text-xs text-[#9CA3AF] text-center">No credit card needed</p>

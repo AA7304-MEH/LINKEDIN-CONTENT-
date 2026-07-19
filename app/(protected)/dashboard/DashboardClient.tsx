@@ -52,6 +52,10 @@ export default function DashboardClient({
 
     useEffect(() => {
         setIsMounted(true);
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('upgrade') === 'pro') {
+            setIsUpgradeOpen(true);
+        }
     }, []);
 
     const fetchAnalyticsSummary = async () => {
