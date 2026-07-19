@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './UpgradeModal.module.css';
 import toast from 'react-hot-toast';
 
@@ -11,6 +11,109 @@ interface UpgradeModalProps {
 
 export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
     const [loading, setLoading] = useState(false);
+
+    // Dynamic PayPal SDK Loader & button renderer
+    useEffect(() => {
+        if (!isOpen) return;
+
+        let paypalInitialized = false;
+
+        const loadPaypalScript = () => {
+            const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || 'sb';
+            
+            // Check if script is already present
+            const existingScript = document.getElementById('paypal-sdk-script');
+            if (existingScript) {
+                // If script exists, check if loaded or reload buttons
+                if ((window as any).paypal) {
+                    renderPaypalButtons();
+                } else {
+                    existingScript.addEventListener('load', renderPaypalButtons);
+                }
+                return;
+            }
+
+            const script = document.createElement("script");
+            script.id = 'paypal-sdk-script';
+            script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=USD`;
+            script.onload = () => {
+                renderPaypalButtons();
+            };
+            document.body.appendChild(script);
+        };
+
+        const renderPaypalButtons = () => {
+            if (paypalInitialized) return;
+            const container = document.getElementById('paypal-button-container');
+            if (!container) return;
+
+            container.innerHTML = ''; // clear previous buttons if any
+
+            if ((window as any).paypal) {
+                try {
+                    (window as any).paypal.Buttons({
+                        style: {
+                            layout: 'vertical',
+                            color: 'gold',
+                            shape: 'rect',
+                            label: 'paypal',
+                            height: 40
+                        },
+                        createOrder: function(data: any, actions: any) {
+                            return actions.order.create({
+                                purchase_units: [{
+                                    description: "Resodin Pro Creator Plan",
+                                    amount: {
+                                        currency_code: 'USD',
+                                        value: '19.00'
+                                    }
+                                }]
+                            });
+                        },
+                        onApprove: async function(data: any, actions: any) {
+                            setLoading(true);
+                            try {
+                                const details = await actions.order.capture();
+                                
+                                const verifyRes = await fetch('/api/verify-payment', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({
+                                        orderCreationId: data.orderID,
+                                        razorpayPaymentId: details.id,
+                                        razorpaySignature: 'paypal_verified',
+                                        plan: 'PRO'
+                                    })
+                                });
+
+                                const verifyData = await verifyRes.json();
+                                if (verifyData.success) {
+                                    toast.success('Successfully upgraded to Pro with PayPal!');
+                                    window.location.reload();
+                                } else {
+                                    toast.error('Payment verification failed.');
+                                }
+                            } catch (err) {
+                                console.error("PayPal capture error:", err);
+                                toast.error('Payment capture failed.');
+                            } finally {
+                                setLoading(false);
+                            }
+                        },
+                        onError: function(err: any) {
+                            console.error("PayPal error:", err);
+                        }
+                    }).render('#paypal-button-container');
+                    paypalInitialized = true;
+                } catch (e) {
+                    console.error("Error rendering PayPal buttons:", e);
+                }
+            }
+        };
+
+        const timer = setTimeout(loadPaypalScript, 200);
+        return () => clearTimeout(timer);
+    }, [isOpen]);
 
     if (!isOpen) return null;
 
@@ -137,8 +240,16 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
                     Get unlimited AI generations, Voice DNA profile card, weekly growth summaries, advanced analytics, and custom post scheduling.
                 </p>
                 <button className={styles.cta} onClick={handleUpgrade} disabled={loading}>
-                    {loading ? 'Processing...' : 'Upgrade to Pro — $19/month'}
+                    {loading ? 'Processing...' : 'Upgrade with Card / Razorpay'}
                 </button>
+
+                <div style={{ margin: '1.25rem 0', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', opacity: 0.4 }}>
+                    <div style={{ height: '1px', background: '#475569', flex: 1 }} />
+                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8' }}>OR PAYPAL</span>
+                    <div style={{ height: '1px', background: '#475569', flex: 1 }} />
+                </div>
+
+                <div id="paypal-button-container" style={{ minHeight: '40px', position: 'relative', zIndex: 10 }}></div>
             </div>
         </div>
     );
