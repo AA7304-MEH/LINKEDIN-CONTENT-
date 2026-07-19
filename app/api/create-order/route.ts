@@ -45,9 +45,11 @@ export async function POST(req: NextRequest) {
         return NextResponse.json(order);
     } catch (error: any) {
         console.error('Error creating Razorpay order:', error);
+        const rawKey = process.env.RAZORPAY_KEY_ID || '';
+        const maskedKey = rawKey ? `${rawKey.substring(0, 12)}...${rawKey.substring(rawKey.length - 4)}` : 'none';
         const description = error?.error?.description || error?.message || 'Error creating order';
         return NextResponse.json(
-            { error: description },
+            { error: `${description} (using key ID: ${maskedKey})` },
             { status: 500 }
         );
     }
