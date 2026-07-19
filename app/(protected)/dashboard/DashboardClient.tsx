@@ -6,15 +6,12 @@ import PostDisplay from '@/components/PostDisplay';
 import UpgradeModal from '@/components/UpgradeModal';
 import toast from 'react-hot-toast';
 import styles from './page.module.css';
-import { 
-    BarChart, 
-    Bar, 
-    XAxis, 
-    YAxis, 
-    Tooltip, 
-    ResponsiveContainer, 
-    CartesianGrid 
-} from 'recharts';
+import dynamic from 'next/dynamic';
+
+const AnalyticsChart = dynamic(() => import('@/components/AnalyticsChart'), {
+    ssr: false,
+    loading: () => <div style={{ height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', fontStyle: 'italic' }}>Loading chart...</div>
+});
 
 interface DashboardClientProps {
     initialPosts: any[];
@@ -621,15 +618,7 @@ export default function DashboardClient({
                                             <h3 style={{ margin: '0 0 1.5rem 0', color: '#fff' }}>Impressions Trend</h3>
                                             
                                             {isMounted && analytics.history?.length > 0 ? (
-                                                <ResponsiveContainer width="100%" height={300}>
-                                                    <BarChart data={analytics.history}>
-                                                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
-                                                        <XAxis dataKey="date" stroke="#64748b" fontSize={12} />
-                                                        <YAxis stroke="#64748b" fontSize={12} />
-                                                        <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }} />
-                                                        <Bar dataKey="impressions" fill="#06B6D4" radius={[4, 4, 0, 0]} />
-                                                    </BarChart>
-                                                </ResponsiveContainer>
+                                                <AnalyticsChart history={analytics.history} />
                                             ) : (
                                                 <div style={{ height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', fontStyle: 'italic' }}>
                                                     Publish posts to build tracking trends!
