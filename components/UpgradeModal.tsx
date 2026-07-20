@@ -11,10 +11,38 @@ interface UpgradeModalProps {
 
 export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
     const [loading, setLoading] = useState(false);
+    const [isIndianUser, setIsIndianUser] = useState(true); // Default to India (Razorpay)
+
+    // Geolocation detection to route payment gateways
+    useEffect(() => {
+        if (!isOpen) return;
+
+        const detectLocation = async () => {
+            try {
+                // Timezone check (instant, offline fallback)
+                const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                const isIndiaTz = tz === 'Asia/Kolkata' || tz === 'Asia/Calcutta';
+                setIsIndianUser(isIndiaTz);
+
+                // Live GeoIP Lookup to verify country code
+                const res = await fetch('https://ipapi.co/json/');
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.country_code) {
+                        setIsIndianUser(data.country_code === 'IN');
+                    }
+                }
+            } catch (err) {
+                console.log("Geo IP lookup failed, falling back to timezone routing.");
+            }
+        };
+
+        detectLocation();
+    }, [isOpen]);
 
     // Dynamic PayPal SDK Loader & button renderer
     useEffect(() => {
-        if (!isOpen) return;
+        if (!isOpen || isIndianUser) return;
 
         let paypalInitialized = false;
 
@@ -24,7 +52,6 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
             // Check if script is already present
             const existingScript = document.getElementById('paypal-sdk-script');
             if (existingScript) {
-                // If script exists, check if loaded or reload buttons
                 if ((window as any).paypal) {
                     renderPaypalButtons();
                 } else {
@@ -113,7 +140,7 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
 
         const timer = setTimeout(loadPaypalScript, 200);
         return () => clearTimeout(timer);
-    }, [isOpen]);
+    }, [isOpen, isIndianUser]);
 
     if (!isOpen) return null;
 
@@ -239,17 +266,38 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
                 <p className={styles.desc}>
                     Get unlimited AI generations, Voice DNA profile card, weekly growth summaries, advanced analytics, and custom post scheduling.
                 </p>
-                <button className={styles.cta} onClick={handleUpgrade} disabled={loading}>
-                    {loading ? 'Processing...' : 'Upgrade with Card / Razorpay'}
-                </button>
 
-                <div style={{ margin: '1.25rem 0', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', opacity: 0.4 }}>
-                    <div style={{ height: '1px', background: '#475569', flex: 1 }} />
-                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8' }}>OR PAYPAL</span>
-                    <div style={{ height: '1px', background: '#475569', flex: 1 }} />
-                </div>
-
-                <div id="paypal-button-container" style={{ minHeight: '40px', position: 'relative', zIndex: 10 }}></div>
+                {isIndianUser ? (
+                    /* Indian Gateway View (Razorpay Card / UPI) */
+                    <div style={{ width: '100%' }}>
+                        <button className={styles.cta} onClick={handleUpgrade} disabled={loading}>
+                            {loading ? 'Processing...' : 'Upgrade with UPI / Card'}
+                        </button>
+                        <p style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.75rem', color: '#64748b' }}>
+                            Outside India?{' '}
+                            <button 
+                                onClick={() => setIsIndianUser(false)} 
+                                style={{ background: 'none', border: 'none', color: '#06b6d4', textDecoration: 'underline', cursor: 'pointer', padding: 0 }}
+                            >
+                                Pay with PayPal
+                            </button>
+                        </p>
+                    </div>
+                ) : (
+                    /* International Gateway View (PayPal Smart Buttons) */
+                    <div style={{ width: '100%' }}>
+                        <div id="paypal-button-container" style={{ minHeight: '40px', position: 'relative', zIndex: 10 }}></div>
+                        <p style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.75rem', color: '#64748b' }}>
+                            In India?{' '}
+                            <button 
+                                onClick={() => setIsIndianUser(true)} 
+                                style={{ background: 'none', border: 'none', color: '#06b6d4', textDecoration: 'underline', cursor: 'pointer', padding: 0 }}
+                            >
+                                Pay with UPI / Indian Card
+                            </button>
+                        </p>
+                    </div>
+                )}
             </div>
         </div>
     );
