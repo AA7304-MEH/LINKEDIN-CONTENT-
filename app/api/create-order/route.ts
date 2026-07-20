@@ -37,10 +37,13 @@ export async function POST(req: NextRequest) {
             });
         }
 
+        const keyId = process.env.RAZORPAY_KEY_ID || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID || '';
+        const keySecret = process.env.RAZORPAY_KEY_SECRET || '';
+
         // If credentials are not configured or are placeholder, return sandbox mock order directly
-        const hasCredentials = process.env.RAZORPAY_KEY_ID && 
-                               process.env.RAZORPAY_KEY_SECRET && 
-                               process.env.RAZORPAY_KEY_ID !== 'rzp_test_placeholder';
+        const hasCredentials = keyId && 
+                               keySecret && 
+                               keyId !== 'rzp_test_placeholder';
 
         if (!hasCredentials) {
             console.log("Razorpay credentials missing/placeholder. Returning Sandbox Mock order.");
@@ -55,8 +58,8 @@ export async function POST(req: NextRequest) {
 
         try {
             const razorpay = new Razorpay({
-                key_id: process.env.RAZORPAY_KEY_ID || '',
-                key_secret: process.env.RAZORPAY_KEY_SECRET || '',
+                key_id: keyId,
+                key_secret: keySecret,
             });
             const order = await razorpay.orders.create(options);
             return NextResponse.json(order);

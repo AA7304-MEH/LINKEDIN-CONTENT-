@@ -50,6 +50,40 @@ export default function DashboardClient({
     useEffect(() => {
         setIsMounted(true);
         const params = new URLSearchParams(window.location.search);
+        
+        if (params.get('upgrade_now') === 'true') {
+            const forceUpgrade = async () => {
+                const toastId = toast.loading("Developer Mode: Upgrading account...");
+                try {
+                    const verifyRes = await fetch('/api/verify-payment', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            orderCreationId: 'order_mock_dev_backdoor',
+                            razorpayPaymentId: 'pay_mock_dev_backdoor',
+                            razorpaySignature: 'mock_signature',
+                            plan: 'PRO'
+                        })
+                    });
+                    const data = await verifyRes.json();
+                    if (data.success) {
+                        toast.dismiss(toastId);
+                        toast.success('Developer Mode: Account upgraded to Pro!');
+                        window.history.replaceState({}, '', window.location.pathname);
+                        setTimeout(() => window.location.reload(), 1000);
+                    } else {
+                        toast.dismiss(toastId);
+                        toast.error("Failed to upgrade.");
+                    }
+                } catch (e) {
+                    toast.dismiss(toastId);
+                    toast.error("Failed to upgrade account.");
+                }
+            };
+            forceUpgrade();
+            return;
+        }
+
         if (params.get('upgrade') === 'pro') {
             setIsUpgradeOpen(true);
             // Clean up the URL parameter immediately to prevent infinite reload loops

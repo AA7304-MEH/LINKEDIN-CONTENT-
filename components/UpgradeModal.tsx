@@ -213,7 +213,7 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
             }
 
             const options = {
-                key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_test_placeholder',
+                key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || (process.env as any).VITE_RAZORPAY_KEY_ID || 'rzp_test_placeholder',
                 amount: order.amount,
                 currency: order.currency,
                 name: "Resodin AI",
