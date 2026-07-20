@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Mic, RefreshCw, Edit3, Users, ArrowRight, Zap, ThumbsUp, MessageSquare, Repeat, Send } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
+import UpgradeModal from "@/components/UpgradeModal";
 
 // Fade-in animation wrapper
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => {
@@ -25,6 +26,7 @@ export default function Home() {
   const { isSignedIn } = useUser();
   const [annualBilling, setAnnualBilling] = useState(false);
   const [activeTone, setActiveTone] = useState("Authoritative");
+  const [isUpgradeOpen, setIsUpgradeOpen] = useState(false);
 
   return (
     <div className="min-h-screen selection:bg-[#06B6D4]/30 selection:text-white" 
@@ -366,9 +368,12 @@ export default function Home() {
                    <li>✓ 3 profiles</li>
                  </ul>
                  <div className="space-y-3">
-                   <Link href={isSignedIn ? "/dashboard?upgrade=pro" : "/sign-up?plan=pro"} className="w-full py-3 rounded-xl font-bold bg-[#00E5FF] text-[#0A0F1E] block text-center">
-                     {isSignedIn ? "Go to Dashboard" : "Start free trial"}
-                   </Link>
+                   <button 
+                     onClick={() => setIsUpgradeOpen(true)}
+                     className="w-full py-3 rounded-xl font-bold bg-[#00E5FF] text-[#0A0F1E] block text-center cursor-pointer"
+                   >
+                     {isSignedIn ? "Upgrade Plan" : "Start free trial"}
+                   </button>
                    <p className="text-xs text-[#9CA3AF] text-center">No credit card needed</p>
                  </div>
               </div>
@@ -416,6 +421,8 @@ export default function Home() {
       </section>
 
 
+      {/* Upgrade Checkout Modal */}
+      <UpgradeModal isOpen={isUpgradeOpen} onClose={() => setIsUpgradeOpen(false)} />
   </div>
   );
 }
