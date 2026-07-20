@@ -62,7 +62,10 @@ export async function POST(req: NextRequest) {
                 key_secret: keySecret,
             });
             const order = await razorpay.orders.create(options);
-            return NextResponse.json(order);
+            return NextResponse.json({
+                ...order,
+                keyId: keyId
+            });
         } catch (apiError: any) {
             console.error("Razorpay API order creation failed, falling back to Sandbox Mock order:", apiError);
             return NextResponse.json({
