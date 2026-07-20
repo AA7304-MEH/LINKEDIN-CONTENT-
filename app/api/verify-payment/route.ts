@@ -13,8 +13,9 @@ export async function POST(req: Request) {
 
         if (!isMock) {
             const signature = orderCreationId + "|" + razorpayPaymentId;
+            const secret = (process.env.RAZORPAY_KEY_SECRET || '').trim();
             const expectedSignature = crypto
-                .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET || "")
+                .createHmac("sha256", secret)
                 .update(signature.toString())
                 .digest("hex");
 
