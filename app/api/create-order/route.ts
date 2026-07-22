@@ -37,10 +37,10 @@ export async function POST(req: NextRequest) {
             });
         }
 
-        const keyId = (process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID || '').trim();
-        const keySecret = (process.env.RAZORPAY_KEY_SECRET || '').trim();
+        const keyId = (process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID || 'rzp_live_TGapFevpWRxIzW').trim();
+        const keySecret = (process.env.RAZORPAY_KEY_SECRET || 'dCfaOk0c29AYNu8SUWam9vHp').trim();
 
-        // Try server-side order creation if keySecret is available
+        // Server-side live Razorpay order creation
         if (keyId && keySecret) {
             try {
                 const razorpay = new Razorpay({

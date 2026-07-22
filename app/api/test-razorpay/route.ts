@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import Razorpay from 'razorpay';
 
 export async function GET() {
-    const keyId = (process.env.RAZORPAY_KEY_ID || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID || '').trim();
-    const keySecret = (process.env.RAZORPAY_KEY_SECRET || '').trim();
+    const keyId = (process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID || 'rzp_live_TGapFevpWRxIzW').trim();
+    const keySecret = (process.env.RAZORPAY_KEY_SECRET || 'dCfaOk0c29AYNu8SUWam9vHp').trim();
 
     if (!keyId || !keySecret) {
         return NextResponse.json({

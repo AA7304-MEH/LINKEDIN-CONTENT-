@@ -190,7 +190,7 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
                 return;
             }
 
-            const razorpayKey = (process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || order.keyId || process.env.RAZORPAY_KEY_ID || (process.env as any).VITE_RAZORPAY_KEY_ID || '').trim();
+            const razorpayKey = (process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || order.keyId || process.env.RAZORPAY_KEY_ID || (process.env as any).VITE_RAZORPAY_KEY_ID || 'rzp_live_TGapFevpWRxIzW').trim();
 
             const options: any = {
                 key: razorpayKey,
