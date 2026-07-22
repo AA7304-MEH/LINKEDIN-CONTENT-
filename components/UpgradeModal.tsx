@@ -154,7 +154,7 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
                 const response = await fetch('/api/create-order', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ plan: 'PRO', sandbox: isSandboxMode })
+                    body: JSON.stringify({ plan: 'PRO', currency: 'INR', sandbox: isSandboxMode })
                 });
 
                 if (response.ok) {
@@ -186,10 +186,10 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
 
             const options: any = {
                 key: razorpayKey,
-                amount: order.amount || 1900, // $19 or 1900 in smallest currency unit
-                currency: order.currency || 'USD',
+                amount: order.amount || 149900, // ₹1,499 (149900 paise)
+                currency: order.currency || 'INR',
                 name: "Resodin AI",
-                description: "Pro Monthly Subscription",
+                description: "Pro Creator Subscription",
                 handler: async function (response: any) {
                     try {
                         const verifyRes = await fetch('/api/verify-payment', {
@@ -218,6 +218,10 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
                     color: "#06B6D4"
                 }
             };
+
+            if (order.id && !order.mock) {
+                options.order_id = order.id;
+            }
 
             const rzp = new (window as any).Razorpay(options);
 

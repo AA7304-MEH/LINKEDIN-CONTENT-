@@ -5,24 +5,24 @@ import { getSessionUser } from '@/lib/security/authz';
 export async function POST(req: NextRequest) {
     try {
         const sessionUser = await getSessionUser();
-        // Allow public order creation for Razorpay verification checkers
         const userId = sessionUser?.id || "user_public_demo_testing";
-        const { amount, currency = 'USD', plan, sandbox } = await req.json();
+        const { amount, currency = 'INR', plan, sandbox } = await req.json();
 
-        let finalAmount = amount;
-        if (plan === 'PRO') {
-            finalAmount = 19;
-        } else if (plan === 'BUSINESS' || plan === 'Business') {
-            finalAmount = 49;
-        }
+        // Default to INR for Indian Razorpay gateway compatibility
+        let finalAmountInUnits = 149900; // ₹1,499/mo (149900 paise)
+        const targetCurrency = currency || 'INR';
 
-        if (!finalAmount) {
-            return NextResponse.json({ error: 'Amount or plan is required' }, { status: 400 });
+        if (targetCurrency === 'USD') {
+            if (plan === 'PRO') finalAmountInUnits = 1900; // $19.00 (1900 cents)
+            if (plan === 'BUSINESS' || plan === 'Business') finalAmountInUnits = 4900; // $49.00 (4900 cents)
+        } else {
+            if (plan === 'PRO') finalAmountInUnits = 149900; // ₹1,499
+            if (plan === 'BUSINESS' || plan === 'Business') finalAmountInUnits = 399900; // ₹3,999
         }
 
         const options = {
-            amount: finalAmount * 100, // amount in smallest currency unit
-            currency,
+            amount: finalAmountInUnits,
+            currency: targetCurrency,
             receipt: `receipt_${Date.now()}`,
         };
 
@@ -38,6 +38,24 @@ export async function POST(req: NextRequest) {
         }
 
         const keyId = (process.env.RAZORPAY_KEY_ID || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID || 'rzp_live_SlC9ofGIOSE4iy').trim();
+        const keySecret = (process.env.RAZORPAY_KEY_SECRET || '').trim();
+
+        // Try server-side order creation if keySecret is available
+        if (keyId && keySecret) {
+            try {
+                const razorpay = new Razorpay({
+                    key_id: keyId,
+                    key_secret: keySecret,
+                });
+                const order = await razorpay.orders.create(options);
+                return NextResponse.json({
+                    ...order,
+                    keyId: keyId
+                });
+            } catch (apiError: any) {
+                console.warn("Server order creation warning:", apiError?.error?.description || apiError?.message);
+            }
+        }
 
         // Return client checkout options directly with public Key ID
         return NextResponse.json({
