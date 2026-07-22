@@ -182,10 +182,7 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
                 return;
             }
 
-            let razorpayKey = 'rzp_test_1DP5mmO1F5G5ag';
-            if (order.keyId && !order.mock && !order.keyId.startsWith('rzp_live_')) {
-                razorpayKey = order.keyId;
-            }
+            const razorpayKey = order.keyId || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || (process.env as any).VITE_RAZORPAY_KEY_ID || 'rzp_live_SlC9ofGIOSE4iy';
 
             const options: any = {
                 key: razorpayKey,
