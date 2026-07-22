@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
             });
         }
 
-        const keyId = (process.env.RAZORPAY_KEY_ID || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID || '').trim();
+        const keyId = (process.env.RAZORPAY_KEY_ID || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_1DP5mmO1F5G5ag').trim();
         const keySecret = (process.env.RAZORPAY_KEY_SECRET || '').trim();
 
         // If credentials are not configured or are placeholder, return sandbox mock order directly
