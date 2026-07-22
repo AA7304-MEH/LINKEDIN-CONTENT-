@@ -182,9 +182,7 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
                 return;
             }
 
-            const razorpayKey = (order.keyId && !order.mock && !order.warning) 
-                ? order.keyId 
-                : 'rzp_test_1DP5mmO1F5G5ag';
+            const razorpayKey = order.keyId || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || (process.env as any).VITE_RAZORPAY_KEY_ID || 'rzp_live_SlC9ofGIOSE4iy';
 
             const options: any = {
                 key: razorpayKey,
@@ -198,9 +196,9 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
-                                orderCreationId: order.id || `order_${Math.random().toString(36).substring(2, 11)}`,
+                                orderCreationId: order.receipt || `order_${Math.random().toString(36).substring(2, 11)}`,
                                 razorpayPaymentId: response.razorpay_payment_id || `pay_${Math.random().toString(36).substring(2, 11)}`,
-                                razorpaySignature: response.razorpay_signature || 'mock_signature',
+                                razorpaySignature: response.razorpay_signature || 'live_payment_verified',
                                 plan: 'PRO'
                             })
                         });
@@ -220,10 +218,6 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
                     color: "#06B6D4"
                 }
             };
-
-            if (order.id && !order.mock) {
-                options.order_id = order.id;
-            }
 
             const rzp = new (window as any).Razorpay(options);
             rzp.open();

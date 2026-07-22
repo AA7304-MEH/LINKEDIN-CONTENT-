@@ -38,45 +38,14 @@ export async function POST(req: NextRequest) {
         }
 
         const keyId = (process.env.RAZORPAY_KEY_ID || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID || 'rzp_live_SlC9ofGIOSE4iy').trim();
-        const keySecret = (process.env.RAZORPAY_KEY_SECRET || '').trim();
 
-        // If credentials are not configured or are placeholder, return sandbox mock order directly
-        const hasCredentials = keyId && 
-                               keySecret && 
-                               keyId !== 'rzp_test_placeholder';
-
-        if (!hasCredentials) {
-            console.log("Razorpay credentials missing/placeholder. Returning Sandbox Mock order.");
-            return NextResponse.json({
-                id: `order_mock_${Math.random().toString(36).substring(2, 11)}`,
-                amount: options.amount,
-                currency: options.currency,
-                receipt: options.receipt,
-                mock: true
-            });
-        }
-
-        try {
-            const razorpay = new Razorpay({
-                key_id: keyId,
-                key_secret: keySecret,
-            });
-            const order = await razorpay.orders.create(options);
-            return NextResponse.json({
-                ...order,
-                keyId: keyId
-            });
-        } catch (apiError: any) {
-            console.error("Razorpay API order creation failed, falling back to Sandbox Mock order:", apiError);
-            return NextResponse.json({
-                id: `order_mock_${Math.random().toString(36).substring(2, 11)}`,
-                amount: options.amount,
-                currency: options.currency,
-                receipt: options.receipt,
-                mock: true,
-                warning: apiError?.error?.description || apiError?.message || "Authentication failed"
-            });
-        }
+        // Return client checkout options directly with public Key ID
+        return NextResponse.json({
+            keyId: keyId,
+            amount: options.amount,
+            currency: options.currency,
+            receipt: options.receipt
+        });
     } catch (error: any) {
         console.error('Error in create-order endpoint:', error);
         return NextResponse.json(
