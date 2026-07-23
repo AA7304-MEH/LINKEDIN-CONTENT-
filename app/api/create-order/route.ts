@@ -3,25 +3,17 @@ import Razorpay from 'razorpay';
 import { getSessionUser } from '@/lib/security/authz';
 
 const getKeyId = () => {
-    const keys = [
-        process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-        process.env.RAZORPAY_KEY_ID,
-        process.env.VITE_RAZORPAY_KEY_ID,
-        'rzp_live_TGapFevpWRxIzW'
-    ];
-    for (const k of keys) {
-        if (k && k.trim().length > 0) return k.trim();
+    const envKey = process.env.RAZORPAY_KEY_ID || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID;
+    if (envKey && envKey.trim().length > 0 && envKey.trim().startsWith('rzp_live_TGap')) {
+        return envKey.trim();
     }
     return 'rzp_live_TGapFevpWRxIzW';
 };
 
 const getKeySecret = () => {
-    const secrets = [
-        process.env.RAZORPAY_KEY_SECRET,
-        'dCfaOk0c29AYNu8SUWam9vHp'
-    ];
-    for (const s of secrets) {
-        if (s && s.trim().length > 0) return s.trim();
+    const envSecret = process.env.RAZORPAY_KEY_SECRET;
+    if (envSecret && envSecret.trim().length > 0 && envSecret.trim().startsWith('dCfa')) {
+        return envSecret.trim();
     }
     return 'dCfaOk0c29AYNu8SUWam9vHp';
 };
