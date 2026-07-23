@@ -11,9 +11,9 @@ interface UpgradeModalProps {
 
 export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
     const [loading, setLoading] = useState(false);
-    const [isIndianUser, setIsIndianUser] = useState(true); // Default to India (Razorpay)
+    const [selectedGateway, setSelectedGateway] = useState<'razorpay' | 'paypal'>('razorpay');
 
-    // Geolocation detection to route payment gateways
+    // Geolocation detection to route payment gateways automatically
     useEffect(() => {
         if (!isOpen) return;
 
@@ -22,14 +22,14 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
                 // Timezone check (instant, offline fallback)
                 const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
                 const isIndiaTz = tz === 'Asia/Kolkata' || tz === 'Asia/Calcutta';
-                setIsIndianUser(isIndiaTz);
+                setSelectedGateway(isIndiaTz ? 'razorpay' : 'paypal');
 
                 // Live GeoIP Lookup to verify country code
                 const res = await fetch('https://ipapi.co/json/');
                 if (res.ok) {
                     const data = await res.json();
                     if (data.country_code) {
-                        setIsIndianUser(data.country_code === 'IN');
+                        setSelectedGateway(data.country_code === 'IN' ? 'razorpay' : 'paypal');
                     }
                 }
             } catch (err) {
@@ -42,7 +42,7 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
 
     // Dynamic PayPal SDK Loader & button renderer
     useEffect(() => {
-        if (!isOpen || isIndianUser) return;
+        if (!isOpen || selectedGateway !== 'paypal') return;
 
         let paypalInitialized = false;
 
@@ -84,7 +84,7 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
                             color: 'gold',
                             shape: 'rect',
                             label: 'paypal',
-                            height: 40
+                            height: 44
                         },
                         createOrder: function(data: any, actions: any) {
                             return actions.order.create({
@@ -140,11 +140,11 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
 
         const timer = setTimeout(loadPaypalScript, 200);
         return () => clearTimeout(timer);
-    }, [isOpen, isIndianUser]);
+    }, [isOpen, selectedGateway]);
 
     if (!isOpen) return null;
 
-    const handleUpgrade = async () => {
+    const handleRazorpayUpgrade = async () => {
         setLoading(true);
         try {
             const isSandboxMode = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('sandbox') === 'true';
@@ -257,43 +257,74 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
         <div className={styles.overlay}>
             <div className={styles.modal}>
                 <button className={styles.closeBtn} onClick={onClose}>✕</button>
-                <div className={styles.badge}>PRO FEATURE</div>
-                <h2 className={styles.title}>Upgrade to unlock premium features 🎉</h2>
+                <div className={styles.badge}>PRO CREATOR PLAN</div>
+                <h2 className={styles.title}>Upgrade to Unlock Full AI Access 🎉</h2>
                 <p className={styles.desc}>
-                    Get unlimited AI generations, Voice DNA profile card, weekly growth summaries, advanced analytics, and custom post scheduling.
+                    Get unlimited AI post generations, Voice DNA profile card, weekly growth summaries, advanced analytics, and custom post scheduling.
                 </p>
 
-                {isIndianUser ? (
+                {/* Gateway Selector Tabs */}
+                <div className={styles.tabsContainer}>
+                    <button 
+                        className={`${styles.tabBtn} ${selectedGateway === 'razorpay' ? styles.tabBtnActive : ''}`}
+                        onClick={() => setSelectedGateway('razorpay')}
+                    >
+                        <span>🇮🇳 Razorpay</span>
+                        <span className={styles.tabSub}>UPI & Indian Cards</span>
+                        <span className={styles.recBadge}>Recommended</span>
+                    </button>
+                    <button 
+                        className={`${styles.tabBtn} ${selectedGateway === 'paypal' ? styles.tabBtnActive : ''}`}
+                        onClick={() => setSelectedGateway('paypal')}
+                    >
+                        <span>🌎 PayPal</span>
+                        <span className={styles.tabSub}>International Cards</span>
+                    </button>
+                </div>
+
+                {selectedGateway === 'razorpay' ? (
                     /* Indian Gateway View (Razorpay Card / UPI) */
                     <div style={{ width: '100%' }}>
-                        <button className={styles.cta} onClick={handleUpgrade} disabled={loading}>
-                            {loading ? 'Processing...' : 'Upgrade with UPI / Card'}
+                        <div className={styles.gatewayBox}>
+                            <div className={styles.gatewayHeader}>
+                                <span className={styles.gatewayTitle}>⚡ Instant UPI & Cards</span>
+                                <span className={styles.gatewayPrice}>₹1,499<small style={{ fontSize: '0.7rem', color: '#94a3b8' }}>/mo</small></span>
+                            </div>
+                            <div className={styles.supportedMethods}>
+                                <span className={styles.methodPill}>🟢 Google Pay</span>
+                                <span className={styles.methodPill}>🟣 PhonePe</span>
+                                <span className={styles.methodPill}>🔵 Paytm / BHIM</span>
+                                <span className={styles.methodPill}>💳 Debit & Credit Cards</span>
+                                <span className={styles.methodPill}>🏦 Netbanking</span>
+                            </div>
+                        </div>
+
+                        <button className={styles.cta} onClick={handleRazorpayUpgrade} disabled={loading}>
+                            {loading ? 'Processing...' : 'Pay ₹1,499 with Razorpay (UPI / Card)'}
                         </button>
-                        <p style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.75rem', color: '#64748b' }}>
-                            Outside India?{' '}
-                            <button 
-                                onClick={() => setIsIndianUser(false)} 
-                                style={{ background: 'none', border: 'none', color: '#06b6d4', textDecoration: 'underline', cursor: 'pointer', padding: 0 }}
-                            >
-                                Pay with PayPal
-                            </button>
-                        </p>
                     </div>
                 ) : (
                     /* International Gateway View (PayPal Smart Buttons) */
                     <div style={{ width: '100%' }}>
-                        <div id="paypal-button-container" style={{ minHeight: '40px', position: 'relative', zIndex: 10 }}></div>
-                        <p style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.75rem', color: '#64748b' }}>
-                            In India?{' '}
-                            <button 
-                                onClick={() => setIsIndianUser(true)} 
-                                style={{ background: 'none', border: 'none', color: '#06b6d4', textDecoration: 'underline', cursor: 'pointer', padding: 0 }}
-                            >
-                                Pay with UPI / Indian Card
-                            </button>
-                        </p>
+                        <div className={styles.gatewayBox}>
+                            <div className={styles.gatewayHeader}>
+                                <span className={styles.gatewayTitle}>🌎 PayPal Checkout</span>
+                                <span className={styles.gatewayPrice}>$19.00<small style={{ fontSize: '0.7rem', color: '#94a3b8' }}>/mo</small></span>
+                            </div>
+                            <div className={styles.supportedMethods}>
+                                <span className={styles.methodPill}>🟡 PayPal Balance</span>
+                                <span className={styles.methodPill}>💳 Visa / MasterCard</span>
+                                <span className={styles.methodPill}>💳 American Express</span>
+                            </div>
+                        </div>
+
+                        <div id="paypal-button-container" style={{ minHeight: '44px', position: 'relative', zIndex: 10 }}></div>
                     </div>
                 )}
+
+                <p className={styles.footerNote}>
+                    🔒 Secure SSL Encrypted Checkout. Cancel anytime with 1-click.
+                </p>
             </div>
         </div>
     );
