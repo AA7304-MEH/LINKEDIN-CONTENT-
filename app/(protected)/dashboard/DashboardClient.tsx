@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import ContentForm from '@/components/ContentForm';
 import PostDisplay from '@/components/PostDisplay';
 import UpgradeModal from '@/components/UpgradeModal';
+import HookEnhancerModal from '@/components/HookEnhancerModal';
 import toast from 'react-hot-toast';
 import styles from './page.module.css';
 import dynamic from 'next/dynamic';
@@ -39,6 +40,13 @@ export default function DashboardClient({
     const [linkedInStatus, setLinkedInStatus] = useState<any>(null);
     const [publishedUrl, setPublishedUrl] = useState<string | null>(null);
     const [showLinkedInModal, setShowLinkedInModal] = useState(false);
+
+    // AI Hook Enhancer State
+    const [isBoostingHook, setIsBoostingHook] = useState(false);
+    const [showHookModal, setShowHookModal] = useState(false);
+    const [hookVariations, setHookVariations] = useState<any[]>([]);
+    const [originalHookText, setOriginalHookText] = useState<string>('');
+    const [isHighOriginalScore, setIsHighOriginalScore] = useState<boolean>(false);
 
     // Component 4: Performance Analytics tab state
     const [activeTab, setActiveTab] = useState<'generator' | 'performance'>('generator');
@@ -201,6 +209,84 @@ export default function DashboardClient({
         }
     };
 
+    const handleBoostHook = async () => {
+        if (!generatedPost?.content) {
+            toast.error("No post content available to boost.");
+            return;
+        }
+
+        setIsBoostingHook(true);
+        try {
+            const res = await fetch('/api/boost-hook', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    postContent: generatedPost.content,
+                    currentHookScore: hookScore
+                })
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.error || 'Failed to boost hook');
+            }
+
+            setHookVariations(data.variations || []);
+            setOriginalHookText(data.originalHook || '');
+            setIsHighOriginalScore(data.isHighOriginalScore || false);
+            setShowHookModal(true);
+        } catch (err: any) {
+            toast.error(err.message || 'Could not enhance hook. Try again.');
+        } finally {
+            setIsBoostingHook(false);
+        }
+    };
+
+    const handleApplyHook = async (newHookText: string) => {
+        if (!generatedPost?.content) return;
+
+        // Split post by double line breaks or single line breaks to isolate the opening
+        const parts = generatedPost.content.split('\n\n');
+        
+        let updatedContent = '';
+        if (parts.length > 1) {
+            parts[0] = newHookText;
+            updatedContent = parts.join('\n\n');
+        } else {
+            // Single block of text fallback
+            const singleLines = generatedPost.content.split('\n');
+            singleLines[0] = newHookText;
+            updatedContent = singleLines.join('\n');
+        }
+
+        setGeneratedPost((prev: any) => ({
+            ...prev,
+            content: updatedContent
+        }));
+
+        toast.success("New hook applied to post!");
+
+        // Re-analyze hook strength live
+        try {
+            const res = await fetch('/api/analyze-hook', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ hook: newHookText })
+            });
+
+            if (res.ok) {
+                const analysis = await res.json();
+                if (analysis.score) {
+                    setHookScore(analysis.score);
+                    setHookFeedback(analysis.feedback || 'Enhanced hook applied!');
+                }
+            }
+        } catch (err) {
+            console.error("Failed to re-score updated hook:", err);
+        }
+    };
+
     const handlePublishToLinkedIn = async () => {
         if (!generatedPost?.content || !generatedPost?.id) return;
 
@@ -295,6 +381,16 @@ export default function DashboardClient({
         <div style={{ width: '100%' }}>
             {/* Upgrade Plan Modal */}
             <UpgradeModal isOpen={isUpgradeOpen} onClose={() => setIsUpgradeOpen(false)} />
+
+            {/* AI Hook Enhancer Modal */}
+            <HookEnhancerModal
+                isOpen={showHookModal}
+                onClose={() => setShowHookModal(false)}
+                variations={hookVariations}
+                originalHook={originalHookText}
+                isHighOriginalScore={isHighOriginalScore}
+                onApplyHook={handleApplyHook}
+            />
 
             {/* Tab Selector Buttons */}
             <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '0.5rem' }}>
@@ -423,17 +519,42 @@ export default function DashboardClient({
                         {generatedPost && !isGenerating && (
                             <div className={styles.resultsArea}>
                                 {hookScore !== null && (
-                                    <div className={styles.hookScoreCard}>
-                                        <div className={styles.scoreCircle} style={{ borderColor: scoreColor }}>
-                                            <span className={styles.scoreNumber} style={{ color: scoreColor }}>
-                                                {hookScore}
-                                            </span>
-                                            <span className={styles.scoreLabel}>Hook Score</span>
+                                    <div className={styles.hookScoreCard} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                            <div className={styles.scoreCircle} style={{ borderColor: scoreColor }}>
+                                                <span className={styles.scoreNumber} style={{ color: scoreColor }}>
+                                                    {hookScore}
+                                                </span>
+                                                <span className={styles.scoreLabel}>Hook Score</span>
+                                            </div>
+                                            <div className={styles.scoreFeedback}>
+                                                <h4>Viral Potential</h4>
+                                                <p>{hookFeedback || 'Strong opening. Engage your audience!'}</p>
+                                            </div>
                                         </div>
-                                        <div className={styles.scoreFeedback}>
-                                            <h4>Viral Potential</h4>
-                                            <p>{hookFeedback || 'Strong opening. Engage your audience!'}</p>
-                                        </div>
+
+                                        {/* 1-Click AI Hook Enhancer Button */}
+                                        <button
+                                            onClick={handleBoostHook}
+                                            disabled={isBoostingHook}
+                                            style={{
+                                                background: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)',
+                                                color: '#fff',
+                                                border: 'none',
+                                                borderRadius: '12px',
+                                                padding: '0.65rem 1.15rem',
+                                                fontWeight: 800,
+                                                fontSize: '0.88rem',
+                                                cursor: isBoostingHook ? 'not-allowed' : 'pointer',
+                                                boxShadow: '0 4px 12px rgba(6, 182, 212, 0.25)',
+                                                display: 'inline-flex',
+                                                alignItems: 'center',
+                                                gap: '0.4rem',
+                                                transition: 'all 0.2s'
+                                            }}
+                                        >
+                                            {isBoostingHook ? '⚡ Generating Variations...' : '🚀 Boost Hook to 90+'}
+                                        </button>
                                     </div>
                                 )}
                                 {generatedPost.provider && (
