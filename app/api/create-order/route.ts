@@ -20,7 +20,13 @@ const getKeySecret = () => {
 
 export async function POST(req: NextRequest) {
     try {
-        const sessionUser = await getSessionUser();
+        let sessionUser = null;
+        try {
+            sessionUser = await getSessionUser();
+        } catch (e) {
+            console.log("Session lookup skipped, using fallback user ID.");
+        }
+
         const userId = sessionUser?.id || "user_public_demo_testing";
         const { amount, currency = 'INR', plan, sandbox } = await req.json();
 
@@ -57,33 +63,20 @@ export async function POST(req: NextRequest) {
         const keySecret = getKeySecret();
 
         // Server-side live Razorpay order creation
-        if (keyId && keySecret) {
-            try {
-                const razorpay = new Razorpay({
-                    key_id: keyId,
-                    key_secret: keySecret,
-                });
-                const order = await razorpay.orders.create(options);
-                return NextResponse.json({
-                    ...order,
-                    keyId: keyId
-                });
-            } catch (apiError: any) {
-                console.warn("Server order creation warning:", apiError?.error?.description || apiError?.message);
-            }
-        }
+        const razorpay = new Razorpay({
+            key_id: keyId,
+            key_secret: keySecret,
+        });
 
-        // Return client checkout options directly with public Key ID
+        const order = await razorpay.orders.create(options);
         return NextResponse.json({
-            keyId: keyId,
-            amount: options.amount,
-            currency: options.currency,
-            receipt: options.receipt
+            ...order,
+            keyId: keyId
         });
     } catch (error: any) {
-        console.error('Error in create-order endpoint:', error);
+        console.error('Error creating Razorpay order:', error);
         return NextResponse.json(
-            { error: error?.message || 'Error processing request' },
+            { error: error?.error?.description || error?.message || 'Error processing request' },
             { status: 500 }
         );
     }

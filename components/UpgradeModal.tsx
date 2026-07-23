@@ -149,20 +149,20 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
         try {
             const isSandboxMode = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('sandbox') === 'true';
 
-            let order: any = {};
-            try {
-                const response = await fetch('/api/create-order', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ plan: 'PRO', currency: 'INR', sandbox: isSandboxMode })
-                });
+            const response = await fetch('/api/create-order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ plan: 'PRO', currency: 'INR', sandbox: isSandboxMode })
+            });
 
-                if (response.ok) {
-                    order = await response.json();
-                }
-            } catch (e) {
-                console.log("Create order API check skipped.");
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                toast.error(errorData.error || 'Failed to create payment order');
+                setLoading(false);
+                return;
             }
+
+            const order = await response.json();
 
             // Check if user or environment configured a direct Razorpay Payment Page URL
             const customPaymentLink = process.env.NEXT_PUBLIC_RAZORPAY_PAYMENT_LINK;
@@ -194,8 +194,7 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
 
             const options: any = {
                 key: razorpayKey,
-                amount: order.amount || 149900, // ₹1,499 (149900 paise)
-                currency: order.currency || 'INR',
+                order_id: order.id,
                 name: "Resodin AI",
                 description: "Pro Creator Subscription",
                 handler: async function (response: any) {
@@ -204,9 +203,9 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
-                                orderCreationId: order.receipt || `order_${Math.random().toString(36).substring(2, 11)}`,
-                                razorpayPaymentId: response.razorpay_payment_id || `pay_${Math.random().toString(36).substring(2, 11)}`,
-                                razorpaySignature: response.razorpay_signature || 'live_payment_verified',
+                                orderCreationId: response.razorpay_order_id || order.id,
+                                razorpayPaymentId: response.razorpay_payment_id,
+                                razorpaySignature: response.razorpay_signature,
                                 plan: 'PRO'
                             })
                         });
@@ -216,10 +215,10 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
                             toast.success(`Success! Welcome to Resodin Pro.`);
                             window.location.reload();
                         } else {
-                            alert('Verification failed.');
+                            toast.error('Payment verification failed.');
                         }
                     } catch (err) {
-                        alert('Verification failed.');
+                        toast.error('Payment verification failed.');
                     }
                 },
                 modal: {
@@ -232,21 +231,24 @@ export default function UpgradeModal({ isOpen, onClose }: UpgradeModalProps) {
                 }
             };
 
-            if (order.id && !order.mock) {
-                options.order_id = order.id;
+            // If sandbox mock order
+            if (order.mock) {
+                delete options.order_id;
+                options.amount = order.amount || 149900;
+                options.currency = order.currency || 'INR';
             }
 
             const rzp = new (window as any).Razorpay(options);
 
             rzp.on('payment.failed', async function (response: any) {
-                console.warn("Razorpay payment failed or domain unauthorized:", response);
-                toast.error("Razorpay origin authorization check failed. Checking fallback payment options...", { duration: 3000 });
+                console.warn("Razorpay payment failed:", response);
+                toast.error(response?.error?.description || "Payment failed or cancelled.", { duration: 4000 });
                 setLoading(false);
             });
 
             rzp.open();
         } catch (error: any) {
-            alert(error.message || 'Payment initiation failed.');
+            toast.error(error.message || 'Payment initiation failed.');
             setLoading(false);
         }
     };
